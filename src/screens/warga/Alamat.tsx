@@ -5,7 +5,7 @@ import { A, Img, StatusBar, AppBar } from '../../ui'
 
 /** Figma: A6 Alamat Jemput (23:1600) → Simpan Alamat → B1 Beranda */
 export default function Alamat() {
-  const { go } = useStore()
+  const { s, go, back } = useStore()
   const [label, setLabel] = useState('Rumah')
   const [q, setQ] = useState('')
   return (
@@ -46,7 +46,7 @@ export default function Alamat() {
         </div>
       </div>
       <div className="bottom-bar">
-        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('beranda', { root: true })}>
+        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => (s.warga.includes('akun') ? back() : go('beranda', { root: true }))}>
           <Img src="ic-check-white-20.svg" size={20} />Simpan Alamat
         </button>
       </div>

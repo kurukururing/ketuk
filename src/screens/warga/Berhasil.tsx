@@ -38,7 +38,7 @@ export default function Berhasil() {
         <span className="t-overline" style={{ color: 'var(--amber-500)' }}>Tok! Ketuk Palu berhasil</span>
         <span className="t-h1" style={{ color: '#fff', letterSpacing: -0.39 }}>Harga terkunci {rp(o.price)}</span>
         <span className="t-body-l" style={{ color: 'var(--primary-200)' }}>
-          {o.name} akan menjemput {ITEM.name.toLowerCase()} {o.pickup.startsWith('Jemput') ? `hari ini pukul ${o.pickup.slice(7)}` : o.pickup.toLowerCase()}.
+          {o.name} akan menjemput {ITEM.name.toLowerCase()} {o.pickup.startsWith('Jemput') ? 'hari ini' : 'besok'} pukul {o.pickup.split(' ').at(-1)}.
         </span>
       </motion.div>
 

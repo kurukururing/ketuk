@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useStore, ITEM, rp, mmss, PAK_SLAMET } from '../../store'
-import { A, Img, StatusBar, AppBar } from '../../ui'
+import { Img, StatusBar, AppBar, itemPhoto } from '../../ui'
 
 const SLOTS = ['15.30', '16.00', '17.00', '17.30']
 const fmt = (n: number) => (n ? n.toLocaleString('id-ID') : '')
@@ -23,7 +23,7 @@ export default function Ajukan() {
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>
           <div className="row" style={{ gap: 12 }}>
-            <img src={s.photo ?? A('photo-kipas.jpg')} alt="" style={{ width: 64, height: 64, borderRadius: 14, objectFit: 'cover' }} />
+            <img src={itemPhoto(s)} alt="" style={{ width: 64, height: 64, borderRadius: 14, objectFit: 'cover' }} />
             <div className="col grow" style={{ gap: 4 }}>
               <span className="t-body-ms">{ITEM.name}</span>
               <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>1,2 km | AI {rp(ITEM.aiLow)}–{rp(ITEM.aiHigh)}</span>

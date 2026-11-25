@@ -42,7 +42,7 @@ export default function Onboarding() {
     <div className="screen">
       <img src={A('onb-ellipse1.svg')} alt="" className="abs" style={{ left: -52, top: -432, width: 883, height: 883 }} />
       <img src={A('onb-ellipse2.svg')} alt="" className="abs" style={{ left: -478, top: 0, width: 883, height: 883 }} />
-      <button className="abs t-label-m nowrap" style={{ left: 317, top: 64, color: 'var(--primary-500)' }} onClick={toMasuk}>Lewati</button>
+      <button className="abs t-label-m nowrap" style={{ left: 317, top: 64, color: 'var(--primary-500)', zIndex: 5 }} onClick={toMasuk}>Lewati</button>
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div key={i} className="abs" style={{ inset: 0 }}

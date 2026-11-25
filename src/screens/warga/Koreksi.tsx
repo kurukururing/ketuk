@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useStore, CORRECTION, rp } from '../../store'
+import { useStore, CORRECTION, rp, winnerName } from '../../store'
 import { A, Img, StatusBar, AppBar } from '../../ui'
 
 /** Figma: E1 Koreksi Berbukti (13:796) */
@@ -14,7 +14,7 @@ export default function Koreksi() {
           <div className="row" style={{ gap: 12, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--coral-100)' }}>
             <div className="row" style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: '#fff', justifyContent: 'center' }}><Img src="ic-alert-coral.svg" size={22} /></div>
             <div className="col grow" style={{ gap: 2 }}>
-              <span className="t-body-ms" style={{ color: 'var(--coral-700)' }}>Pak Slamet mengajukan koreksi harga</span>
+              <span className="t-body-ms" style={{ color: 'var(--coral-700)' }}>{winnerName(s)} mengajukan koreksi harga</span>
               <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>Kamu boleh menolak. Menolak tidak dikenai denda.</span>
             </div>
           </div>

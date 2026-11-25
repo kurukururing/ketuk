@@ -61,7 +61,7 @@ export default function Bayar() {
         <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('jadwal', { root: true })}>
           <Img src="ic-arrow-right-white.svg" size={20} />Lanjut ke Titik Berikutnya
         </button>
-        <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('radar', { root: true })}>
+        <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('bukti')}>
           <Img src="ic-cash-ink.svg" size={20} />Lihat Bukti Transaksi
         </button>
       </div>

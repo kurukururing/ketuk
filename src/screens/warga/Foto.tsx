@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useStore } from '../../store'
-import { A, Img, StatusBar } from '../../ui'
+import { A, Img, StatusBar, itemPhoto } from '../../ui'
 
 type Phase = 'aim' | 'scan' | 'done'
 
@@ -11,7 +11,10 @@ export default function Foto() {
   const [phase, setPhase] = useState<Phase>('aim')
   const [flash, setFlash] = useState(false)
   const file = useRef<HTMLInputElement>(null)
-  const photo = s.photo ?? A('photo-kipas.jpg')
+  const photo = itemPhoto(s)
+  // Figma: B2 Shutter → Detail; C1 (dispenser) Shutter → Ubah Kategori → Detail
+  const nextScreen = s.scenario === 'dispenser' ? 'kategori' : 'detail'
+  const detected = s.scenario === 'dispenser' ? (s.retake ? 'Dispenser | Elektronik' : 'Buram | Elektronik') : 'Kipas angin | Elektronik'
 
   const capture = () => {
     if (phase === 'scan') return
@@ -19,7 +22,7 @@ export default function Foto() {
     setTimeout(() => setFlash(false), 180)
     setPhase('scan')
     setTimeout(() => setPhase('done'), 1400)
-    setTimeout(() => go('detail'), 2100)
+    setTimeout(() => go(nextScreen), 2100)
   }
   const onFile = (f?: File) => {
     if (!f) return
@@ -71,7 +74,7 @@ export default function Foto() {
               {phase === 'scan'
                 ? <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2.5px solid var(--primary-100)', borderTopColor: 'var(--primary-500)', animation: 'spin .8s linear infinite' }} />
                 : <Img src="ic-spark-indigo.svg" size={18} />}
-              <span className="t-label-s nowrap">{phase === 'scan' ? 'AI mengenali barang…' : 'Terdeteksi: Kipas angin | Elektronik'}</span>
+              <span className="t-label-s nowrap">{phase === 'scan' ? 'AI mengenali barang…' : `Terdeteksi: ${detected}`}</span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -108,7 +111,7 @@ export default function Foto() {
         <motion.button whileTap={{ scale: 0.9 }} onClick={capture} aria-label="Ambil foto" style={{ width: 84, height: 84 }}>
           <Img src="shutter.svg" size={84} />
         </motion.button>
-        <button disabled={phase !== 'done'} onClick={() => go('detail')} className="btn btn-inverse btn-m" style={{ opacity: phase === 'done' ? 1 : 0.4 }}>
+        <button disabled={phase !== 'done'} onClick={() => go(nextScreen)} className="btn btn-inverse btn-m" style={{ opacity: phase === 'done' ? 1 : 0.4 }}>
           <Img src="ic-arrow-right-indigo.svg" size={20} />Lanjut
         </button>
       </div>

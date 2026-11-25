@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { useStore, mmss, rp, type Offer, SESSION_LEN } from './store'
+import { useStore, mmss, rp, type Offer, type State, SESSION_LEN, ITEM } from './store'
 
 /** Static design asset exported from Figma (public/a/*) */
 export const A = (name: string) => `${import.meta.env.BASE_URL}a/${name}`
@@ -155,39 +155,49 @@ function NavItem({ icon, label, active, onClick }: { icon: string; label: string
   )
 }
 
-export function BottomNavWarga({ onPasang, onSesi }: { onPasang: () => void; onSesi: () => void }) {
+type WargaTab = 'beranda' | 'sesi' | 'riwayat' | 'akun'
+/** Figma › BottomNav/Warga — Beranda | Sesi | (+ Pasang) | Riwayat | Akun */
+export function BottomNavWarga({ active = 'beranda' }: { active?: WargaTab }) {
+  const { d, go } = useStore()
+  const tab = (k: WargaTab, label: string, screen: 'beranda' | 'sesi-saya' | 'riwayat' | 'akun') => (
+    <NavItem icon={`nav-${k === 'beranda' ? 'house' : k}${active === k ? '-active' : ''}.svg`} label={label} active={active === k}
+      onClick={() => active !== k && go(screen, { root: true })} />
+  )
   return (
     <div className="abs" style={{ left: 0, top: 747, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
-      <button onClick={onPasang} className="abs row" aria-label="Pasang barang"
+      {/* Figma: "+" → C1 Ambil Foto Blur (skenario dispenser) */}
+      <button onClick={() => { d({ type: 'scenario', scenario: 'dispenser' }); go('foto') }} className="abs row" aria-label="Pasang barang"
         style={{ left: 169, top: -12, width: 52, height: 52, borderRadius: 100, background: 'var(--primary-500)', justifyContent: 'center', boxShadow: 'var(--elev-primary)' }}>
         <Img src="ic-add-white.svg" size={22} />
       </button>
       <div className="row" style={{ padding: '10px 12px 0', alignItems: 'flex-start' }}>
-        <NavItem icon="nav-house-active.svg" label="Beranda" active />
-        <NavItem icon="nav-sesi.svg" label="Sesi" onClick={onSesi} />
+        {tab('beranda', 'Beranda', 'beranda')}
+        {tab('sesi', 'Sesi', 'sesi-saya')}
         <div className="col grow" style={{ alignItems: 'center', gap: 4 }}>
           <div style={{ height: 32 }} />
           <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Pasang</span>
         </div>
-        <NavItem icon="nav-riwayat.svg" label="Riwayat" />
-        <NavItem icon="nav-akun.svg" label="Akun" />
+        {tab('riwayat', 'Riwayat', 'riwayat')}
+        {tab('akun', 'Akun', 'akun')}
       </div>
       <div style={{ height: 34 }} />
     </div>
   )
 }
 
-export function BottomNavPengepul({ active, onNav }: { active: 'radar' | 'tawaranku' | 'jemput' | 'akun'; onNav?: (k: 'radar' | 'tawaranku' | 'jemput' | 'akun') => void }) {
-  const items: [typeof active, string, string][] = [
-    ['radar', 'Radar', active === 'radar' ? 'nav-radar-active.svg' : 'nav-radar.svg'],
-    ['tawaranku', 'Tawaranku', 'nav-tawaranku.svg'],
-    ['jemput', 'Jemput', active === 'jemput' ? 'nav-jemput-active.svg' : 'nav-jemput.svg'],
-    ['akun', 'Akun', 'nav-akun.svg'],
+export type PengepulTab = 'radar' | 'tawaranku' | 'jemput' | 'akun'
+/** Figma › BottomNav/Pengepul — Radar | Tawaranku | Jemput | Akun (self-wired; onNav overrides) */
+export function BottomNavPengepul({ active, onNav }: { active?: PengepulTab; onNav?: (k: PengepulTab) => void }) {
+  const { go } = useStore()
+  const dest = { radar: 'radar', tawaranku: 'tawaranku', jemput: 'jadwal', akun: 'profil' } as const
+  const items: [PengepulTab, string, string][] = [
+    ['radar', 'Radar', 'nav-radar'], ['tawaranku', 'Tawaranku', 'nav-tawaranku'], ['jemput', 'Jemput', 'nav-jemput'], ['akun', 'Akun', 'nav-akun'],
   ]
   return (
     <div className="abs" style={{ left: 0, top: 747, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
       <div className="row" style={{ padding: '10px 12px 0', alignItems: 'flex-start' }}>
-        {items.map(([k, label, icon]) => <NavItem key={k} icon={icon} label={label} active={k === active} onClick={() => onNav?.(k)} />)}
+        {items.map(([k, label, icon]) => <NavItem key={k} icon={`${icon}${k === active ? '-active' : ''}.svg`} label={label} active={k === active}
+          onClick={() => (onNav ? onNav(k) : go(dest[k], { root: true }))} />)}
       </div>
       <div style={{ height: 34 }} />
     </div>
@@ -198,7 +208,7 @@ export function BottomNavPengepul({ active, onNav }: { active: 'radar' | 'tawara
 export function ItemPhoto({ size, radius = 14, style }: { size: number; radius?: number; style?: CSSProperties }) {
   const { s } = useStore()
   return (
-    <img src={s.photo ?? A('photo-kipas.jpg')} alt="Foto barang"
+    <img src={itemPhoto(s)} alt="Foto barang"
       style={{ width: size, height: size, borderRadius: radius, objectFit: 'cover', flex: 'none', ...style }} />
   )
 }
@@ -228,14 +238,17 @@ export function TimelineStep({ state, title, meta, line = true }: { state: 'done
 }
 
 /** Pak Slamet contact card (Figma: go:C2 Pengepul tiba) */
-export function PengepulCard({ onChat }: { onChat?: () => void }) {
+export function PengepulCard({ onChat, who }: { onChat?: () => void; who?: { name: string; initials: string; score: number } }) {
+  const w = who ?? { name: 'Pak Slamet', initials: 'PS', score: 97 }
   return (
     <div className="card row" style={{ gap: 12, padding: 14, width: '100%' }}>
-      <img src={A('avatar-slamet.png')} alt="" style={{ width: 44, height: 44, borderRadius: 999, objectFit: 'cover', background: 'var(--primary-100)' }} />
+      {w.initials === 'PS'
+        ? <img src={A('avatar-slamet.png')} alt="" style={{ width: 44, height: 44, borderRadius: 999, objectFit: 'cover', background: 'var(--primary-100)' }} />
+        : <Avatar initials={w.initials} />}
       <div className="col grow" style={{ gap: 4 }}>
-        <span className="t-body-ms nowrap">Pak Slamet</span>
+        <span className="t-body-ms nowrap">{w.name}</span>
         <div className="row" style={{ gap: 6 }}>
-          <ScoreBadge score={97} />
+          <ScoreBadge score={w.score} />
           <span className="tag tag-indigo"><Img src="ic-shield-indigo.svg" size={14} />Mitra</span>
         </div>
       </div>
@@ -254,3 +267,7 @@ export function Checkbox({ on, onChange }: { on: boolean; onChange?: (v: boolean
     </button>
   )
 }
+
+/** Photo of the active item: the warga's own photo, else the scenario photo (blurred before the dispenser retake) */
+export const itemPhoto = (s: State) =>
+  s.photo ?? A(s.scenario === 'dispenser' && !s.retake ? 'photo-dispenser-blur.jpg' : ITEM.photo)

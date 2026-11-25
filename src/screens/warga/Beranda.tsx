@@ -8,16 +8,22 @@ const LAYANAN: [string, string, 'p' | 'a'][][] = [
 
 /** Figma: B1 Beranda (10:148) */
 export default function Beranda() {
-  const { s, go } = useStore()
+  const { s, d, go } = useStore()
   const sesi = s.session
   const top = sesi.offers[0]
   const openSesi = () => {
     if (sesi.status === 'running') go('sesi')
     else if (sesi.status === 'won') go('terkunci')
     else if (sesi.status === 'done') go('selesai')
-    else go('foto')
+    else pasang()
   }
-  const tileAction = (label: string) => (label === 'Pasang' ? () => go('foto') : label === 'Sesi Ketuk' ? openSesi : undefined)
+  const pasang = () => { d({ type: 'scenario', scenario: 'kipas' }); go('foto') }
+  // Figma B1 Beranda hotspots
+  const TILE_GO: Record<string, () => void> = {
+    'Pasang': pasang, 'Harga AI': pasang, 'Sesi Ketuk': () => go('sesi-saya'), 'Pindahan': () => go('pindahan'),
+    'E-waste': () => go('ewaste'), 'Lepas Gratis': () => go('lepas'), 'Dompet': () => go('dompet'), 'Bantuan': () => go('bantuan'),
+  }
+  const tileAction = (label: string) => TILE_GO[label]
 
   return (
     <div className="screen">
@@ -28,20 +34,20 @@ export default function Beranda() {
       {/* Greeting */}
       <div className="abs row" style={{ left: 24, top: 62, width: 342, height: 48, justifyContent: 'space-between' }}>
         <div className="row" style={{ gap: 12 }}>
-          <img src={A('avatar-ratna.png')} alt="" style={{ width: 44, height: 44, borderRadius: 999, border: '2px solid #fff', objectFit: 'cover' }} />
+          <button onClick={() => go('akun', { root: true })} aria-label="Akun"><img src={A('avatar-ratna.png')} alt="" style={{ width: 44, height: 44, borderRadius: 999, border: '2px solid #fff', objectFit: 'cover' }} /></button>
           <div className="col nowrap">
             <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>Selamat sore | {ITEM.area}</span>
             <span className="t-h2" style={{ color: '#fff' }}>Halo, {ITEM.warga}</span>
           </div>
         </div>
-        <button className="row" style={{ width: 44, height: 44, borderRadius: 999, background: 'rgba(255,255,255,0.14)', justifyContent: 'center' }}>
+        <button onClick={() => go('notifikasi')} aria-label="Notifikasi" className="row" style={{ width: 44, height: 44, borderRadius: 999, background: 'rgba(255,255,255,0.14)', justifyContent: 'center' }}>
           <Img src="ic-bell-white.svg" size={22} />
         </button>
       </div>
       <Img src="badge-dot.svg" size={10} className="abs" style={{ left: 350, top: 70 }} />
 
       {/* Hero card: Sekali Ketuk — Pasang Barang */}
-      <button onClick={() => go('foto')} className="abs row"
+      <button onClick={pasang} className="abs row"
         style={{ left: 24, top: 136, width: 342, gap: 12, padding: 20, borderRadius: 'var(--radius-xl)', background: 'var(--surface)', boxShadow: 'var(--elev-2)', textAlign: 'left' }}>
         <div className="col grow" style={{ gap: 6 }}>
           <span className="t-overline" style={{ color: 'var(--amber-700)' }}>Sekali Ketuk</span>
@@ -73,9 +79,9 @@ export default function Beranda() {
           ))}
         </div>
 
-        <SectionHeader title="Sesi berjalan" action="Lihat semua" color="var(--primary-500)" />
+        <SectionHeader title="Sesi berjalan" action="Lihat semua" color="var(--primary-500)" onAction={() => go('sesi-saya')} />
         {sesi.status === 'idle' ? (
-          <button onClick={() => go('foto')} className="card row" style={{ gap: 14, padding: 14, textAlign: 'left' }}>
+          <button onClick={pasang} className="card row" style={{ gap: 14, padding: 14, textAlign: 'left' }}>
             <div className="row" style={{ width: 64, height: 64, borderRadius: 999, background: 'var(--primary-50)', justifyContent: 'center' }}>
               <img src={A('3d-sesi.png')} alt="" style={{ width: 48, height: 48 }} />
             </div>
@@ -103,7 +109,7 @@ export default function Beranda() {
         )}
       </div>
 
-      <BottomNavWarga onPasang={() => go('foto')} onSesi={openSesi} />
+      <BottomNavWarga active="beranda" />
       <StatusBar inverse />
     </div>
   )

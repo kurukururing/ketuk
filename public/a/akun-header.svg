@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="390" height="240" viewBox="0 0 390 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Header" clip-path="url(#clip0_0_267)">
+<rect width="390" height="240" fill="#1B1760"/>
+<circle id="Deco ring" opacity="0.06" cx="330" cy="70" r="149.25" stroke-width="1.5" stroke="white"/>
+<circle id="Deco ring_2" opacity="0.09" cx="330" cy="70" r="99.25" stroke-width="1.5" stroke="white"/>
+<circle id="Deco ring_3" opacity="0.12" cx="330" cy="70" r="59.25" stroke-width="1.5" stroke="white"/>
+</g>
+<defs>
+<clipPath id="clip0_0_267">
+<rect width="390" height="240" fill="white"/>
+</clipPath>
+</defs>
+</svg>

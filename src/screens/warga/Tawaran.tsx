@@ -1,4 +1,4 @@
-import { useStore, rp } from '../../store'
+import { useStore, rp, ITEM } from '../../store'
 import { Img, StatusBar, AppBar, Avatar, ScoreBadge, SectionHeader } from '../../ui'
 
 const REVIEWS: [string, string, number, string][] = [
@@ -12,7 +12,7 @@ export default function Tawaran() {
   const o = s.session.offers.find(x => x.id === s.session.selected) ?? s.session.offers[0]
   if (!o) return null
   const isPs = o.id === 'ps'
-  const tx = isPs ? 128 : 64
+  const tx = isPs ? 128 : o.id === 'ub' ? 86 : 64
   return (
     <div className="screen">
       <AppBar ink title="Detail Tawaran" />
@@ -22,7 +22,7 @@ export default function Tawaran() {
             <Avatar initials={o.initials} size={60} />
             <div className="col grow" style={{ gap: 6 }}>
               <span className="t-h3">{o.name}</span>
-              <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>{isPs ? 'Lapak Rungkut' : 'Mitra KETUK'} | {o.distance} | {tx} transaksi | rating {isPs ? '4,9' : '4,7'}</span>
+              <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>{isPs ? 'Lapak Rungkut | 1,6 km' : o.id === 'ub' ? 'Gunung Anyar | 2,4 km' : `Mitra KETUK | ${o.distance}`} | {tx} transaksi | rating {isPs ? '4,9' : '4,7'}</span>
               <div className="row" style={{ gap: 6 }}>
                 <ScoreBadge score={o.score} />
                 <span className="tag tag-indigo"><Img src="ic-shield-indigo.svg" size={14} />Terverifikasi</span>
@@ -31,7 +31,7 @@ export default function Tawaran() {
           </div>
           <div className="row nowrap" style={{ gap: 12, padding: 18, borderRadius: 'var(--radius-lg)', background: 'var(--primary-900)' }}>
             <div className="col grow" style={{ gap: 2 }}>
-              <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>Tawaran untuk kipas angin</span>
+              <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>{s.scenario === 'borongan' ? 'Tawaran borongan 3 barang' : `Tawaran untuk ${ITEM.short}`}</span>
               <span className="t-num-l" style={{ color: '#fff' }}>{rp(o.price)}</span>
             </div>
             <div className="col" style={{ gap: 2, alignItems: 'flex-end' }}>

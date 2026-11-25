@@ -73,7 +73,7 @@ export default function Jadwal() {
           <span className="tag tag-neutral">{done ? 'Berikutnya' : 'Nanti'}</span>
         </div>
       </div>
-      <BottomNavPengepul active="jemput" onNav={k => k === 'radar' && go('radar', { root: true })} />
+      <BottomNavPengepul active="jemput" />
       <StatusBar />
     </div>
   )

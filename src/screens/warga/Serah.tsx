@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useStore, ITEM, rp } from '../../store'
+import { useStore, ITEM, rp, winner, arrivalTime } from '../../store'
 import { Img, StatusBar, AppBar, Checkbox, ItemPhoto } from '../../ui'
 
 /** Figma: E1 Serah Terima (13:695) */
@@ -27,7 +27,7 @@ export default function Serah() {
               <motion.button initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} onClick={() => go('koreksi')}
                 className="row" style={{ gap: 12, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--coral-100)', border: '1px solid var(--coral-500)', textAlign: 'left' }}>
                 <div className="col grow" style={{ gap: 2 }}>
-                  <span className="t-body-ms" style={{ color: 'var(--coral-700)' }}>Pak Slamet mengajukan koreksi harga</span>
+                  <span className="t-body-ms" style={{ color: 'var(--coral-700)' }}>{winner(s).name} mengajukan koreksi harga</span>
                   <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>Dengan bukti foto | ketuk untuk meninjau</span>
                 </div>
                 <Img src="ic-chevron-right.svg" size={20} />
@@ -38,8 +38,8 @@ export default function Serah() {
           <div className="row" style={{ gap: 12, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--amber-100)', border: '1px solid var(--amber-500)' }}>
             <div className="row" style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'var(--amber-500)', justifyContent: 'center' }}><Img src="ic-truck-ink.svg" size={22} /></div>
             <div className="col grow" style={{ gap: 2 }}>
-              <span className="t-body-ms">Pak Slamet sudah tiba</span>
-              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>Tiba 15.58 | 2 menit lebih awal</span>
+              <span className="t-body-ms">{winner(s).name} sudah tiba</span>
+              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>Tiba {arrivalTime(winner(s))} | 2 menit lebih awal</span>
             </div>
           </div>
 

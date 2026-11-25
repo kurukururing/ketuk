@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useStore, ITEM, rp, mmss, PAK_SLAMET } from '../../store'
-import { A, Img, StatusBar, BottomNavPengepul } from '../../ui'
+import { A, Img, StatusBar, BottomNavPengepul, itemPhoto } from '../../ui'
 
 function useCountdown(start: number) {
   const [t, setT] = useState(start)
@@ -29,7 +29,7 @@ function RadarCard({ photo, title, meta, ai, sisa, extra, onClick, highlight }: 
   )
 }
 
-/** Figma: B1 Radar Barang (15:818) — the warga's live item appears here */
+/** Figma: B1 Radar Barang (15:818) — kartu → B2 Ajukan; peta/filter/lonceng/statistik; the warga's live item appears here */
 export default function Radar() {
   const { s, go } = useStore()
   const kardus = useCountdown(18 * 60 + 5)
@@ -47,21 +47,21 @@ export default function Radar() {
           <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>radius 3 km | {ITEM.area}</span>
         </div>
         <div className="row" style={{ gap: 8 }}>
-          {['ic-map-white.svg', 'ic-filter-white.svg', 'ic-bell-white.svg'].map(ic => (
-            <div key={ic} className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'rgba(255,255,255,0.14)', justifyContent: 'center' }}><Img src={ic} size={20} /></div>
+          {([['ic-map-white.svg', 'peta', 'Peta'], ['ic-filter-white.svg', 'filter', 'Filter'], ['ic-bell-white.svg', 'notif', 'Notifikasi']] as const).map(([ic, to, label]) => (
+            <button key={ic} aria-label={label} onClick={() => go(to)} className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'rgba(255,255,255,0.14)', justifyContent: 'center' }}><Img src={ic} size={20} /></button>
           ))}
         </div>
       </div>
       <Img src="badge-dot.svg" size={9} className="abs" style={{ left: 354, top: 64 }} />
 
-      <div className="abs row" style={{ left: 24, top: 128, width: 342, height: 60, gap: 10 }}>
+      <button aria-label="Statistik" onClick={() => go('pendapatan')} className="abs row" style={{ left: 24, top: 128, width: 342, height: 60, gap: 10, textAlign: 'left' }}>
         {[[live ? '13' : '12', 'barang aktif'], ['4', 'sesi < 20 menit'], ['97%', 'Skor Harga']].map(([n, l]) => (
           <div key={l} className="col grow nowrap" style={{ padding: '10px 12px', borderRadius: 'var(--radius-md)', background: 'rgba(255,255,255,0.1)' }}>
             <span className="t-num-m" style={{ color: '#fff' }}>{n}</span>
             <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>{l}</span>
           </div>
         ))}
-      </div>
+      </button>
 
       <div className="abs row" style={{ left: 24, top: 232, gap: 8 }}>
         {['Elektronik', 'Perabot', 'Kardus', 'Logam'].map(c => (
@@ -73,7 +73,7 @@ export default function Radar() {
         <div className="col" style={{ padding: '2px 24px 24px', gap: 12 }}>
           <AnimatePresence initial={false}>
             {live && (
-              <RadarCard key="kipas" photo={s.photo ?? A('photo-kipas.jpg')} title={ITEM.name} meta="1,2 km | Rungkut Kidul"
+              <RadarCard key="kipas" photo={itemPhoto(s)} title={ITEM.name} meta="1,2 km | Rungkut Kidul"
                 ai={`${rp(ITEM.aiLow)}–${rp(ITEM.aiHigh)}`} sisa={s.session.remaining} highlight={!mine}
                 onClick={() => go(mine ? 'terkirim' : 'ajukan')}
                 extra={mine
@@ -81,9 +81,9 @@ export default function Radar() {
                   : <span className="tag tag-neutral">{s.session.offers.length} tawaran</span>} />
             )}
           </AnimatePresence>
-          <RadarCard photo={A('photo-kardus.jpg')} title="Kardus bekas 12 kg" meta="0,8 km | Medokan Ayu" ai="Rp24.000–Rp30.000" sisa={kardus}
+          <RadarCard photo={A('photo-kardus.jpg')} title="Kardus bekas 12 kg" meta="0,8 km | Medokan Ayu" ai="Rp24.000–Rp30.000" sisa={kardus} onClick={() => go('ajukan')}
             extra={<span className="tag tag-neutral">1 tawaran</span>} />
-          <RadarCard photo={A('photo-dispenser.jpg')} title="Dispenser rusak" meta="2,4 km | Penjaringan Sari" ai="Rp30.000–Rp50.000" sisa={dispenser}
+          <RadarCard photo={A('photo-dispenser.jpg')} title="Dispenser rusak" meta="2,4 km | Penjaringan Sari" ai="Rp30.000–Rp50.000" sisa={dispenser} onClick={() => go('ajukan')}
             extra={<span className="tag tag-dark"><Img src="ic-battery-white.svg" size={14} />E-waste</span>} />
         </div>
       </div>

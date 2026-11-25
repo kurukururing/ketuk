@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { useStore } from '../store'
-import { A, Img, StatusBar, Avatar } from '../ui'
+import { Img, StatusBar, Avatar } from '../ui'
 
 export type Msg = { me: boolean; text?: string; time: string; img?: string; action?: ReactNode }
 
@@ -64,4 +64,4 @@ export default function Chat({ initials, name, status, banner, messages, quick, 
   )
 }
 
-export const kipasPhoto = (photo: string | null) => photo ?? A('photo-kipas.jpg')
+

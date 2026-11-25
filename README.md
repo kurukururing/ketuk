@@ -35,6 +35,13 @@ Cabang koreksi: Chat/Serah Terima → Koreksi Berbukti → Terima (Selesai) atau
 
 **Pengepul:** Radar Barang → Ajukan Tawaran → Tawaran Terkirim → Lihat Tawaranku → Jadwal Jemput Hari Ini → Navigasi → Saya Sudah Tiba → Cocokkan Barang → Ajukan Koreksi Berbukti → Menunggu Konfirmasi → Chat dengan Warga → Koreksi Disetujui → Pembayaran Selesai → Jadwal Jemput.
 
+**Warga — akun & riwayat:** nav Riwayat → Bukti Transaksi (Unduh / Laporkan Masalah); Akun → Alamat, Dompet → Tarik Saldo → Berhasil Tarik, Mode Dibantu Keluarga, Notifikasi, Pusat Bantuan, Ubah profil (Daftar), Ganti ke Pengepul, Keluar (dialog → Masuk).
+
+**Pengepul — onboarding & akun:** Ganti ke Pengepul / Pilih Peran Pengepul → Splash → Onboarding → Masuk → OTP → Pilih Peran → Daftar Mitra → Verifikasi Identitas (dialog Sumber Foto) → Status Verifikasi → Mitra Terverifikasi → Radar / Profil.
+Radar: ikon peta → Peta Radar, filter → Filter Radar, lonceng → Notifikasi, statistik → Pendapatan. Nav bawah: Radar | Tawaranku (Berjalan/Menang) | Jemput | Akun (Profil & Skor → Pendapatan, Lencana E-waste Aman, Keluar).
+
+Daftar lengkap koneksi prototype ada di [docs/FLOW.md](docs/FLOW.md); uji otomatis: `node scripts/e2e.mjs`, `node scripts/e2e-scen.mjs`, `node scripts/e2e-nav.mjs` (dengan `npx vite --port 5173` berjalan).
+
 ## Naskah demo 2 menit (saran)
 
 1. **0:00 · Warga** — splash beranimasi (ketuk layar untuk melewati) → onboarding → Masuk → OTP terisi otomatis → Pilih Peran → Alamat → Beranda.

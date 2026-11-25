@@ -8,14 +8,17 @@ const OPTS: { k: Role; img: string; over: string; overColor: string; title: stri
   { k: 'pengepul', img: '3d-truk.png', over: 'Pengepul', overColor: 'var(--amber-700)', title: 'Saya Pengepul', sub: 'Beli barang bekas', body: 'Pantau Radar Barang radius 3 km, ajukan tawaran, menangkan, jemput.' },
 ]
 
-/** Figma: A5 Pilih Peran (9:246) → Lanjut → A6 Alamat Jemput */
+/** Figma: A5 Pilih Peran (9:246) — Warga → A6 Alamat Jemput; Pengepul → A1 Daftar Mitra; Mode Dibantu → G1 */
 export default function Peran() {
-  const { d, go } = useStore()
-  const [role, setRole] = useState<Role>('warga')
+  const { s, d, go } = useStore()
+  const [role, setRole] = useState<Role>(s.role)
   const [dibantu, setDibantu] = useState(false)
   const next = () => {
-    if (role === 'warga') go('alamat')
-    else { go('beranda', { root: true }); d({ type: 'role', role: 'pengepul' }) }
+    if (role === 'warga') {
+      if (s.role === 'warga') go('alamat')
+      else { go('alamat', { role: 'warga' }); d({ type: 'role', role: 'warga' }) }
+    } else if (s.role === 'pengepul') go('mitra-daftar')
+    else d({ type: 'switchToPengepul', screen: 'mitra-daftar' })
   }
   return (
     <div className="screen">
@@ -50,7 +53,7 @@ export default function Peran() {
             <span className="t-body-ms">Mode Dibantu Keluarga</span>
             <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Kerabat bisa memasang barang untuk orang tua. Uang tetap masuk ke pemilik.</span>
           </div>
-          <Toggle on={dibantu} onChange={setDibantu} />
+          <Toggle on={dibantu} onChange={v => { setDibantu(v); if (v && s.role === 'warga') go('dibantu') }} />
         </div>
       </div>
       <div className="abs" style={{ left: 24, top: 738, width: 342 }}>

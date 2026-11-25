@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useStore } from '../../store'
 import { A, Img, StatusBar } from '../../ui'
 
-/** Figma: A3 Masuk (9:106) — Kirim OTP → A4 Verifikasi OTP, Google → A5 Pilih Peran */
+/** Figma: A3 Masuk (9:106) — Kirim OTP → A4 Verifikasi OTP, Google → A5 Pilih Peran, Daftar → A4 Daftar */
 export default function Masuk() {
   const { go } = useStore()
   const [hp, setHp] = useState('')
@@ -43,7 +43,7 @@ export default function Masuk() {
         <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('peran')}>
           <Img src="ic-google.svg" size={20} />Lanjut dengan Google
         </button>
-        <button className="t-body-m" style={{ color: 'var(--ink-500)' }} onClick={() => go('otp')}>
+        <button className="t-body-m" style={{ color: 'var(--ink-500)' }} onClick={() => go('daftar')}>
           Belum punya akun? <b style={{ color: 'var(--primary-500)' }}>Daftar</b>
         </button>
       </div>

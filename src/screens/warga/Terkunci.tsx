@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { useStore, ITEM, rp } from '../../store'
+import { useStore, ITEM, rp, winner, pickupTime, arrivalTime } from '../../store'
 import { A, Img, StatusBar, AppBar, TimelineStep, PengepulCard } from '../../ui'
 
 const TRAVEL = 7 // seconds for the truck to reach the warga on the map
@@ -9,18 +9,19 @@ const TRAVEL = 7 // seconds for the truck to reach the warga on the map
 export default function Terkunci() {
   const { s, d, go } = useStore()
   const arrived = s.arrived
-  const [eta, setEta] = useState(12)
+  const [eta, setEta] = useState(ITEM.pickupWait)
   useEffect(() => {
     if (s.arrived) return
     const t0 = Date.now()
     const id = setInterval(() => {
       const p = (Date.now() - t0) / 1000 / TRAVEL
-      setEta(Math.max(0, Math.ceil(12 * (1 - p))))
+      setEta(Math.max(0, Math.ceil(ITEM.pickupWait * (1 - p))))
       if (p >= 1) { d({ type: 'arrive' }); clearInterval(id) }
     }, 200)
     return () => clearInterval(id)
   }, []) // eslint-disable-line
   const price = s.finalPrice ?? 38000
+  const w = winner(s)
 
   return (
     <div className="screen">
@@ -39,7 +40,7 @@ export default function Terkunci() {
                 <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>{ITEM.name} | ketuk palu 15.21</span>
               </div>
             </div>
-            <span className="t-num-xl nowrap" style={{ color: '#fff' }}>{rp(price)}</span>
+            <span className="t-num-xl nowrap" style={{ color: '#fff' }}>{price === 0 ? 'Gratis' : rp(price)}</span>
             <span className="row t-label-s nowrap" style={{ alignSelf: 'flex-start', gap: 4, padding: '4px 10px', borderRadius: 'var(--radius-sm)', background: 'rgba(255,255,255,0.16)', color: '#fff' }}>
               <Img src="ic-shield-white.svg" size={14} />Tidak bisa ditawar ulang saat jemput
             </span>
@@ -56,19 +57,19 @@ export default function Terkunci() {
             </motion.div>
             <div className="abs row" style={{ left: 12, top: 96, gap: 6, padding: '6px 12px 6px 8px', borderRadius: 999, background: arrived ? 'var(--amber-100)' : '#fff', boxShadow: 'var(--elev-2)' }}>
               <Img src="ic-clock-amber16.svg" size={16} />
-              <span className="t-label-s nowrap">{arrived ? 'Pak Slamet sudah tiba' : `Pak Slamet | ${eta} menit lagi`}</span>
+              <span className="t-label-s nowrap">{arrived ? `${w.name} sudah tiba` : `${w.name} | ${eta} menit lagi`}</span>
             </div>
           </div>
 
           {/* Timeline */}
           <div className="col" style={{ background: 'var(--surface)', borderRadius: 'var(--radius-lg)', padding: 16 }}>
             <TimelineStep state="done" title="Ketuk palu" meta={`15.21 | ${rp(price)} terkunci`} />
-            <TimelineStep state={arrived ? 'done' : 'current'} title={arrived ? 'Pengepul tiba' : 'Pengepul menuju lokasi'} meta={arrived ? 'Tiba 15.58 | 2 menit lebih awal' : 'Estimasi tiba 16.00'} />
+            <TimelineStep state={arrived ? 'done' : 'current'} title={arrived ? 'Pengepul tiba' : 'Pengepul menuju lokasi'} meta={arrived ? `Tiba ${arrivalTime(w)} | 2 menit lebih awal` : `Estimasi tiba ${pickupTime(w)}`} />
             <TimelineStep state={arrived ? 'current' : 'upcoming'} title="Serah terima" meta="Cocokkan barang dengan foto" />
             <TimelineStep state="upcoming" title="Selesai" meta="Pembayaran diterima" line={false} />
           </div>
 
-          <PengepulCard onChat={() => go('chat')} />
+          <PengepulCard who={w} onChat={() => go('chat')} />
         </div>
       </div>
 

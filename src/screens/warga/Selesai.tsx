@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useStore, rp } from '../../store'
+import { useStore, rp, ITEM, winnerName } from '../../store'
 import { Img, StatusBar } from '../../ui'
 
 const CONFETTI: [number, number, number, string][] = [
@@ -42,12 +42,12 @@ export default function Selesai() {
         <div className="col" style={{ padding: '20px 24px 24px', gap: 12 }}>
           <div className="row" style={{ gap: 10, alignItems: 'stretch' }}>
             <div className="col grow" style={{ gap: 2, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--primary-100)' }}>
-              <span className="t-num-m">3,2 kg</span>
+              <span className="t-num-m">{ITEM.weight}</span>
               <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>tidak berakhir di TPA</span>
             </div>
             <div className="col grow" style={{ gap: 2, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--amber-100)' }}>
-              <span className="t-num-m">{rp(88000 + price)}</span>
-              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>total dari 4 barang</span>
+              <span className="t-num-m">{rp(ITEM.total + price)}</span>
+              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>total dari {ITEM.totalItems} barang</span>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export default function Selesai() {
 
           <div className="col" style={{ gap: 12, padding: 16, borderRadius: 'var(--radius-lg)', background: '#fff' }}>
             <div className="row" style={{ justifyContent: 'space-between' }}>
-              <span className="t-body-ms nowrap">Nilai Pak Slamet</span>
+              <span className="t-body-ms nowrap">Nilai {winnerName(s)}</span>
               <div className="row" style={{ gap: 4 }}>
                 {[1, 2, 3, 4, 5].map(n => (
                   <motion.button key={n} whileTap={{ scale: 1.3 }} onClick={() => { setStars(n); d({ type: 'rate', n }) }} aria-label={`${n} bintang`}>

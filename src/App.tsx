@@ -31,7 +31,7 @@ function Screens() {
   const stack = s[s.role] as string[]
   const key = `${s.role}:${stack.at(-1)}`
   const map = (s.role === 'warga' ? wargaScreens : pengepulScreens) as Record<string, ComponentType>
-  const Screen = map[stack.at(-1)!]
+  const Screen = map[stack.at(-1)!] ?? (() => <div className="screen row" style={{ justifyContent: 'center' }}>{stack.at(-1)}</div>)
   const [dir, setDir] = useState(1)
   const [prevLen, setPrevLen] = useState(stack.length)
   if (prevLen !== stack.length) { setDir(stack.length >= prevLen ? 1 : -1); setPrevLen(stack.length) }
@@ -95,7 +95,7 @@ function Toasts() {
   )
 }
 
-const DARK = ['foto', 'splash', 'berhasil']
+const DARK = ['foto', 'splash', 'berhasil', 'mitra-ok']
 function Phone() {
   const { s } = useStore()
   const cur = (s[s.role] as string[]).at(-1)!
@@ -103,7 +103,7 @@ function Phone() {
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: 'var(--canvas)' }}>
       <Screens />
       <Toasts />
-      <HomeIndicator inverse={s.role === 'warga' && DARK.includes(cur)} />
+      <HomeIndicator inverse={DARK.includes(cur)} />
     </div>
   )
 }

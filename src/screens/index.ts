@@ -19,6 +19,22 @@ import Alamat from './warga/Alamat'
 import Tawaran from './warga/Tawaran'
 import ChatPengepul from './warga/ChatPengepul'
 import Batal from './warga/Batal'
+import Kategori from './warga/Kategori'
+import Ewaste from './warga/Ewaste'
+import Pindahan from './warga/Pindahan'
+import SesiSaya from './warga/SesiSaya'
+import SesiKosong from './warga/SesiKosong'
+import Lepas from './warga/Lepas'
+import Notifikasi from './warga/Notifikasi'
+import Riwayat from './warga/Riwayat'
+import Bukti from './warga/Bukti'
+import Akun from './warga/Akun'
+import Dibantu from './warga/Dibantu'
+import Bantuan from './warga/Bantuan'
+import Dompet from './warga/Dompet'
+import Tarik from './warga/Tarik'
+import TarikOk from './warga/TarikOk'
+import Daftar from './warga/Daftar'
 import Radar from './pengepul/Radar'
 import Ajukan from './pengepul/Ajukan'
 import Terkirim from './pengepul/Terkirim'
@@ -30,8 +46,12 @@ import Jadwal from './pengepul/Jadwal'
 import Navigasi from './pengepul/Navigasi'
 import ChatWarga from './pengepul/ChatWarga'
 import Disetujui from './pengepul/Disetujui'
+import { MitraDaftar, MitraVerifikasi, MitraStatus, MitraOk } from './pengepul/Mitra'
+import { NotifPengepul, FilterRadar, PetaRadar } from './pengepul/RadarExtra'
+import { TawarankuBerjalan, TawarankuMenang } from './pengepul/Tawaranku'
+import { Profil, Pendapatan, Lencana } from './pengepul/Akun'
 
-export const wargaScreens: Record<WargaScreen, ComponentType> = {
+export const wargaScreens: Partial<Record<WargaScreen, ComponentType>> = {
   splash: Splash,
   onboarding: Onboarding,
   masuk: Masuk,
@@ -41,6 +61,13 @@ export const wargaScreens: Record<WargaScreen, ComponentType> = {
   beranda: Beranda,
   foto: Foto,
   detail: Detail,
+  kategori: Kategori,
+  ewaste: Ewaste,
+  pindahan: Pindahan,
+  'sesi-saya': SesiSaya,
+  'sesi-kosong': SesiKosong,
+  lepas: Lepas,
+  notifikasi: Notifikasi,
   sesi: Sesi,
   tawaran: Tawaran,
   konfirmasi: Konfirmasi,
@@ -51,9 +78,24 @@ export const wargaScreens: Record<WargaScreen, ComponentType> = {
   koreksi: Koreksi,
   batal: Batal,
   selesai: Selesai,
+  riwayat: Riwayat,
+  bukti: Bukti,
+  akun: Akun,
+  dibantu: Dibantu,
+  bantuan: Bantuan,
+  dompet: Dompet,
+  tarik: Tarik,
+  'tarik-ok': TarikOk,
+  daftar: Daftar,
 }
 
-export const pengepulScreens: Record<PengepulScreen, ComponentType> = {
+export const pengepulScreens: Partial<Record<PengepulScreen, ComponentType>> = {
+  splash: Splash,
+  onboarding: Onboarding,
+  masuk: Masuk,
+  otp: Otp,
+  peran: Peran,
+  daftar: Daftar,
   radar: Radar,
   ajukan: Ajukan,
   terkirim: Terkirim,
@@ -65,4 +107,18 @@ export const pengepulScreens: Record<PengepulScreen, ComponentType> = {
   chat: ChatWarga,
   disetujui: Disetujui,
   bayar: Bayar,
+  'mitra-daftar': MitraDaftar,
+  'mitra-verifikasi': MitraVerifikasi,
+  'mitra-status': MitraStatus,
+  'mitra-ok': MitraOk,
+  notif: NotifPengepul,
+  filter: FilterRadar,
+  peta: PetaRadar,
+  tawaranku: TawarankuBerjalan,
+  'tawaranku-menang': TawarankuMenang,
+  profil: Profil,
+  pendapatan: Pendapatan,
+  lencana: Lencana,
+  bukti: Bukti,
+  bantuan: Bantuan,
 }
