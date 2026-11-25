@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="illo/kipas">
+<path id="Vector" d="M60 110C74.3594 110 86 107.314 86 104C86 100.686 74.3594 98 60 98C45.6406 98 34 100.686 34 104C34 107.314 45.6406 110 60 110Z" fill="#D6D2FD"/>
+<path id="Vector_2" d="M64 62C64 59.7909 62.2091 58 60 58C57.7909 58 56 59.7909 56 62V100C56 102.209 57.7909 104 60 104C62.2091 104 64 102.209 64 100V62Z" fill="#3A3950"/>
+<path id="Vector_3" d="M60 76C77.6731 76 92 61.6731 92 44C92 26.3269 77.6731 12 60 12C42.3269 12 28 26.3269 28 44C28 61.6731 42.3269 76 60 76Z" fill="#ECEAFE" stroke-width="4" stroke="#3D2FD0"/>
+<path id="Vector_4" d="M60 44C56 28 62 20 70 22C77 24 74 36 60 44ZM60 44C76 42 82 49 79 56C76 62 65 58 60 44ZM60 44C50 56 41 55 39 48C37 41 48 37 60 44Z" fill="#3D2FD0"/>
+<path id="Vector_5" d="M60 50C63.3137 50 66 47.3137 66 44C66 40.6863 63.3137 38 60 38C56.6863 38 54 40.6863 54 44C54 47.3137 56.6863 50 60 50Z" fill="#F5A524"/>
+<g id="Vector_6">
+<path d="M34 30H86ZM30 44H90ZM34 58H86Z" fill="black"/>
+<path d="M34 30H86M30 44H90M34 58H86" stroke-width="2" stroke="#3D2FD0" stroke-opacity="0.25"/>
+</g>
+</g>
+</svg>
