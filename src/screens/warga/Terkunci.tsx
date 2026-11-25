@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useStore, ITEM, rp } from '../../store'
 import { A, Img, StatusBar, AppBar, TimelineStep, PengepulCard } from '../../ui'
 
@@ -28,7 +28,7 @@ export default function Terkunci() {
         trailing={<button className="icon-btn"><Img src="ic-help.svg" size={20} /></button>} />
 
       <div className="scroll" style={{ top: 116, bottom: 0 }}>
-        <div className="col" style={{ padding: '0 24px 120px', gap: 12 }}>
+        <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>
           {/* Harga Terkunci */}
           <div className="col" style={{ background: 'var(--primary-900)', borderRadius: 'var(--radius-xl)', padding: 20, gap: 8 }}>
             <div className="row" style={{ gap: 12 }}>
@@ -68,17 +68,10 @@ export default function Terkunci() {
             <TimelineStep state="upcoming" title="Selesai" meta="Pembayaran diterima" line={false} />
           </div>
 
-          <PengepulCard onClick={() => go('serah')} />
+          <PengepulCard onChat={() => go('chat')} />
         </div>
       </div>
 
-      <AnimatePresence>
-        {arrived && (
-          <motion.div className="bottom-bar" initial={{ y: 120 }} animate={{ y: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 30 }}>
-            <button className="btn btn-primary" onClick={() => go('serah')}>Pak Slamet sudah tiba · Mulai Serah Terima</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
       <StatusBar bg="var(--surface)" />
     </div>
   )

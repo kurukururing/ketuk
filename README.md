@@ -28,19 +28,24 @@ Deploy ke Vercel: import repo → framework **Vite** terdeteksi otomatis → Dep
 | `F` | Timer Sesi Ketuk dipercepat 30× / normal |
 | `Shift + R` | Reset demo ke awal |
 
+## Alur (mengikuti koneksi prototype di Figma)
+
+**Warga:** Splash (animasi 8 frame) → Onboarding ×3 → Masuk → Verifikasi OTP → Pilih Peran → Alamat Jemput → Beranda → Foto Barang → Detail & Patokan Harga AI → Sesi Ketuk → Detail Tawaran Pengepul → Konfirmasi Ketuk Palu → Ketuk Palu Berhasil → Status Penjemputan → Chat dengan Pengepul → Serah Terima → Selesai & Ulasan.
+Cabang koreksi: Chat/Serah Terima → Koreksi Berbukti → Terima (Selesai) atau Tolak (Transaksi Dibatalkan).
+
+**Pengepul:** Radar Barang → Ajukan Tawaran → Tawaran Terkirim → Lihat Tawaranku → Jadwal Jemput Hari Ini → Navigasi → Saya Sudah Tiba → Cocokkan Barang → Ajukan Koreksi Berbukti → Menunggu Konfirmasi → Chat dengan Warga → Koreksi Disetujui → Pembayaran Selesai → Jadwal Jemput.
+
 ## Naskah demo 2 menit (saran)
 
-1. **0:00 · Warga** — Splash → Beranda. Ketuk **Foto Barang** → tombol shutter (AI mengenali "Kipas angin | Elektronik") → **Lanjut**.
-   *(Tombol galeri kiri bawah bisa memakai foto asli; di HP langsung membuka kamera.)*
-2. **0:20** — **Patokan Harga AI Rp25.000–Rp40.000** → **Mulai Sesi Ketuk 60 Menit**. Timer berjalan, tawaran pengepul masuk satu per satu.
-3. **0:40 · `Tab` → Pengepul** — notifikasi "Barang baru di radar". Ketuk kartu kipas → **Kirim Tawaran Rp38.000**.
-4. **0:55 · `Tab` → Warga** — tawaran Pak Slamet muncul di urutan teratas. **Ketuk Palu** → konfirmasi → animasi *Tok!* **Harga terkunci**.
-5. **1:15** — **Lihat Status Penjemputan**: truk bergerak di peta → **Mulai Serah Terima**.
-6. **1:30 · Koreksi berbukti (opsional)** — `Tab` → Pengepul: **Mulai Penjemputan** → **Ajukan Koreksi Berbukti** → kirim. `Tab` → Warga: tinjau bukti foto → **Terima Koreksi** (atau tolak tanpa denda).
-   *Jalur singkat:* di Serah Terima langsung **Konfirmasi Terima Rp38.000**.
-7. **1:50** — **Selesai & Ulasan**: dampak (3,2 kg tidak ke TPA) + jalur barang. Selesai.
+1. **0:00 · Warga** — splash beranimasi (ketuk layar untuk melewati) → onboarding → Masuk → OTP terisi otomatis → Pilih Peran → Alamat → Beranda.
+   *Untuk demo singkat, tekan `1` agar langsung ke Beranda.*
+2. **0:15** — **Foto Barang** → shutter (AI mengenali kipas) → **Patokan Harga AI** → **Mulai Sesi Ketuk 60 Menit**. Tawaran masuk satu per satu.
+3. **0:35 · `Tab` → Pengepul** — Radar Barang → kipas → **Kirim Tawaran Rp38.000**.
+4. **0:50 · `Tab` → Warga** — ketuk kartu Pak Slamet → **Detail Tawaran** → **Ketuk Palu** → konfirmasi → *Tok!* harga terkunci.
+5. **1:10** — **Lihat Status Penjemputan** → ikon chat → **Chat dengan Pengepul** → **Barang Sesuai →** → Serah Terima → **Konfirmasi Terima** → Selesai & Ulasan.
+6. **Cabang koreksi (opsional)** — `Tab` → Pengepul: Lihat Tawaranku → Jadwal → Navigasi → **Saya Sudah Tiba** → **Ajukan Koreksi Berbukti** → kirim. `Tab` → Warga: chat menampilkan **Pengajuan Koreksi Harga →** → Koreksi Berbukti → **Terima** (atau **Tolak** → Transaksi Dibatalkan). Pengepul: **Buka chat dengan warga** → **Lanjut ke pembayaran** → Koreksi Disetujui → bayar.
 
-Kalau ada yang macet di panggung: tekan angka `1`–`7` untuk langsung ke adegan berikutnya.
+Kalau ada yang macet di panggung: tekan angka `1`–`7` untuk langsung ke adegan berikutnya, atau `Shift+R` untuk kembali ke splash.
 
 ## Struktur
 ```
@@ -50,8 +55,9 @@ src/
   index.css        token desain (warna, tipografi, radius, elevation)
   App.tsx          bingkai HP, transisi, notifikasi lintas peran, shortcut
   DemoPanel.tsx    panel presenter
-  screens/warga    11 layar Warga
-  screens/pengepul 7 layar Pengepul
+  screens/warga    20 layar Warga (termasuk splash, onboarding, autentikasi)
+  screens/pengepul 11 layar Pengepul
+  screens/Chat.tsx layout chat bersama
 public/a/          aset yang diekspor dari Figma (ikon, ilustrasi 3D, foto)
 scripts/           alat bantu: unduh aset, screenshot, uji end-to-end (Playwright)
 ```

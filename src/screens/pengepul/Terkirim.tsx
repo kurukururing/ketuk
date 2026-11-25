@@ -48,16 +48,9 @@ export default function Terkirim() {
       </div>
 
       <div className="bottom-bar" style={{ height: 166 }}>
-        {won ? (
-          <button className="btn btn-accent" onClick={() => go('cek', { root: true })}>
-            <Img src="ic-gavel-ink.svg" size={20} />Mulai Penjemputan
-          </button>
-        ) : (
-          <button className="btn btn-primary" disabled style={{ opacity: 0.85 }}>
-            <div style={{ width: 18, height: 18, borderRadius: '50%', border: '2.5px solid rgba(255,255,255,.35)', borderTopColor: '#fff', animation: 'spin .9s linear infinite' }} />
-            Menunggu warga ketuk palu…
-          </button>
-        )}
+        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('jadwal')}>
+          <Img src="ic-tag-white20.svg" size={20} />Lihat Tawaranku
+        </button>
         <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('radar', { root: true })}>
           <Img src="ic-radar-ink.svg" size={20} />Kembali ke Radar
         </button>

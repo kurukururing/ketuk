@@ -6,11 +6,13 @@ import { createContext, useContext, useEffect, useReducer, useRef, type ReactNod
 export type Role = 'warga' | 'pengepul'
 
 export type WargaScreen =
-  | 'splash' | 'beranda' | 'foto' | 'detail' | 'sesi'
-  | 'konfirmasi' | 'berhasil' | 'terkunci' | 'serah' | 'koreksi' | 'selesai'
+  | 'splash' | 'onboarding' | 'masuk' | 'otp' | 'peran' | 'alamat'
+  | 'beranda' | 'foto' | 'detail' | 'sesi' | 'tawaran'
+  | 'konfirmasi' | 'berhasil' | 'terkunci' | 'chat' | 'serah' | 'koreksi' | 'batal' | 'selesai'
 
 export type PengepulScreen =
-  | 'radar' | 'ajukan' | 'terkirim' | 'cek' | 'ajukan-koreksi' | 'menunggu' | 'bayar'
+  | 'radar' | 'ajukan' | 'terkirim' | 'jadwal' | 'navigasi' | 'cek'
+  | 'ajukan-koreksi' | 'menunggu' | 'chat' | 'disetujui' | 'bayar'
 
 export type Offer = {
   id: string
@@ -164,8 +166,8 @@ function withPreset(p: Preset): State {
     case 'koreksi':
     case 'selesai': {
       const r = { ...running(['rj', 'lr', 'ub', 'ps']), status: 'won' as const, winner: 'ps', queued: [] }
-      if (p === 'serah') return { ...s, arrived: true, warga: ['beranda', 'terkunci', 'serah'], pengepul: ['radar', 'cek'], session: r, finalPrice: 38000 }
-      if (p === 'koreksi') return { ...s, warga: ['beranda', 'terkunci', 'koreksi'], pengepul: ['radar', 'menunggu'], session: r, correction: 'pending', finalPrice: 38000 }
+      if (p === 'serah') return { ...s, arrived: true, warga: ['beranda', 'terkunci', 'chat', 'serah'], pengepul: ['radar', 'jadwal', 'navigasi', 'cek'], session: r, finalPrice: 38000 }
+      if (p === 'koreksi') return { ...s, arrived: true, warga: ['beranda', 'terkunci', 'chat', 'koreksi'], pengepul: ['radar', 'cek', 'menunggu'], session: r, correction: 'pending', finalPrice: 38000 }
       return { ...s, warga: ['beranda', 'selesai'], pengepul: ['radar', 'bayar'], session: { ...r, status: 'done' }, finalPrice: 38000 }
     }
   }
@@ -217,7 +219,7 @@ function reducer(s: State, a: Action): State {
         ...s,
         session: { ...s.session, status: 'won', winner: a.id, queued: [] },
         finalPrice: s.session.offers.find(o => o.id === a.id)?.price ?? null,
-        toasts: a.id === 'ps' ? toast(s, 'pengepul', 'Tok! Tawaranmu dipilih', `Harga terkunci ${rp(s.session.offers.find(o => o.id === 'ps')!.price)} | jemput hari ini`, 'cek') : s.toasts,
+        toasts: a.id === 'ps' ? toast(s, 'pengepul', 'Tok! Tawaranmu dipilih', `Harga terkunci ${rp(s.session.offers.find(o => o.id === 'ps')!.price)} | jemput hari ini`, 'jadwal') : s.toasts,
       }
     case 'requestCorrection':
       return {

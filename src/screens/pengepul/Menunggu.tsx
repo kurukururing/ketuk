@@ -68,12 +68,7 @@ export default function Menunggu() {
         </div>
       </div>
       <div className="bottom-bar">
-        {decided ? (
-          ok ? <button className="btn btn-primary" onClick={() => go('bayar', { root: true })}><Img src="ic-check-white-20.svg" size={20} />Bayar {rp(CORRECTION.price)} ke {ITEM.warga}</button>
-             : <button className="btn btn-secondary" onClick={() => go('radar', { root: true })}><Img src="ic-radar-ink.svg" size={20} />Kembali ke Radar</button>
-        ) : (
-          <button className="btn btn-primary"><Img src="ic-chat-white.svg" size={20} />Buka chat dengan warga</button>
-        )}
+        <button className="btn btn-primary" onClick={() => go('chat')}><Img src="ic-chat-white.svg" size={20} />Buka chat dengan warga</button>
       </div>
       <StatusBar bg="var(--surface)" />
     </div>

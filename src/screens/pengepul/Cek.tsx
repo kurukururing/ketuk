@@ -7,7 +7,7 @@ export default function Cek() {
   const price = s.finalPrice ?? PAK_SLAMET.price
   return (
     <div className="screen">
-      <AppBar ink title="Cocokkan Barang" onBack={() => go('radar', { root: true })} />
+      <AppBar ink title="Cocokkan Barang" />
       <div className="abs col" style={{ left: 0, top: 116, width: 390, padding: '0 24px', gap: 12 }}>
         <span className="t-body-m" style={{ color: 'var(--ink-500)' }}>Bandingkan barang di lokasi dengan foto saat warga memasang.</span>
         <ItemPhoto size={118} style={{ width: 166 }} />

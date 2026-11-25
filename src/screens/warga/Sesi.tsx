@@ -64,7 +64,7 @@ export default function Sesi() {
             ) : (
               offers.map((o, i) => (
                 <OfferCard key={o.id} offer={o} top={i === 0} selected={pick === o.id && selected !== null}
-                  onClick={() => d({ type: 'select', id: o.id })} />
+                  onClick={() => { d({ type: 'select', id: o.id }); go('tawaran') }} />
               ))
             )}
           </AnimatePresence>

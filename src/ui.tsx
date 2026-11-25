@@ -177,17 +177,17 @@ export function BottomNavWarga({ onPasang, onSesi }: { onPasang: () => void; onS
   )
 }
 
-export function BottomNavPengepul({ active }: { active: 'radar' | 'tawaranku' | 'jemput' | 'akun' }) {
+export function BottomNavPengepul({ active, onNav }: { active: 'radar' | 'tawaranku' | 'jemput' | 'akun'; onNav?: (k: 'radar' | 'tawaranku' | 'jemput' | 'akun') => void }) {
   const items: [typeof active, string, string][] = [
-    ['radar', 'Radar', 'nav-radar-active.svg'],
+    ['radar', 'Radar', active === 'radar' ? 'nav-radar-active.svg' : 'nav-radar.svg'],
     ['tawaranku', 'Tawaranku', 'nav-tawaranku.svg'],
-    ['jemput', 'Jemput', 'nav-jemput.svg'],
+    ['jemput', 'Jemput', active === 'jemput' ? 'nav-jemput-active.svg' : 'nav-jemput.svg'],
     ['akun', 'Akun', 'nav-akun.svg'],
   ]
   return (
     <div className="abs" style={{ left: 0, top: 747, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
       <div className="row" style={{ padding: '10px 12px 0', alignItems: 'flex-start' }}>
-        {items.map(([k, label, icon]) => <NavItem key={k} icon={icon} label={label} active={k === active} />)}
+        {items.map(([k, label, icon]) => <NavItem key={k} icon={icon} label={label} active={k === active} onClick={() => onNav?.(k)} />)}
       </div>
       <div style={{ height: 34 }} />
     </div>
@@ -228,9 +228,9 @@ export function TimelineStep({ state, title, meta, line = true }: { state: 'done
 }
 
 /** Pak Slamet contact card (Figma: go:C2 Pengepul tiba) */
-export function PengepulCard({ onClick }: { onClick?: () => void }) {
+export function PengepulCard({ onChat }: { onChat?: () => void }) {
   return (
-    <div className="card row" style={{ gap: 12, padding: 14, width: '100%', cursor: onClick ? 'pointer' : undefined }} onClick={onClick}>
+    <div className="card row" style={{ gap: 12, padding: 14, width: '100%' }}>
       <img src={A('avatar-slamet.png')} alt="" style={{ width: 44, height: 44, borderRadius: 999, objectFit: 'cover', background: 'var(--primary-100)' }} />
       <div className="col grow" style={{ gap: 4 }}>
         <span className="t-body-ms nowrap">Pak Slamet</span>
@@ -239,8 +239,8 @@ export function PengepulCard({ onClick }: { onClick?: () => void }) {
           <span className="tag tag-indigo"><Img src="ic-shield-indigo.svg" size={14} />Mitra</span>
         </div>
       </div>
-      <div className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center' }}><Img src="ic-chat-indigo.svg" size={20} /></div>
-      <div className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center' }}><Img src="ic-call-indigo.svg" size={20} /></div>
+      <button onClick={onChat} aria-label="Chat" className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center' }}><Img src="ic-chat-indigo.svg" size={20} /></button>
+      <button onClick={onChat} aria-label="Telepon" className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center' }}><Img src="ic-call-indigo.svg" size={20} /></button>
     </div>
   )
 }

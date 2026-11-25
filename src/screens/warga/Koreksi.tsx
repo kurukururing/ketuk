@@ -48,7 +48,7 @@ export default function Koreksi() {
           onClick={() => { d({ type: 'resolveCorrection', ok: true }); go('selesai', { root: true }) }}>
           Terima Koreksi {rp(CORRECTION.price)}
         </button>
-        <button className="btn btn-danger" onClick={() => { d({ type: 'resolveCorrection', ok: false }); go('beranda', { root: true }) }}>
+        <button className="btn btn-danger" onClick={() => { d({ type: 'resolveCorrection', ok: false }); go('batal', { root: true }) }}>
           <Img src="ic-x-coral.svg" size={20} />Tolak & Batalkan, tanpa denda
         </button>
       </div>

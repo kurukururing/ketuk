@@ -58,7 +58,7 @@ export default function Bayar() {
         </div>
       </div>
       <div className="bottom-bar" style={{ height: 166 }}>
-        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('radar', { root: true })}>
+        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('jadwal', { root: true })}>
           <Img src="ic-arrow-right-white.svg" size={20} />Lanjut ke Titik Berikutnya
         </button>
         <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('radar', { root: true })}>

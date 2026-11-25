@@ -19,6 +19,7 @@ export default function Foto() {
     setTimeout(() => setFlash(false), 180)
     setPhase('scan')
     setTimeout(() => setPhase('done'), 1400)
+    setTimeout(() => go('detail'), 2100)
   }
   const onFile = (f?: File) => {
     if (!f) return
