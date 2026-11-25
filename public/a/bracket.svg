@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="282" height="282" viewBox="0 0 282 282" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Bracket" clip-path="url(#clip0_0_56)">
+<path id="Vector" d="M2 40V14C2 10.8174 3.26428 7.76516 5.51472 5.51472C7.76516 3.26428 10.8174 2 14 2H40M242 2H268C271.183 2 274.235 3.26428 276.485 5.51472C278.736 7.76516 280 10.8174 280 14V40M280 242V268C280 271.183 278.736 274.235 276.485 276.485C274.235 278.736 271.183 280 268 280H242M40 280H14C10.8174 280 7.76516 278.736 5.51472 276.485C3.26428 274.235 2 271.183 2 268V242" stroke-width="4" stroke-linecap="round" stroke="#F5A524"/>
+</g>
+<defs>
+<clipPath id="clip0_0_56">
+<rect width="282" height="282" fill="white"/>
+</clipPath>
+</defs>
+</svg>
