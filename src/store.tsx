@@ -99,14 +99,14 @@ export const SCENARIOS: Record<ScenarioId, Scenario> = {
     aiLow: 25000, aiHigh: 40000, confidence: 82, basis: 'Dari 214 transaksi kipas angin di Surabaya, 30 hari terakhir.',
     offers: BASE_OFFERS, auto: ['rj', 'lr', 'ub'], manual: 'ps', startAt: 60 * 60,
     correction: { price: 30000, reason: 'Retak / pecah', note: 'Baling-baling retak di dua sisi, tidak terlihat di foto awal.' },
-    weight: '3,2 kg', total: 88000, totalItems: 4, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
+    weight: '3,2 kg', total: 0, totalItems: 1, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
   },
   dispenser: {
     name: 'Dispenser', short: 'dispenser', category: 'Elektronik', photo: 'photo-dispenser-c1.jpg',
     aiLow: 25000, aiHigh: 40000, confidence: 82, basis: 'Dari 214 transaksi kipas angin di Surabaya, 30 hari terakhir.',
     offers: BASE_OFFERS, auto: ['ps', 'ub', 'rj', 'lr'], manual: null, startAt: 38 * 60 + 12,
     correction: { price: 30000, reason: 'Retak / pecah', note: 'Tutup galon retak, tidak terlihat di foto awal.' },
-    weight: '3,2 kg', total: 88000, totalItems: 4, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
+    weight: '3,2 kg', total: 0, totalItems: 1, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
   },
   borongan: {
     name: '3 barang borongan', short: '3 barang borongan', category: 'Mode Pindahan', photo: 'item-kasur.jpg',
@@ -162,7 +162,7 @@ type Action =
   | { type: 'scenario'; scenario: ScenarioId }
   | { type: 'expandRadius' }
   | { type: 'retake' }
-  | { type: 'demoState'; scenario: ScenarioId; phase: 'running' | 'won'; correction?: boolean }
+  | { type: 'demoState'; scenario: ScenarioId; phase: 'running' | 'won'; correction?: boolean; lock?: { id: string; price: number; pickup: string } }
   | { type: 'switchToPengepul'; screen: PengepulScreen }
   | { type: 'tick'; dt: number }
   | { type: 'offer'; id: string; price?: number; pickup?: string }
@@ -296,8 +296,9 @@ function reducer(s: State, a: Action): State {
       // Open a prepared session (Figma static frames reached from Sesi Saya / Notifikasi)
       useScenario(a.scenario)
       const S = SCENARIOS[a.scenario]
-      const offers = Object.values(S.offers).map(o => ({ ...o, at: 0 })).sort((x, y) => y.price - x.price)
-      const win = offers[0]
+      const lk = a.lock
+      const offers = Object.values(S.offers).map(o => ({ ...o, at: 0, ...(lk && o.id === lk.id ? { price: lk.price, pickup: lk.pickup } : {}) })).sort((x, y) => y.price - x.price)
+      const win = (lk && offers.find(o => o.id === lk.id)) || offers[0]
       return {
         ...s, scenario: a.scenario, retake: true, radius: a.scenario === 'dispenser' ? 5 : 3, correction: a.correction ? 'pending' : 'none', arrived: !!a.correction,
         finalPrice: a.phase === 'won' ? win.price : null,

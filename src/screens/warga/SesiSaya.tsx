@@ -45,9 +45,9 @@ export default function SesiSaya() {
           {card(() => go('sesi-kosong'), <CountdownRing size={64} remaining={0} variant="mini" />, 'Kardus bekas 12 kg', 'Sesi berakhir tanpa tawaran',
             <span className="tag tag-coral"><Img src="ic-alert-coral14.svg" size={14} />Pilih langkah</span>, 'Sesi kardus')}
           {over('Terkunci')}
-          {card(() => { d({ type: 'demoState', scenario: 'dispenser', phase: 'won' }); go('terkunci') },
+          {card(() => { d({ type: 'demoState', scenario: 'dispenser', phase: 'won', lock: { id: 'ub', price: 35000, pickup: 'Besok 09.00' } }); go('terkunci') },
             <div className="row" style={{ width: 64, height: 64, borderRadius: 999, background: 'var(--primary-900)', justifyContent: 'center', flex: 'none' }}><Img src="ic-lock-white28.svg" size={28} /></div>,
-            'Dispenser', 'Rp38.000 terkunci | jemput hari ini 16.00',
+            'Dispenser', 'Rp35.000 terkunci | jemput besok 09.00',
             <span className="tag tag-indigo"><Img src="ic-lock-indigo14.svg" size={14} />Harga Terkunci</span>, 'Sesi dispenser')}
         </div>
       </div>

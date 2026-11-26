@@ -9,7 +9,10 @@ export default function Notifikasi() {
   const { d, go } = useStore()
   const [tab, setTab] = useState<'Semua' | 'Sesi' | 'Transaksi'>('Semua')
   const [read, setRead] = useState(false)
-  const sesi = (sc: 'kipas' | 'dispenser', phase: 'running' | 'won', to: 'sesi' | 'terkunci') => () => { d({ type: 'demoState', scenario: sc, phase }); go(to) }
+  // Dispenser lock in the notification: Rp35.000, jemput besok 09.00 (Figma B1 Notifikasi / D1 Sesi Saya)
+  const sesi = (sc: 'kipas' | 'dispenser', phase: 'running' | 'won', to: 'sesi' | 'terkunci') => () => {
+    d({ type: 'demoState', scenario: sc, phase, ...(sc === 'dispenser' && phase === 'won' ? { lock: { id: 'ub', price: 35000, pickup: 'Besok 09.00' } } : {}) }); go(to)
+  }
   const today: N[] = [
     { k: 'a', icon: 'ic-tag-indigo20.svg', bg: 'var(--primary-100)', title: 'Tawaran baru Rp38.000', sub: 'Pak Slamet | kipas angin | jemput 16.00', time: '2 mnt', unread: true, go: sesi('kipas', 'running', 'sesi') },
     { k: 'b', icon: 'ic-clock-amber20.svg', bg: 'var(--amber-100)', title: 'Sesi tersisa 15 menit', sub: 'Kipas angin berdiri | 5 tawaran masuk', time: '18 mnt', unread: true, go: sesi('kipas', 'running', 'sesi') },
