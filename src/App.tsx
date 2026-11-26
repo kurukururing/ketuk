@@ -106,7 +106,7 @@ function Toasts() {
             boxShadow: '0 12px 32px rgba(27,23,96,0.28)',
           }}
         >
-          <img src={A('logo-mark.png')} alt="" style={{ width: 38, height: 38, borderRadius: 10, flex: 'none' }} />
+          <img src={A('logo-mark-group.svg')} alt="" style={{ width: 38, height: 38, borderRadius: 9, flex: 'none' }} />
           <div className="col grow" style={{ gap: 1 }}>
             <div className="row" style={{ justifyContent: 'space-between' }}>
               <span className="t-label-s" style={{ color: 'var(--ink-500)', letterSpacing: 0.4 }}>KETUK{t.role === 'pengepul' ? ' MITRA' : ''}</span>
@@ -149,7 +149,7 @@ function Island({ dark }: { dark: boolean }) {
         position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', zIndex: 120, height: 32, padding: '0 14px', gap: 8,
         borderRadius: 999, background: dark ? 'rgba(255,255,255,.16)' : '#0b0a1f', color: '#fff', whiteSpace: 'nowrap',
       }}>
-      <img src={A('logo-mark.png')} alt="" style={{ width: 18, height: 18, borderRadius: 5 }} />
+      <img src={A('logo-mark-group.svg')} alt="" style={{ width: 18, height: 18, borderRadius: 4.5, boxShadow: '0 0 0 1px rgba(255,255,255,.25)' }} />
       {s.role === 'warga' ? 'Warga' : 'Pengepul'}
       <span style={{ opacity: .55 }}>⇄</span>
       {unseen && <span style={{ width: 8, height: 8, borderRadius: 9, background: 'var(--amber-500)' }} />}
@@ -219,13 +219,17 @@ function Stage() {
         <div key={sz} style={{ position: 'absolute', width: sz, height: sz, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.06)', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', opacity: 1 - i * 0.12 }} />
       ))}
 
-      {wide && !landscapePhone && <div className="col" style={{ position: 'absolute', top: 32, left: 40, gap: 6, color: '#fff' }}>
-        <div className="row" style={{ gap: 12 }}>
-          <img src={A('logo-mark.png')} alt="" style={{ width: 44, height: 44 }} />
-          <span style={{ fontWeight: 800, fontSize: 34, letterSpacing: -1, lineHeight: 1 }}>ketuk</span>
+      {wide && !landscapePhone && (
+        <div className="row" style={{ position: 'absolute', top: 28, left: 40, gap: 14, color: '#fff' }}>
+          {/* Vector mark from Figma; a hairline ring + shadow lifts it off the same-coloured background */}
+          <img src={A('logo-mark-group.svg')} alt="" style={{ width: 52, height: 52, borderRadius: 12, flex: 'none',
+            boxShadow: '0 0 0 1px rgba(255,255,255,.16), 0 10px 28px rgba(5,4,30,.45)' }} />
+          <div className="col" style={{ gap: 4 }}>
+            <span style={{ fontWeight: 800, fontSize: 28, lineHeight: '30px', letterSpacing: -0.8 }}>Ketuk</span>
+            <span style={{ fontWeight: 500, fontSize: 13, lineHeight: '16px', letterSpacing: 0.2, color: 'rgba(214,210,253,.75)' }}>Sekali Ketuk, Harga Pasti.</span>
+          </div>
         </div>
-        <span className="t-body-m" style={{ color: 'var(--primary-200)' }}>Sekali Ketuk, Harga Pasti.</span>
-      </div>}
+      )}
       <div style={{ position: 'absolute', top: landscapePhone ? 12 : 32, right: landscapePhone ? 12 : 40 }}><RoleSwitch /></div>
       <button onClick={() => d({ type: 'panel' })} className="t-body-s"
         style={{ position: 'absolute', bottom: landscapePhone ? 12 : 24, right: landscapePhone ? 12 : 40, color: 'rgba(255,255,255,.5)' }}>
