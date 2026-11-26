@@ -14,7 +14,7 @@ export default function Tawaran() {
   const isPs = o.id === 'ps'
   const tx = isPs ? 128 : o.id === 'ub' ? 86 : 64
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Detail Tawaran" />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

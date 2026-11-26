@@ -22,7 +22,7 @@ export default function Notifikasi() {
   ]
   const groups: [string, N[]][] = tab === 'Semua' ? [['Hari ini', today], ['Kemarin', yesterday]] : tab === 'Sesi' ? [['Hari ini', today]] : [['Hari ini', today.slice(0, 2)]]
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Notifikasi"
         trailing={<button className="icon-btn" onClick={() => setRead(true)} aria-label="Tandai dibaca"><Img src="ic-checkmark-ink.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 0 }}>

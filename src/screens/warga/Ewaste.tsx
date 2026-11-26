@@ -5,7 +5,7 @@ import { A, Img, StatusBar, AppBar } from '../../ui'
 export default function Ewaste() {
   const { go } = useStore()
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar title="Jalur E-waste Aman" bg="transparent" trailing={<button className="icon-btn" onClick={() => go('bantuan')}><Img src="ic-help.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

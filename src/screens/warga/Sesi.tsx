@@ -10,7 +10,7 @@ export default function Sesi() {
   const bor = s.scenario === 'borongan'
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       {/* Hero */}
       <div className="abs" style={{ left: 0, top: 0, width: 390, height: 420, background: 'var(--primary-900)', overflow: 'hidden' }}>
         <img src={A('sesi-deco1.svg')} alt="" className="abs" style={{ left: -15, top: 52, width: 420, height: 420 }} />

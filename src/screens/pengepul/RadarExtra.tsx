@@ -44,7 +44,7 @@ export function NotifPengepul() {
     )
   }
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar title="Notifikasi" ink trailing={<button className="icon-btn" aria-label="Tandai dibaca" onClick={() => setRead(true)}><Img src="ic-checkmark-ink.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 34 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 10 }}>
@@ -73,12 +73,12 @@ export function FilterRadar() {
   const reset = () => { setRadius(3); setCats(['Elektronik', 'Kardus', 'Logam']); setUrgent(false); setEwaste(false); setSort('Terdekat') }
   const pct = ((radius - 1) / 4) * 100
   return (
-    <div className="screen">
+    <div className="screen fit">
       <Radar />
-      <motion.button aria-label="Tutup filter" className="abs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={back}
+      <motion.button aria-label="Tutup filter" className="fix" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={back}
         style={{ inset: 0, background: 'rgba(21,20,43,0.55)', zIndex: 20 }} />
-      <motion.div className="abs col" initial={{ y: 600 }} animate={{ y: 0 }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-        style={{ left: 0, top: 271, width: 390, bottom: 0, zIndex: 21, padding: '12px 24px 34px', gap: 16, borderRadius: '28px 28px 0 0', background: '#fff' }}>
+      <motion.div className="fix col" initial={{ y: 600 }} animate={{ y: 0 }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+        style={{ left: 0, maxHeight: 'calc(100% - 24px)', overflowY: 'auto', width: 390, bottom: 0, zIndex: 21, padding: '12px 24px 34px', gap: 16, borderRadius: '28px 28px 0 0', background: '#fff' }}>
         <div className="row" style={{ justifyContent: 'center' }}><div style={{ width: 40, height: 5, borderRadius: 3, background: 'var(--line-200)' }} /></div>
         <div className="row" style={{ justifyContent: 'space-between' }}>
           <span className="t-h2">Filter Radar</span>
@@ -145,7 +145,7 @@ export function PetaRadar() {
         </div>
         <button aria-label="Filter" onClick={() => go('filter')} className="row" style={{ width: 44, height: 44, borderRadius: 999, background: '#fff', justifyContent: 'center', boxShadow: 'var(--elev-1)' }}><Img src="ic-filter-ink20.svg" size={20} /></button>
       </div>
-      <div className="abs col" style={{ left: 24, top: 577, width: 342, padding: 16, gap: 12, borderRadius: 'var(--radius-xl)', background: '#fff', boxShadow: 'var(--elev-2)' }}>
+      <div className="fix col" style={{ left: 24, bottom: 115, width: 342, padding: 16, gap: 12, borderRadius: 'var(--radius-xl)', background: '#fff', boxShadow: 'var(--elev-2)' }}>
         <div className="row" style={{ gap: 12 }}>
           <img src={A('peta-kipas.jpg')} alt="" style={{ width: 64, height: 64, borderRadius: 14, objectFit: 'cover' }} />
           <div className="col grow" style={{ gap: 4 }}>

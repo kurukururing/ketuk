@@ -56,7 +56,7 @@ export default function Peran() {
           <Toggle on={dibantu} onChange={v => { setDibantu(v); if (v && s.role === 'warga') go('dibantu') }} />
         </div>
       </div>
-      <div className="abs" style={{ left: 24, top: 738, width: 342 }}>
+      <div className="fix" style={{ left: 24, bottom: 50, width: 342 }}>
         <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={next}>
           <Img src="ic-arrow-right-white.svg" size={20} />Lanjut sebagai {role === 'warga' ? 'Warga' : 'Pengepul'}
         </button>

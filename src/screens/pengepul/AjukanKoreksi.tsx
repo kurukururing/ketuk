@@ -15,7 +15,7 @@ export default function AjukanKoreksi() {
   const tooMuch = drop > locked * 0.4
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Ajukan Koreksi" trailing={<button className="icon-btn"><Img src="ic-help.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

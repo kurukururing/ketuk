@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState, type ComponentType } from 'react'
+import { useEffect, useLayoutEffect, useState, type ComponentType, type CSSProperties } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { StoreProvider, useStore, type Preset, type Role } from './store'
 import { A, HomeIndicator } from './ui'
@@ -9,22 +9,48 @@ const W = 390
 const H = 844
 const BEZEL = 12
 
-/** Scale the 390×844 phone to fit the viewport. On a real phone: fill the screen. */
-function useFit() {
-  const calc = () => {
-    const vw = window.innerWidth, vh = window.innerHeight
-    const mobile = vw < 560
-    if (mobile) return { mobile, scale: vw / W }
-    return { mobile, scale: Math.min(1, (vh - 48) / (H + BEZEL * 2), (vw - 48) / (W + BEZEL * 2)) }
+type Fit = { mobile: boolean; scale: number; height: number; landscapePhone: boolean; wide: boolean }
+
+/**
+ * Phones (< 560 px wide): the 390-wide design is scaled to the screen width and the canvas takes the
+ * full screen height (so bottom navs and action bars sit at the real bottom of the phone).
+ * Larger screens: the 390×844 phone is shown in a device frame, scaled to fit.
+ */
+function measure(prev?: Fit): Fit {
+  const vw = window.innerWidth, vh = window.innerHeight
+  const mobile = vw < 560
+  const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false
+  const landscapePhone = !mobile && coarse && vh < 560
+  if (mobile) {
+    const scale = vw / W
+    let height = vh / scale
+    // On-screen keyboard (Android): keep the layout instead of squashing it while typing
+    const typing = document.activeElement?.matches?.('input, textarea')
+    if (prev?.mobile && typing && height < prev.height) height = prev.height
+    return { mobile, scale, height, landscapePhone, wide: false }
   }
-  const [fit, setFit] = useState(calc)
+  const margin = landscapePhone ? 16 : 48
+  return { mobile, landscapePhone, wide: vw >= 900, height: H, scale: Math.min(1, (vh - margin) / (H + BEZEL * 2), (vw - margin) / (W + BEZEL * 2)) }
+}
+
+function useFit() {
+  const [fit, setFit] = useState<Fit>(() => measure())
   useLayoutEffect(() => {
-    const on = () => setFit(calc())
+    const on = () => setFit(f => measure(f))
     window.addEventListener('resize', on)
-    return () => window.removeEventListener('resize', on)
+    window.addEventListener('orientationchange', on)
+    return () => { window.removeEventListener('resize', on); window.removeEventListener('orientationchange', on) }
   }, [])
   return fit
 }
+
+/** CSS variables the screens use to adapt to the canvas height */
+const canvasVars = (h: number) => ({
+  '--vh-c': `${h}px`,
+  '--page-h': `${Math.max(H, h)}px`,
+  '--short': `${Math.min(0, h - H)}px`,
+  '--shortn': `${Math.min(0, h - H)}`,
+}) as CSSProperties
 
 function Screens() {
   const { s } = useStore()
@@ -49,7 +75,7 @@ function Screens() {
         transition={{ duration: 0.28, ease: [0.2, 0.8, 0.2, 1] }}
         style={{ position: 'absolute', inset: 0 }}
       >
-        <Screen />
+        <div className="viewport"><Screen /></div>
       </motion.div>
     </AnimatePresence>
   )
@@ -96,15 +122,38 @@ function Toasts() {
 }
 
 const DARK = ['foto', 'splash', 'berhasil', 'mitra-ok']
-function Phone() {
+/** Keep overflow:hidden wrappers from being scrolled by the browser (focus, find-in-page, scrollIntoView) */
+const pin = (e: React.UIEvent<HTMLElement>) => { const el = e.currentTarget; if (el.scrollTop || el.scrollLeft) { el.scrollTop = 0; el.scrollLeft = 0 } }
+
+function Phone({ island }: { island?: boolean }) {
   const { s } = useStore()
   const cur = (s[s.role] as string[]).at(-1)!
   return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: 'var(--canvas)' }}>
+    <div onScroll={pin} style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: 'var(--canvas)' }}>
       <Screens />
       <Toasts />
+      {island && <Island dark={DARK.includes(cur)} />}
       <HomeIndicator inverse={DARK.includes(cur)} />
     </div>
+  )
+}
+
+/** Phone-only presenter control, drawn like a Dynamic Island in the status bar: shows the active role, opens the demo panel */
+function Island({ dark }: { dark: boolean }) {
+  const { s, d } = useStore()
+  const other = s.role === 'warga' ? 'pengepul' : 'warga'
+  const unseen = s.toasts.some(t => t.role === other)
+  return (
+    <button aria-label="Panel demo" onClick={() => d({ type: 'panel' })} className="row t-label-s"
+      style={{
+        position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', zIndex: 120, height: 32, padding: '0 14px', gap: 8,
+        borderRadius: 999, background: dark ? 'rgba(255,255,255,.16)' : '#0b0a1f', color: '#fff', whiteSpace: 'nowrap',
+      }}>
+      <img src={A('logo-mark.png')} alt="" style={{ width: 18, height: 18, borderRadius: 5 }} />
+      {s.role === 'warga' ? 'Warga' : 'Pengepul'}
+      <span style={{ opacity: .55 }}>⇄</span>
+      {unseen && <span style={{ width: 8, height: 8, borderRadius: 9, background: 'var(--amber-500)' }} />}
+    </button>
   )
 }
 
@@ -129,7 +178,7 @@ function RoleSwitch() {
 
 function Stage() {
   const { s, d } = useStore()
-  const { mobile, scale } = useFit()
+  const { mobile, scale, height, landscapePhone, wide } = useFit()
 
   // Presenter shortcuts
   useEffect(() => {
@@ -151,9 +200,9 @@ function Stage() {
 
   if (mobile) {
     return (
-      <div style={{ position: 'fixed', inset: 0, background: 'var(--canvas)', overflow: 'hidden' }}>
-        <div style={{ width: W, height: H, transform: `scale(${scale})`, transformOrigin: '0 0', position: 'relative' }}>
-          <Phone />
+      <div onScroll={pin} style={{ position: 'fixed', inset: 0, background: 'var(--canvas)', overflow: 'hidden' }}>
+        <div style={{ width: W, height, transform: `scale(${scale})`, transformOrigin: '0 0', position: 'relative', ...canvasVars(height) }}>
+          <Phone island />
         </div>
         <DemoPanel />
       </div>
@@ -170,25 +219,30 @@ function Stage() {
         <div key={sz} style={{ position: 'absolute', width: sz, height: sz, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.06)', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', opacity: 1 - i * 0.12 }} />
       ))}
 
-      <div className="col" style={{ position: 'absolute', top: 32, left: 40, gap: 6, color: '#fff' }}>
+      {wide && !landscapePhone && <div className="col" style={{ position: 'absolute', top: 32, left: 40, gap: 6, color: '#fff' }}>
         <div className="row" style={{ gap: 12 }}>
           <img src={A('logo-mark.png')} alt="" style={{ width: 44, height: 44 }} />
           <span style={{ fontWeight: 800, fontSize: 34, letterSpacing: -1, lineHeight: 1 }}>ketuk</span>
         </div>
         <span className="t-body-m" style={{ color: 'var(--primary-200)' }}>Sekali Ketuk, Harga Pasti.</span>
-      </div>
-      <div style={{ position: 'absolute', top: 32, right: 40 }}><RoleSwitch /></div>
+      </div>}
+      <div style={{ position: 'absolute', top: landscapePhone ? 12 : 32, right: landscapePhone ? 12 : 40 }}><RoleSwitch /></div>
       <button onClick={() => d({ type: 'panel' })} className="t-body-s"
-        style={{ position: 'absolute', bottom: 24, right: 40, color: 'rgba(255,255,255,.35)' }}>
-        Panel demo: tekan <b>D</b>
+        style={{ position: 'absolute', bottom: landscapePhone ? 12 : 24, right: landscapePhone ? 12 : 40, color: 'rgba(255,255,255,.5)' }}>
+        {landscapePhone ? 'Panel demo' : <>Panel demo: tekan <b>D</b></>}
       </button>
+      {landscapePhone && (
+        <span className="t-body-s" style={{ position: 'absolute', left: 12, bottom: 12, maxWidth: 180, color: 'rgba(255,255,255,.6)' }}>
+          Putar HP ke posisi tegak untuk tampilan penuh
+        </span>
+      )}
 
       <div style={{ width: (W + BEZEL * 2) * scale, height: (H + BEZEL * 2) * scale, position: 'relative' }}>
         <div style={{
           width: W + BEZEL * 2, height: H + BEZEL * 2, padding: BEZEL, transform: `scale(${scale})`, transformOrigin: '0 0',
           borderRadius: 56, background: '#0b0a1f', boxShadow: '0 0 0 2px #2b2950, 0 40px 120px rgba(0,0,0,.55)',
         }}>
-          <div style={{ width: W, height: H, borderRadius: 44, overflow: 'hidden', position: 'relative', transform: 'translateZ(0)' }}>
+          <div style={{ width: W, height: H, borderRadius: 44, overflow: 'hidden', position: 'relative', transform: 'translateZ(0)', ...canvasVars(H) }}>
             <Phone />
           </div>
         </div>

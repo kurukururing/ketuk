@@ -6,7 +6,7 @@ function Shell({ tab, stats, children }: { tab: 'berjalan' | 'menang'; stats: [s
   const { go } = useStore()
   const tabs: [string, 'berjalan' | 'menang' | 'kalah'][] = [['Berjalan 6', 'berjalan'], ['Menang 2', 'menang'], ['Kalah 9', 'kalah']]
   return (
-    <div className="screen">
+    <div className="screen fit">
       <span className="abs t-h1" style={{ left: 24, top: 62, letterSpacing: -0.39 }}>Tawaranku</span>
       <div className="abs row" style={{ left: 24, top: 108, width: 342, padding: 16, gap: 12, borderRadius: 'var(--radius-lg)', background: 'var(--primary-900)', alignItems: 'flex-start' }}>
         {stats.map(([a, b, amber]) => (

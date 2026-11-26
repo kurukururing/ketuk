@@ -22,7 +22,7 @@ export default function SesiSaya() {
   )
   const over = (t: string, c = 'var(--ink-500)') => <span className="t-overline" style={{ color: c }}>{t}</span>
   return (
-    <div className="screen">
+    <div className="screen fit">
       <div className="abs col nowrap" style={{ left: 24, top: 60, gap: 2 }}>
         <span className="t-h1" style={{ letterSpacing: -0.39 }}>Sesi Saya</span>
         <span className="t-body-m" style={{ color: 'var(--ink-500)' }}>2 berjalan | 1 perlu tindakan | 1 terkunci</span>

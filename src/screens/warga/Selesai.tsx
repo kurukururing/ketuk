@@ -20,7 +20,7 @@ export default function Selesai() {
   const toggleTag = (t: string) => setTags(x => (x.includes(t) ? x.filter(y => y !== t) : [...x, t]))
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       {CONFETTI.map(([x, y, sz, c], i) => (
         <motion.div key={i} className="abs" style={{ left: x, top: y, width: sz, height: sz, borderRadius: sz / 2, background: c }}
           initial={{ y: -140, opacity: 0, rotate: 0 }} animate={{ y: 0, opacity: 1, rotate: 180 }} transition={{ delay: 0.1 + i * 0.05, type: 'spring', stiffness: 120, damping: 12 }} />

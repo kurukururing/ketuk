@@ -58,7 +58,7 @@ export default function Splash() {
   const t = tr(p)
 
   return (
-    <div className="screen" style={{ background: 'var(--primary-900)', cursor: 'pointer' }} onClick={() => (p >= 7 ? next() : setP(7))}>
+    <div className="screen" style={{ background: 'var(--primary-900)', cursor: 'pointer', transform: 'translateY(calc(var(--short, 0px) / 2))' }} onClick={() => (p >= 7 ? next() : setP(7))}>
       {/* Photo background (Mask group) — appears in _8 */}
       <motion.div className="abs" initial={false} animate={{ opacity: p >= 7 ? 0.5 : 0 }} transition={t}
         style={{

@@ -47,17 +47,19 @@ export default function Onboarding() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.div key={i} className="abs" style={{ inset: 0 }}
           initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.32, ease: [0.25, 0.1, 0.25, 1] }}>
-          <div className="abs" style={{ ...s.box, overflow: 'hidden' }}>
+          {/* On short phones (--short < 0) the illustration shrinks and moves up so the text clears the buttons */}
+          <div className="abs" style={{ ...s.box, overflow: 'hidden', transformOrigin: '50% 0',
+            transform: 'translateY(calc(var(--short, 0px) * 0.45)) scale(calc(1 + var(--shortn, 0) / 520))' }}>
             <img src={A(s.img)} alt="" style={{ position: 'absolute', maxWidth: 'none', ...s.crop }} />
           </div>
-          <div className="abs col" style={{ left: 0, top: 540, width: 390, padding: '0 24px', gap: 12 }}>
+          <div className="abs col" style={{ left: 0, top: 'calc(540px + var(--short, 0px))', width: 390, padding: '0 24px', gap: 12 }}>
             <span className="t-h1" style={{ color: 'var(--primary-500)', letterSpacing: -0.39 }}>{s.title}</span>
             <span className="t-body-l" style={{ color: 'var(--ink-500)' }}>{s.body}</span>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      <div className="abs row" style={{ left: 24, top: 738, width: 342, height: 56, justifyContent: 'space-between' }}>
+      <div className="fix row" style={{ left: 24, bottom: 50, width: 342, height: 56, justifyContent: 'space-between' }}>
         <div className="row" style={{ gap: 8 }}>
           {SLIDES.map((_, k) => (
             <motion.div key={k} animate={{ width: k === i ? 28 : 8, backgroundColor: k === i ? '#3d2fd0' : '#d6d2fd' }}

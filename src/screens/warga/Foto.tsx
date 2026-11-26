@@ -103,7 +103,7 @@ export default function Foto() {
       </div>
 
       {/* Controls */}
-      <div className="abs row" style={{ left: 24, top: 690, width: 342, height: 84, justifyContent: 'space-between' }}>
+      <div className="fix row" style={{ left: 24, bottom: 70, width: 342, height: 84, justifyContent: 'space-between' }}>
         <button onClick={() => file.current?.click()} className="row" style={{ width: 52, height: 52, borderRadius: 14, background: 'rgba(255,255,255,0.14)', justifyContent: 'center' }} aria-label="Galeri">
           <Img src="ic-image-white.svg" size={24} />
         </button>

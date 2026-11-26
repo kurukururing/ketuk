@@ -56,7 +56,7 @@ export default function Akun() {
 
       <AnimatePresence>
         {logout && (
-          <motion.div key="scrim" className="abs row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          <motion.div key="scrim" className="fix row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setLogout(false)}
             style={{ inset: 0, background: 'rgba(21,20,43,0.6)', justifyContent: 'center', zIndex: 30 }}>
             <motion.div initial={{ scale: 0.92 }} animate={{ scale: 1 }} exit={{ scale: 0.92 }} onClick={e => e.stopPropagation()}

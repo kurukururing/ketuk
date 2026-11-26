@@ -18,7 +18,7 @@ export default function DemoPanel() {
   return (
     <AnimatePresence>
       {s.panel && (
-        <motion.div
+        <motion.div className="demo-panel"
           initial={{ x: 340, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 340, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 380, damping: 36 }}
           style={{
@@ -30,8 +30,19 @@ export default function DemoPanel() {
         >
           <div className="row" style={{ justifyContent: 'space-between' }}>
             <b style={{ fontSize: 15 }}>Panel Demo</b>
-            <button onClick={() => d({ type: 'panel', open: false })} style={{ color: 'rgba(255,255,255,.6)' }}>Tutup (Esc)</button>
+            <button onClick={() => d({ type: 'panel', open: false })} style={{ color: 'rgba(255,255,255,.6)', padding: '6px 0 6px 12px' }}>Tutup</button>
           </div>
+
+          <Section title="Peran">
+            <div className="row" style={{ gap: 6 }}>
+              {(['warga', 'pengepul'] as const).map(r => (
+                <button key={r} onClick={() => d({ type: 'role', role: r })} className="grow"
+                  style={{ padding: '10px 0', borderRadius: 10, fontWeight: 600, background: s.role === r ? '#fff' : 'rgba(255,255,255,.07)', color: s.role === r ? 'var(--primary-900)' : '#fff' }}>
+                  {r === 'warga' ? 'Warga' : 'Pengepul'}{s.role !== r && s.toasts.some(t => t.role === r) ? ' •' : ''}
+                </button>
+              ))}
+            </div>
+          </Section>
 
           <Section title="Status">
             <Line k="Peran" v={s.role === 'warga' ? 'Warga' : 'Pengepul'} />
@@ -56,7 +67,8 @@ export default function DemoPanel() {
           </Section>
 
           <p style={{ color: 'rgba(255,255,255,.45)', lineHeight: 1.5 }}>
-            Shortcut tetap aktif meski panel tertutup. Panel ini tidak terlihat di layar HP.
+            Di laptop: shortcut tetap aktif meski panel tertutup (D buka panel, Tab ganti peran, 1–7 lompat adegan).
+            Di HP: buka panel lewat pil di bagian atas layar.
           </p>
         </motion.div>
       )}

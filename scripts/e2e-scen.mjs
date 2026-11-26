@@ -1,8 +1,10 @@
 import { createRequire } from 'module'
-const { chromium } = createRequire(import.meta.url)('playwright')
+const { chromium, devices } = createRequire(import.meta.url)('playwright')
+// DEVICE="iPhone SE" (any Playwright device name) runs the walk in phone emulation with touch
+const DEVICE = process.env.DEVICE
 const out = process.argv[2]
 const b = await chromium.launch()
-const p = await b.newPage({ viewport: { width: 390, height: 844 } })
+const p = await (await b.newContext(DEVICE ? { ...devices[DEVICE], deviceScaleFactor: 1 } : { viewport: { width: 390, height: 844 } })).newPage()
 const errs = []
 p.on('pageerror', e => errs.push(e.message)); p.on('console', m => m.type() === 'error' && errs.push(m.text()))
 let n = 0

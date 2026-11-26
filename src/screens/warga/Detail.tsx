@@ -12,7 +12,7 @@ export default function Detail() {
   const [slot, setSlot] = useState(0)
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar title="Detail Barang" trailing={<button className="icon-btn" onClick={() => go('bantuan')}><Img src="ic-help.svg" size={20} /></button>} />
 
       <div className="scroll" style={{ top: 116, bottom: 102 }}>

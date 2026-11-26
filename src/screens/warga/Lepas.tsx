@@ -7,7 +7,7 @@ export default function Lepas() {
   const { d, go } = useStore()
   const [slot, setSlot] = useState(0)
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Lepas Gratis + Jemput" trailing={<button className="icon-btn" onClick={() => go('bantuan')}><Img src="ic-help.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

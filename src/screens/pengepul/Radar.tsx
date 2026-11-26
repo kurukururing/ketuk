@@ -39,7 +39,7 @@ export default function Radar() {
   const mine = s.session.offers.find(o => o.id === PAK_SLAMET.id)
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <img src={A('radar-header.svg')} alt="" className="abs" style={{ left: 0, top: 0, width: 390, height: 216 }} />
       <div className="abs row" style={{ left: 24, top: 58, width: 342, height: 52, justifyContent: 'space-between' }}>
         <div className="col nowrap" style={{ gap: 2 }}>

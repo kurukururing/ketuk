@@ -16,7 +16,7 @@ export default function Bayar() {
   const corrected = s.correction === 'approved'
   const [jalur, setJalur] = useState('servis')
   return (
-    <div className="screen">
+    <div className="screen fit">
       <div className="scroll" style={{ top: 50, bottom: 166 }}>
         <div className="col" style={{ padding: '40px 24px 0', gap: 8, alignItems: 'center', textAlign: 'center' }}>
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 14 }}

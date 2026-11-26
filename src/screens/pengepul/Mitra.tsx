@@ -119,7 +119,7 @@ export function MitraVerifikasi() {
 
       <AnimatePresence>
         {sheet !== null && (
-          <motion.div className="abs row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(null)}
+          <motion.div className="fix row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSheet(null)}
             style={{ inset: 0, background: 'rgba(21,20,43,0.6)', justifyContent: 'center', zIndex: 30 }}>
             <motion.div initial={{ scale: 0.92 }} animate={{ scale: 1 }} exit={{ scale: 0.92 }} onClick={e => e.stopPropagation()}
               className="col" style={{ width: 342, padding: 24, gap: 14, borderRadius: 28, background: '#fff', boxShadow: '0 12px 32px rgba(27,23,96,0.14)' }}>
@@ -186,20 +186,23 @@ export function MitraOk() {
   const rings: [string, number, number, number][] = [['mitra-ring1.svg', -115, -60, 620], ['mitra-ring2.svg', -35, 20, 460], ['mitra-ring3.svg', 35, 90, 320], ['mitra-ring4.svg', 95, 150, 200]]
   return (
     <div className="screen" style={{ background: 'var(--primary-900)' }}>
-      {rings.map(([r, x, y, s]) => <img key={r} src={A(r)} alt="" className="abs" style={{ left: x, top: y, width: s, height: s }} />)}
-      <motion.img src={A('3d-perisai.png')} alt="" className="abs" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 14 }}
-        style={{ left: 120, top: 190, width: 150, height: 150 }} />
-      <div className="abs col" style={{ left: 24, top: 344, width: 342, gap: 10, alignItems: 'center', textAlign: 'center' }}>
-        <span className="t-overline" style={{ color: 'var(--amber-500)' }}>Verifikasi selesai</span>
-        <span className="t-h1" style={{ color: '#fff', letterSpacing: -0.39 }}>Kamu Mitra Terverifikasi</span>
-        <span className="t-body-l" style={{ color: 'var(--primary-200)' }}>Lapak Rungkut sekarang tampil di Radar warga dalam radius 3 km.</span>
+      {/* Hero shrinks and moves up on short phones so it clears the pinned buttons */}
+      <div className="abs" style={{ inset: 0, transformOrigin: '50% 0', transform: 'translateY(calc(var(--short, 0px) * 0.55)) scale(calc(1 + var(--shortn, 0) / 900))' }}>
+        {rings.map(([r, x, y, s]) => <img key={r} src={A(r)} alt="" className="abs" style={{ left: x, top: y, width: s, height: s }} />)}
+        <motion.img src={A('3d-perisai.png')} alt="" className="abs" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 14 }}
+          style={{ left: 120, top: 190, width: 150, height: 150 }} />
+        <div className="abs col" style={{ left: 24, top: 344, width: 342, gap: 10, alignItems: 'center', textAlign: 'center' }}>
+          <span className="t-overline" style={{ color: 'var(--amber-500)' }}>Verifikasi selesai</span>
+          <span className="t-h1" style={{ color: '#fff', letterSpacing: -0.39 }}>Kamu Mitra Terverifikasi</span>
+          <span className="t-body-l" style={{ color: 'var(--primary-200)' }}>Lapak Rungkut sekarang tampil di Radar warga dalam radius 3 km.</span>
+        </div>
+        <div className="abs col" style={{ left: 24, top: 500, width: 342, padding: 18, gap: 12, borderRadius: 'var(--radius-lg)', background: 'rgba(255,255,255,0.08)' }}>
+          {['Tawaranmu bisa dipilih warga', 'Skor Tepat Harga mulai dihitung', 'Lencana tampil di profil dan tawaran'].map(t => (
+            <div key={t} className="row" style={{ gap: 10 }}><Img src="ic-check-circle-amber.svg" size={20} /><span className="t-body-m" style={{ color: '#fff' }}>{t}</span></div>
+          ))}
+        </div>
       </div>
-      <div className="abs col" style={{ left: 24, top: 500, width: 342, padding: 18, gap: 12, borderRadius: 'var(--radius-lg)', background: 'rgba(255,255,255,0.08)' }}>
-        {['Tawaranmu bisa dipilih warga', 'Skor Tepat Harga mulai dihitung', 'Lencana tampil di profil dan tawaran'].map(t => (
-          <div key={t} className="row" style={{ gap: 10 }}><Img src="ic-check-circle-amber.svg" size={20} /><span className="t-body-m" style={{ color: '#fff' }}>{t}</span></div>
-        ))}
-      </div>
-      <div className="abs col" style={{ left: 24, top: 704, width: 342, gap: 12, alignItems: 'center' }}>
+      <div className="fix col" style={{ left: 24, bottom: 52, width: 342, gap: 12, alignItems: 'center' }}>
         <button className="btn btn-inverse" onClick={() => go('radar', { root: true })}><Img src="ic-radar-p900.svg" size={20} />Mulai Menawar</button>
         <button className="t-label-m" style={{ color: 'var(--primary-200)' }} onClick={() => go('profil', { root: true })}>Lihat Profil Mitra</button>
       </div>

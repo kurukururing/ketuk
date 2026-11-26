@@ -14,7 +14,7 @@ export default function Riwayat() {
   const filt = (t: Tx) => f === 'Semua' || (f === 'Bulan ini' && t.month === 'November 2026') || (f === 'Elektronik' && t.cat === 'Elektronik') || (f === 'Dibatalkan' && t.status === 'Dibatalkan')
   const months = ['November 2026', 'Oktober 2026']
   return (
-    <div className="screen">
+    <div className="screen fit">
       <span className="abs t-h1" style={{ left: 24, top: 60, letterSpacing: -0.39 }}>Riwayat</span>
       <div className="scroll" style={{ top: 112, bottom: 97 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

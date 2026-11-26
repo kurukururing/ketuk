@@ -14,14 +14,17 @@ npm run build    # hasil di dist/ (siap untuk Vercel / Netlify)
 Deploy ke Vercel: import repo → framework **Vite** terdeteksi otomatis → Deploy. Tidak perlu konfigurasi tambahan.
 
 ## Tampilan
-- **Laptop / proyektor:** HP 390×844 di tengah layar, dengan pengalih peran **Warga | Pengepul** di kanan atas.
-- **Dibuka di HP:** otomatis layar penuh seperti aplikasi asli.
+- **Laptop / proyektor / tablet:** HP 390×844 dalam bingkai di tengah layar, dengan pengalih peran **Warga | Pengepul** di kanan atas.
+- **Dibuka di HP (tegak):** layar penuh seperti aplikasi asli. Lebar desain mengikuti lebar HP, tinggi mengikuti tinggi layar HP:
+  navigasi bawah, tombol aksi, keypad, dialog, dan sheet selalu menempel di bawah layar; di HP pendek (mis. iPhone SE)
+  isi di tengah bisa di-scroll. Pil **KETUK · Warga ⇄** di bagian atas membuka Panel Demo (ganti peran, lompat adegan, reset).
+- **HP miring (landscape):** tampil dalam bingkai, dengan petunjuk untuk memutar HP ke posisi tegak.
 
 ## Shortcut presenter (berlaku kapan saja)
 
 | Tombol | Fungsi |
 |---|---|
-| `D` | Buka/tutup **Panel Demo** (tidak terlihat di layar HP) |
+| `D` | Buka/tutup **Panel Demo** (di HP: ketuk pil di bagian atas layar) |
 | `Tab` | Ganti peran Warga ⇄ Pengepul |
 | `1`–`7` | Lompat ke adegan: Beranda · Sesi baru · Radar Pengepul · Tawaran Pak Slamet masuk · Serah terima · Koreksi · Selesai |
 | `O` | Paksa tawaran Pak Slamet Rp38.000 masuk (cadangan) |
@@ -40,7 +43,7 @@ Cabang koreksi: Chat/Serah Terima → Koreksi Berbukti → Terima (Selesai) atau
 **Pengepul — onboarding & akun:** Ganti ke Pengepul / Pilih Peran Pengepul → Splash → Onboarding → Masuk → OTP → Pilih Peran → Daftar Mitra → Verifikasi Identitas (dialog Sumber Foto) → Status Verifikasi → Mitra Terverifikasi → Radar / Profil.
 Radar: ikon peta → Peta Radar, filter → Filter Radar, lonceng → Notifikasi, statistik → Pendapatan. Nav bawah: Radar | Tawaranku (Berjalan/Menang) | Jemput | Akun (Profil & Skor → Pendapatan, Lencana E-waste Aman, Keluar).
 
-Daftar lengkap koneksi prototype ada di [docs/FLOW.md](docs/FLOW.md); uji otomatis: `node scripts/e2e.mjs`, `node scripts/e2e-scen.mjs`, `node scripts/e2e-nav.mjs` (dengan `npx vite --port 5173` berjalan).
+Daftar lengkap koneksi prototype ada di [docs/FLOW.md](docs/FLOW.md); uji otomatis: `node scripts/e2e.mjs`, `node scripts/e2e-scen.mjs`, `node scripts/e2e-nav.mjs` (dengan `npx vite --port 5173` berjalan). Tambahkan `DEVICE="iPhone SE"` (nama perangkat Playwright apa pun) untuk menguji dalam emulasi HP.
 
 ## Naskah demo 2 menit (saran)
 

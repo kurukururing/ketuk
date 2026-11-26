@@ -17,7 +17,7 @@ export default function Pindahan() {
   const picked = ITEMS.filter((_, i) => on[i])
   const lo = picked.reduce((a, x) => a + x[3], 0), hi = picked.reduce((a, x) => a + x[4], 0)
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Mode Pindahan" trailing={<button className="icon-btn" onClick={() => go('bantuan')}><Img src="ic-help.svg" size={20} /></button>} />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

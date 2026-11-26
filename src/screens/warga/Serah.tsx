@@ -18,7 +18,7 @@ export default function Serah() {
   }
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Serah Terima" />
       <div className="scroll" style={{ top: 116, bottom: 130 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

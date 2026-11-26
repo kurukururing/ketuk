@@ -24,7 +24,7 @@ export default function Terkunci() {
   const w = winner(s)
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar ink title="Status Penjemputan" onBack={() => go('beranda', { root: true })}
         trailing={<button className="icon-btn"><Img src="ic-help.svg" size={20} /></button>} />
 

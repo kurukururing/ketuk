@@ -17,7 +17,7 @@ export function Profil() {
     ['ic-logout-coral22.svg', 'var(--coral-100)', 'Keluar', '', () => setLogout(true), true],
   ]
   return (
-    <div className="screen">
+    <div className="screen fit">
       <img src={A('profil-ellipse2.svg')} alt="" className="abs" style={{ left: -479, top: -229, width: 883, height: 883 }} />
       <img src={A('profil-header.svg')} alt="" className="abs" style={{ left: 0, top: 0, width: 390, height: 280 }} />
       <img src={A('profil-ellipse1.svg')} alt="" className="abs" style={{ left: -37, top: -432, width: 883, height: 883 }} />
@@ -71,7 +71,7 @@ export function Profil() {
       <StatusBar inverse />
       <AnimatePresence>
         {logout && (
-          <motion.div className="abs row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLogout(false)}
+          <motion.div className="fix row" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLogout(false)}
             style={{ inset: 0, background: 'rgba(21,20,43,0.6)', justifyContent: 'center', zIndex: 30 }}>
             <motion.div initial={{ scale: 0.92 }} animate={{ scale: 1 }} exit={{ scale: 0.92 }} onClick={e => e.stopPropagation()}
               className="col" style={{ width: 342, padding: 24, gap: 14, borderRadius: 28, background: '#fff', boxShadow: 'var(--elev-2)' }}>

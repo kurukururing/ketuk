@@ -22,7 +22,7 @@ export default function Kategori() {
   // Dispenser flow (C1): Foto → Ubah Kategori → Detail. Kipas (B2): Detail → Edit → Ubah Kategori → back.
   const save = () => (s.scenario === 'dispenser' ? go('detail', { replace: true }) : back())
   return (
-    <div className="screen">
+    <div className="screen fit">
       <AppBar title="Ubah Kategori" />
       <div className="scroll" style={{ top: 116, bottom: 102 }}>
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>

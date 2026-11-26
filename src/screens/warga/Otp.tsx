@@ -52,12 +52,13 @@ export default function Otp() {
         <button className="btn btn-primary" style={{ boxShadow: 'none' }} disabled={code.length < 6} onClick={() => go('peran')}>Verifikasi</button>
       </div>
 
-      <div className="abs col" style={{ left: 0, top: 554, width: 390, height: 290, background: 'var(--line-100)', padding: '12px 8px 46px', gap: 8 }}>
+      {/* Keypad pinned to the bottom; on short phones its keys get shorter so the Verifikasi button stays visible */}
+      <div className="fix col" style={{ left: 0, bottom: 0, width: 390, height: 'calc(290px + var(--short, 0px) * 0.4)', background: 'var(--line-100)', padding: '12px 8px 40px', gap: 8 }}>
         {[['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9'], ['', '0', 'del']].map((row, r) => (
-          <div key={r} className="row" style={{ gap: 8 }}>
-            {row.map((k, i) => k === '' ? <div key={i} className="grow" style={{ height: 52 }} /> : (
+          <div key={r} className="row grow" style={{ gap: 8, alignItems: 'stretch' }}>
+            {row.map((k, i) => k === '' ? <div key={i} className="grow" /> : (
               <button key={i} onClick={() => press(k)} className="row grow t-h2"
-                style={{ height: 52, borderRadius: 'var(--radius-sm)', justifyContent: 'center', background: k === 'del' ? 'transparent' : '#fff', boxShadow: k === 'del' ? 'none' : '0 1px 0 rgba(0,0,0,0.08)' }}>
+                style={{ borderRadius: 'var(--radius-sm)', justifyContent: 'center', background: k === 'del' ? 'transparent' : '#fff', boxShadow: k === 'del' ? 'none' : '0 1px 0 rgba(0,0,0,0.08)' }}>
                 {k === 'del' ? <Img src="ic-chevron-left-ink.svg" size={24} /> : k}
               </button>
             ))}

@@ -13,12 +13,16 @@ export default function Chat({ initials, name, status, banner, messages, quick, 
   const [extra, setExtra] = useState<Msg[]>([])
   const [draft, setDraft] = useState('')
   const end = useRef<HTMLDivElement>(null)
-  useEffect(() => { end.current?.scrollIntoView({ behavior: 'smooth' }) }, [extra.length])
+  // Scroll only the message list (scrollIntoView would also scroll the phone canvas and shift the whole UI)
+  useEffect(() => {
+    const list = end.current?.closest('.scroll') as HTMLElement | null
+    list?.scrollTo({ top: list.scrollHeight, behavior: 'smooth' })
+  }, [extra.length])
   const send = (text: string) => { if (text.trim()) { setExtra(x => [...x, { me: true, text, time: '15.49  | terkirim' }]); setDraft('') } }
   const all = [...messages, ...extra]
 
   return (
-    <div className="screen">
+    <div className="screen fit">
       <div className="abs row" style={{ left: 0, top: 46, width: 390, height: 64, padding: '0 20px', gap: 12, background: '#fff', borderBottom: '1px solid var(--line-200)', zIndex: 5 }}>
         <button className="icon-btn" style={{ width: 40, height: 40 }} onClick={back} aria-label="Kembali"><Img src="ic-chevron-left-ink.svg" size={20} /></button>
         <Avatar initials={initials} size={40} />
@@ -50,10 +54,10 @@ export default function Chat({ initials, name, status, banner, messages, quick, 
         </div>
       </div>
 
-      <div className="abs row scroll" style={{ left: 0, right: 0, top: 754, height: 40, padding: '0 46px', gap: 8 }}>
+      <div className="fix row scroll" style={{ left: 0, right: 0, bottom: 50, height: 40, padding: '0 46px', gap: 8 }}>
         {quick.map(q => <button key={q} className="chip" onClick={() => send(q)}>{q}</button>)}
       </div>
-      <div className="abs row" style={{ left: 0, bottom: 0, width: 390, height: 90, padding: '10px 16px 34px', gap: 10, background: '#fff', borderTop: '1px solid var(--line-200)', alignItems: 'flex-start' }}>
+      <div className="fix row" style={{ left: 0, bottom: 0, width: 390, height: 90, padding: '10px 16px 34px', gap: 10, background: '#fff', borderTop: '1px solid var(--line-200)', alignItems: 'flex-start' }}>
         <button className="row" style={{ width: 44, height: 44, borderRadius: 999, background: 'var(--line-100)', justifyContent: 'center' }}><Img src="ic-camera-ink.svg" size={20} /></button>
         <input value={draft} onChange={e => setDraft(e.target.value)} onKeyDown={e => e.key === 'Enter' && send(draft)} placeholder="Tulis pesan..."
           className="t-body-m grow" style={{ height: 44, padding: '0 16px', borderRadius: 999, background: 'var(--line-100)', border: 0, outline: 0 }} />

@@ -46,6 +46,10 @@ body {
   background: #0f0d33;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 input, textarea { font: inherit; color: inherit; }
@@ -75,13 +79,23 @@ img { display: block; }
 .abs { position: absolute; }
 .card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--elev-1); }
 
-/* A screen = one 390×844 Figma frame */
+/* A screen = one 390-wide Figma frame. Its height follows the device:
+   --page-h = max(844, device height) for fixed-layout frames (they scroll on short phones),
+   --vh-c   = device height for frames built from top/bottom-anchored scroll areas (.fit). */
 .screen {
-  position: absolute; inset: 0;
-  width: 390px; height: 844px;
+  position: relative;
+  width: 390px; height: var(--page-h, 844px);
   background: var(--canvas);
   overflow: hidden;
 }
+.screen.fit { height: var(--vh-c, 844px); }
+/* Scroll container for one screen inside the phone */
+.viewport {
+  position: absolute; inset: 0; overflow-x: hidden; overflow-y: auto;
+  overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.viewport::-webkit-scrollbar { display: none; }
 .scroll {
   position: absolute; left: 0; right: 0; overflow-y: auto; overflow-x: hidden;
   scrollbar-width: none;
@@ -90,7 +104,7 @@ img { display: block; }
 
 /* Bottom action bar (white, top border, home-indicator padding) */
 .bottom-bar {
-  position: absolute; left: 0; right: 0; bottom: 0;
+  position: fixed; left: 0; right: 0; bottom: 0;
   background: var(--surface); border-top: 1px solid var(--line-200);
   padding: 12px 24px 34px; display: flex; flex-direction: column; gap: 8px; z-index: 5;
 }
@@ -138,3 +152,11 @@ img { display: block; }
 @keyframes pulse-ring { 0% { transform: scale(.9); opacity: .7 } 100% { transform: scale(1.6); opacity: 0 } }
 @keyframes shimmer { 0% { background-position: -200% 0 } 100% { background-position: 200% 0 } }
 @keyframes spin { to { transform: rotate(360deg) } }
+
+/* Pinned to the phone viewport (the phone canvas is the containing block), not to the scrolling page */
+.fix { position: fixed !important; }
+
+/* Presenter panel becomes a bottom sheet on phones */
+@media (max-width: 559px) {
+  .demo-panel { left: 8px !important; right: 8px !important; width: auto !important; top: auto !important; bottom: 8px !important; max-height: 82dvh; }
+}

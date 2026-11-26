@@ -10,12 +10,12 @@ export default function Konfirmasi() {
   if (!o) return <Sesi />
   const others = s.session.offers.length - 1
   return (
-    <div className="screen">
+    <div className="screen fit">
       <div style={{ pointerEvents: 'none' }}><Sesi /></div>
       <motion.button aria-label="Batal" onClick={back} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-        className="abs" style={{ inset: 0, background: 'rgba(21,20,43,0.6)', zIndex: 40 }} />
+        className="fix" style={{ inset: 0, background: 'rgba(21,20,43,0.6)', zIndex: 40 }} />
       <motion.div initial={{ y: 480 }} animate={{ y: 0 }} transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-        className="abs col" style={{ left: 0, bottom: 0, width: 390, zIndex: 41, background: 'var(--surface)', borderRadius: '28px 28px 0 0', padding: '12px 24px 34px', gap: 16, alignItems: 'center' }}>
+        className="fix col" style={{ left: 0, bottom: 0, width: 390, zIndex: 41, background: 'var(--surface)', borderRadius: '28px 28px 0 0', padding: '12px 24px 34px', gap: 16, alignItems: 'center' }}>
         <div style={{ width: 40, height: 5, borderRadius: 3, background: 'var(--line-200)' }} />
         <motion.div initial={{ rotate: -30, scale: 0.6 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 12, delay: 0.15 }}
           className="row" style={{ width: 76, height: 76, borderRadius: 999, background: 'var(--amber-500)', justifyContent: 'center', boxShadow: '0 10px 24px -4px rgba(245,166,36,0.35)' }}>

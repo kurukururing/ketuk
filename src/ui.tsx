@@ -164,7 +164,7 @@ export function BottomNavWarga({ active = 'beranda' }: { active?: WargaTab }) {
       onClick={() => active !== k && go(screen, { root: true })} />
   )
   return (
-    <div className="abs" style={{ left: 0, top: 747, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
+    <div className="fix" style={{ left: 0, bottom: 0, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
       {/* Figma: "+" → C1 Ambil Foto Blur (skenario dispenser) */}
       <button onClick={() => { d({ type: 'scenario', scenario: 'dispenser' }); go('foto') }} className="abs row" aria-label="Pasang barang"
         style={{ left: 169, top: -12, width: 52, height: 52, borderRadius: 100, background: 'var(--primary-500)', justifyContent: 'center', boxShadow: 'var(--elev-primary)' }}>
@@ -194,7 +194,7 @@ export function BottomNavPengepul({ active, onNav }: { active?: PengepulTab; onN
     ['radar', 'Radar', 'nav-radar'], ['tawaranku', 'Tawaranku', 'nav-tawaranku'], ['jemput', 'Jemput', 'nav-jemput'], ['akun', 'Akun', 'nav-akun'],
   ]
   return (
-    <div className="abs" style={{ left: 0, top: 747, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
+    <div className="fix" style={{ left: 0, bottom: 0, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
       <div className="row" style={{ padding: '10px 12px 0', alignItems: 'flex-start' }}>
         {items.map(([k, label, icon]) => <NavItem key={k} icon={`${icon}${k === active ? '-active' : ''}.svg`} label={label} active={k === active}
           onClick={() => (onNav ? onNav(k) : go(dest[k], { root: true }))} />)}
