@@ -10,7 +10,7 @@ const FAQ: [string, string][] = [
   ['Bagaimana Mode Dibantu Keluarga bekerja?', ''],
 ]
 
-/** Figma: G1 Pusat Bantuan (29:2344) — "Bagaimana Mode Dibantu…" → G1 Mode Dibantu Keluarga */
+/** Figma: G1 Pusat Bantuan (29:2344) — "Bagaimana Mode Dibantu…" → K1 Aktifkan Mode Dibantu Keluarga */
 export default function Bantuan() {
   const { s, go } = useStore()
   const [open, setOpen] = useState(0)
@@ -31,7 +31,7 @@ export default function Bantuan() {
         <div className="col" style={{ padding: '4px 16px', borderRadius: 'var(--radius-lg)', background: '#fff' }}>
           {FAQ.map(([q, a], i) => (
             <div key={q} className="col" style={{ gap: 8, padding: '14px 0', borderBottom: i < FAQ.length - 1 ? '1px solid var(--line-100)' : 'none' }}>
-              <button className="row" style={{ gap: 8, textAlign: 'left' }} onClick={() => (i === FAQ.length - 1 ? go('dibantu') : setOpen(open === i ? -1 : i))}>
+              <button className="row" style={{ gap: 8, textAlign: 'left' }} onClick={() => (i === FAQ.length - 1 ? go('k1-aktifkan') : setOpen(open === i ? -1 : i))}>
                 <span className="t-body-ms grow" style={{ color: open === i ? 'var(--primary-500)' : undefined }}>{q}</span>
                 <img src={A(open === i ? 'chev-down-indigo.svg' : 'chev-down.svg')} alt="" style={{ width: 18, height: 18, transform: open === i ? 'rotate(180deg)' : undefined }} />
               </button>

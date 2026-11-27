@@ -4,7 +4,8 @@ import { Img, StatusBar } from '../../ui'
 
 /** Figma: E1 Transaksi Dibatalkan (25:2129) — reached from Koreksi Berbukti → Tolak & Batalkan */
 export default function Batal() {
-  const { s, go } = useStore()
+  const { s, d, go } = useStore()
+  const again = () => (s.scenario === 'borongan' ? go('pindahan', { root: true }) : (d({ type: 'set', v: { detail: 'ok' } }), go('detail', { root: true })))
   return (
     <div className="screen">
       <div className="abs col" style={{ left: 24, top: 100, width: 342, gap: 10, alignItems: 'center', textAlign: 'center' }}>
@@ -14,14 +15,14 @@ export default function Batal() {
         </motion.div>
         <div style={{ height: 4 }} />
         <span className="t-h1" style={{ letterSpacing: -0.39 }}>Transaksi dibatalkan</span>
-        <span className="t-body-l" style={{ color: 'var(--ink-500)' }}>Kamu menolak koreksi {rp(CORRECTION.price)}. Tidak ada denda, dan {s.scenario === 'kipas' ? 'kipas angin' : 'barangmu'} tetap milikmu.</span>
+        <span className="t-body-l" style={{ color: 'var(--ink-500)' }}>Kamu menolak koreksi {rp(CORRECTION.price)}. Tidak ada denda, dan {s.scenario === 'kipas' ? 'kipas angin' : s.scenario === 'dispenser' ? 'dispenser' : 'barangmu'} tetap milikmu.</span>
       </div>
       <div className="abs col" style={{ left: 0, top: 330, width: 390, padding: '0 24px' }}>
         <div className="col" style={{ gap: 14, padding: 16, borderRadius: 'var(--radius-lg)', background: '#fff' }}>
           <span className="t-body-ms">Yang terjadi selanjutnya</span>
           {([
             ['ic-chart-indigo.svg', 'var(--primary-100)', 'Koreksi tercatat', `Masuk ke Skor Tepat Harga ${winnerName(s)}`, null],
-            ['ic-refresh-amber.svg', 'var(--amber-100)', 'Pasang ulang kapan saja', 'Patokan Harga AI menyesuaikan foto baru', () => go('detail', { root: true })],
+            ['ic-refresh-amber.svg', 'var(--amber-100)', 'Pasang ulang kapan saja', 'Patokan Harga AI menyesuaikan foto baru', () => again()],
             ['ic-alert-coral20.svg', 'var(--coral-100)', 'Ada paksaan saat jemput?', 'Laporkan, tim KETUK menindaklanjuti 1x24 jam', null],
           ] as const).map(([ic, bg, t, sub, on]) => (
             <button key={t} className="row" style={{ gap: 12, textAlign: 'left', cursor: on ? 'pointer' : 'default' }} onClick={on ?? undefined}>
@@ -36,8 +37,8 @@ export default function Batal() {
         </div>
       </div>
       <div className="bottom-bar" style={{ height: 166 }}>
-        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => go('detail', { root: true })}>
-          <Img src="ic-refresh-white.svg" size={20} />Pasang Ulang Barang
+        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={again}>
+          <Img src="ic-refresh-white.svg" size={20} />{s.scenario === 'borongan' ? 'Pasang Ulang di Mode Pindahan' : 'Pasang Ulang Barang'}
         </button>
         <button className="btn" style={{ border: '1.5px solid var(--line-200)' }} onClick={() => go('beranda', { root: true })}>
           <Img src="ic-house-ink20.svg" size={20} />Kembali ke Beranda

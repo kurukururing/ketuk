@@ -43,13 +43,15 @@ const SPARKS: [number, number, number][] = [
 ]
 
 export default function Splash() {
-  const { go } = useStore()
-  const [p, setP] = useState(0)
+  const { s, go } = useStore()
+  // Pengepul app (Figma 353:5150 → 353:5162 → Onboarding): starts on the final logo frame, loader fills after 0.8 s, onboarding after 1.6 s more
+  const peng = s.role === 'pengepul'
+  const [p, setP] = useState(peng ? 8 : 0)
   const next = () => go('onboarding', { replace: true })
 
   useEffect(() => {
-    const ids = SCHEDULE.map(([ph, at]) => setTimeout(() => setP(ph), at))
-    ids.push(setTimeout(next, DONE_AT))
+    const ids = peng ? [setTimeout(() => setP(9), 800)] : SCHEDULE.map(([ph, at]) => setTimeout(() => setP(ph), at))
+    ids.push(setTimeout(next, peng ? 2400 : DONE_AT))
     return () => ids.forEach(clearTimeout)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

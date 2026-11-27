@@ -1,11 +1,15 @@
 # Alur Prototype KETUK (dibaca dari Figma)
 
-Sumber: semua *prototype reactions* di halaman **High Fidelity KETUK** (626 koneksi) dan
-*flow starting points*. Kode layar = nama frame di Figma. Kolom **route** = nama layar di web.
+Sumber: semua *prototype reactions* di halaman **High Fidelity KETUK** (pembaruan 27 Nov 2026:
+209 frame, 1.115 koneksi) dan *flow starting points*. Peta koneksi mentah: `docs/figma/edges-warga.txt`
+dan `docs/figma/edges-pengepul.txt`. Kode layar = nama frame di Figma. Kolom **route** = nama layar di web.
 
 Flow starting points di Figma: Alur Utama (Splash Screen_1), Warga | Beranda, Warga Sesi,
 Warga Status, Warga Riwayat, Warga Profil, Alur Pengepul (Radar), Pengepul | Daftar Mitra,
-Pengepul Jadwal, Pengepul Profil.
+Pengepul Jadwal, Pengepul Profil, ditambah alur baru: Lepas Gratis (Skenario 1 & 2), E-waste Aman,
+Koreksi E-waste, Keluarga | Kerabat membantu (K4), Flow 2 (K7), Pengepul | Lepas Gratis (F1),
+E-waste Aman (G1), Transfer kedaluwarsa (D1f), Saldo KETUK (E2). Semua titik mulai ini ada di
+Panel Demo → **Alur lain (Figma)**.
 
 ---
 
@@ -106,10 +110,35 @@ D5 Harga Terkunci → Chat → D5 Chat → Konfirmasi → D5 Koreksi Berbukti �
 ## 2. Pengepul
 
 ### 2.1 Onboarding mitra
-Splash (353:5150) → 0,8 dtk → Splash (353:5162) → 1,6 dtk → Onboarding ×3 → Masuk → OTP
-(atau Google) → Pilih Peran (Pengepul) → A1 Daftar Mitra Pengepul → Lanjut →
-A2 Verifikasi Identitas (unggah foto → dialog Sumber Foto) → Kirim → A3 Status Verifikasi →
-Status → A4 Mitra Terverifikasi → Mulai → B1 Radar Barang; Profil → E1 Profil & Skor.
+Splash (353:5150, foto gelap) → 0,8 dtk → Splash (353:5162) → 1,6 dtk → Onboarding ×3 → Masuk → OTP
+(atau Google) → Pilih Peran (Pengepul) → A1 Daftar Mitra Pengepul `mitra-daftar` → Pindai KTP →
+A1a kamera KTP → A1b Data dari KTP `a1b-ktp` → Gunakan Data Ini → A1c Daftar Mitra · Terisi
+`mitra-daftar-terisi` → Lanjut → A2 Verifikasi Identitas `mitra-verifikasi`:
+Foto lapak → A2a kamera → A2b Pratinjau `a2b-pratinjau` → A2c kamera kendaraan → A2d `a2d-pratinjau`
+→ A2e kamera STNK → A2f `a2f-pratinjau` → Gunakan Foto → A2g Dokumen Lengkap `a2g-lengkap`;
+Surat kuasa → A2h `a2h-kuasa` (Simpan → A2g). Kirim Verifikasi → A3 Status → A4 Mitra Terverifikasi.
+
+### 2.5 Pembayaran (D1a–D1f)
+D1 Serah Terima → Barang sesuai, bayar → D1a Pilih Metode `d1a-metode`: Saldo KETUK → D1b PIN
+`d1b-pin` (2,5 dtk) → D1 Pembayaran Selesai; Tunai → Pembayaran Selesai; Lanjut Bayar → D1c VA
+`d1c-va` (hitung mundur habis → D1f `d1f-kedaluwarsa`; Saya Sudah Transfer → D1d `d1d-cek` (3 dtk) →
+D1e `d1e-berhasil` → Lanjut → Pembayaran Selesai). D1f: Buat VA Baru → D1c; Bayar dengan Saldo → D1b.
+Koreksi Disetujui → D1 Pembayaran Selesai · Koreksi.
+
+### 2.6 Saldo KETUK (E2)
+E1 Profil → kartu Saldo KETUK → E2 `e2-saldo`: Isi Saldo → E2a `e2a-isi` → E2b VA `e2b-va` →
+E2c `e2c-berhasil` → Kembali ke Saldo; Tarik → E2d `e2d-tarik` → E2e PIN `e2e-pin` (2,5 dtk) →
+E2f `e2f-diproses`. Mutasi "Bayar ke Bu Ratna" → D1e.
+
+### 2.7 Lepas Gratis (F1–F4) & E-waste Aman (G1–G5)
+F1 Radar LG `f1-radar` → kartu Kardus → F1 Permintaan `f1-permintaan` → Terima → F2 Jadwal `f2-jadwal`
+→ Navigasi `f2-navigasi` → Tiba → F3 Cek & Timbang `f3-cek` → Sesuai → F4 Kode `f4-kode` → F4 Selesai
+`f4-selesai`; Tolak di Lokasi → F3 Tolak `f3-tolak` → F3 Terkirim `f3-terkirim` (3 dtk) → F3 Disetujui
+`f3-disetujui` → Jadwal.
+G1 Ajukan `g1-ajukan` → G1 Terkirim → G2 Persiapan `g2-persiapan` → Navigasi `g2-navigasi` → G3 Cek
+`g3-cek` → Sesuai → G4 Kode `g4-kode` → G4 Selesai `g4-selesai`; Ajukan Koreksi → G3 Koreksi →
+G3 Menunggu (3 dtk) → G3 Disetujui → G4 Kode · Koreksi `g4-kode-k` → G4 Selesai · Koreksi
+`g4-selesai-k` → Salurkan → G5 `g5-salurkan` → Kirim Bukti → Radar.
 
 ### 2.2 Radar & tawaran
 | Dari | Pemicu | Ke |
@@ -143,6 +172,21 @@ Terverifikasi / Bantuan. Lencana → Profil.
 
 ---
 
+## 1b. Warga — alur baru
+
+- **Kamera (B2/C1 Ambil Foto)** `foto`: mulai buram ("Foto buram · ketuk layar untuk fokus"); ketuk
+  layar/rana untuk fokus, rana lagi → Kategori → Detail. Galeri dispenser → Barang Tidak Dikenali.
+- **Lepas Gratis (H1–H4):** `lepas` → `h1-cek` → kamera → `h2-mencari` → `h2-menerima` →
+  `h3-mengecek` → `h3-serah` → `h4-bukti`. Skenario 2 (barang ditolak): `h3-hasil` → `h3-ditolak` →
+  `h3-banding`.
+- **E-waste Aman (I1–I5):** `ewaste` → `i1-cek` → kamera → `i2-radar` → `i2-tawaran` → `i2-konfirmasi` →
+  `i2-berhasil` → `i3-rincian` → `i4-serah` → `i5-bukti`; koreksi `i4-koreksi` → `i4-serah-k` → `i5-bukti-k`.
+- **Mode Dibantu Keluarga (K1–K10):** Pilih Peran/Pusat Bantuan → `k1-aktifkan` → `k2-undang` →
+  `k3-terkirim` → Mode Dibantu. Kerabat: `k4-undangan` → `k5-bantu` → `k6-menunggu` (3 dtk) → Ketuk
+  Palu Berhasil. Pemilik: `k7-setujui` → `k8-disetujui` → Harga Terkunci. Akses: `k9-akses` → `k10-dicabut`.
+
+---
+
 ## 3. Peran ganda di demo web
 Web demo menjalankan kedua aplikasi sekaligus (tombol **Warga | Pengepul**, `Tab`). Aksi di satu
 sisi (pasang barang, kirim tawaran, ketuk palu, ajukan/terima koreksi, bayar) muncul di sisi lain
@@ -154,4 +198,4 @@ sebagai notifikasi dan data hidup, tanpa mengubah urutan layar di atas.
 Semua layar dan koneksi di atas sudah ada di web (route di kolom **route**). Layar varian (C1/D1 dispenser,
 D5 borongan, Lepas Gratis) memakai komponen layar yang sama dengan data skenario berbeda. Layar statis yang
 dibuka dari daftar/notifikasi (mis. Harga Terkunci dispenser, Koreksi dari notifikasi) disiapkan lewat
-`demoState`. Rute yang diuji otomatis: `scripts/e2e.mjs`, `scripts/e2e-scen.mjs`, `scripts/e2e-nav.mjs`.
+`demoState`. Rute yang diuji otomatis: `scripts/e2e.mjs`, `scripts/e2e-scen.mjs`, `scripts/e2e-nav.mjs`, `scripts/e2e-baru.mjs` (alur baru).

@@ -54,6 +54,14 @@ export function Profil() {
               </button>
             ))}
           </div>
+          <button onClick={() => go('e2-saldo')} className="row" style={{ gap: 12, padding: '14px 16px', borderRadius: 'var(--radius-lg)', background: 'var(--primary-900)', textAlign: 'left' }}>
+            <div className="row" style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,255,255,0.1)', justifyContent: 'center', flex: 'none' }}><Img src="fi-wallet-ffffff-20.svg" size={20} /></div>
+            <div className="col grow nowrap" style={{ gap: 2 }}>
+              <span className="t-body-s" style={{ color: 'var(--primary-200)' }}>Saldo KETUK</span>
+              <span className="t-num-m" style={{ color: '#fff' }}>Rp512.000</span>
+            </div>
+            <span className="t-label-s nowrap" style={{ padding: '6px 12px', borderRadius: 999, background: '#fff', color: 'var(--primary-500)' }}>Isi / Tarik</span>
+          </button>
           <SectionHeader title="Lencana" />
           {rows.map(([ic, tile, t, s, on, danger]) => (
             <button key={t} onClick={on} className="row" style={{ gap: 12, padding: 14, borderRadius: 'var(--radius-lg)', background: '#fff', textAlign: 'left' }}>

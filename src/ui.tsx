@@ -166,7 +166,7 @@ export function BottomNavWarga({ active = 'beranda' }: { active?: WargaTab }) {
   return (
     <div className="fix" style={{ left: 0, bottom: 0, width: 390, background: 'var(--surface)', borderTop: '1px solid var(--line-200)', zIndex: 10 }}>
       {/* Figma: "+" → C1 Ambil Foto Blur (skenario dispenser) */}
-      <button onClick={() => { d({ type: 'scenario', scenario: 'dispenser' }); go('foto') }} className="abs row" aria-label="Pasang barang"
+      <button onClick={() => { d({ type: 'scenario', scenario: 'dispenser' }); d({ type: 'set', v: { cam: 'dispenser', camSharp: false, detail: 'ok' } }); go('foto') }} className="abs row" aria-label="Pasang barang"
         style={{ left: 169, top: -12, width: 52, height: 52, borderRadius: 100, background: 'var(--primary-500)', justifyContent: 'center', boxShadow: 'var(--elev-primary)' }}>
         <Img src="ic-add-white.svg" size={22} />
       </button>

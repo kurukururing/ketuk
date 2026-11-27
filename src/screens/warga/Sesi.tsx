@@ -49,9 +49,10 @@ export default function Sesi() {
       <div className="abs row" style={{ left: '50%', top: 369, transform: 'translateX(-50%)', gap: 6.5 }}>
         {[
           ['ic-tag-white.svg', `${offers.length} tawaran`],
+          // Figma D5: 4 tawaran | Borongan | Radius 3 km
+          ...(bor ? [['ic-box-white.svg', 'Borongan']] : []),
           ['ic-pin-white.svg', `Radius ${s.radius} km`],
           ...(bor ? [] : [['ic-lock-white.svg', 'Harga Terkunci saat dipilih']]),
-          ...(bor ? [['ic-box-white.svg', 'Borongan']] : []),
         ].map(([ic, t]) => (
           <span key={ic} className="row nowrap" style={{ gap: 3.26, padding: '3.26px 8.15px', borderRadius: 999, background: 'rgba(255,255,255,0.16)', color: '#fff', fontWeight: 600, fontSize: 9.78, lineHeight: '13px' }}>
             <Img src={ic} size={11.4} />{t}

@@ -1,16 +1,16 @@
 import { useStore, rp, PAK_SLAMET } from '../../store'
-import { Img, StatusBar, AppBar, ItemPhoto } from '../../ui'
+import { A, Img, StatusBar, AppBar } from '../../ui'
 
 /** Figma: D1 Serah Terima Pengepul (15:1274) — "Cocokkan Barang" */
 export default function Cek() {
-  const { s, d, go } = useStore()
+  const { s, go } = useStore()
   const price = s.finalPrice ?? PAK_SLAMET.price
   return (
     <div className="screen">
       <AppBar ink title="Cocokkan Barang" />
       <div className="abs col" style={{ left: 0, top: 116, width: 390, padding: '0 24px', gap: 12 }}>
         <span className="t-body-m" style={{ color: 'var(--ink-500)' }}>Bandingkan barang di lokasi dengan foto saat warga memasang.</span>
-        <ItemPhoto size={118} style={{ width: 166 }} />
+        <img src={A('photo-bukti.jpg')} alt="" style={{ width: 166, height: 118, borderRadius: 14, objectFit: 'cover' }} />
         <div className="col" style={{ gap: 10, padding: 16, borderRadius: 'var(--radius-lg)', background: '#fff' }}>
           {['Bentuk & warna sesuai foto', 'Masih menyala, sudah dites di lokasi'].map(t => (
             <div key={t} className="row" style={{ gap: 10 }}><Img src="ic-check-circle-indigo.svg" size={22} /><span className="t-body-m grow">{t}</span></div>
@@ -27,7 +27,7 @@ export default function Cek() {
       </div>
       <div className="bottom-bar" style={{ height: 166 }}>
         <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }}
-          onClick={() => { d({ type: 'complete' }); go('bayar', { root: true }) }}>
+          onClick={() => go('d1a-metode')}>
           <Img src="ic-check-white-20.svg" size={20} />Barang sesuai, bayar {rp(price)}
         </button>
         <button className="btn btn-danger" onClick={() => go('ajukan-koreksi')}>

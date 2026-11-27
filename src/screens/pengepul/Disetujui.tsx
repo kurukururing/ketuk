@@ -5,7 +5,7 @@ import { A, Img, StatusBar, AppBar } from '../../ui'
 /** Figma: D1 Koreksi Disetujui (278:6575) — Chat dengan Warga → Lanjut → here → Bayar → Pembayaran Selesai */
 export default function Disetujui() {
   const { d, go } = useStore()
-  const rows: [string, string][] = [['Warga', ITEM.warga], ['Barang', ITEM.name], ['Alasan koreksi', CORRECTION.reason], ['Jadwal jemput', 'Hari ini 16.00']]
+  const rows: [string, string][] = [['Warga', ITEM.warga], ['Barang', ITEM.name], ['Alasan koreksi', CORRECTION.reason], ['Jadwal jemput', 'Hari ini 15.30']]
   return (
     <div className="screen">
       <AppBar ink title="Koreksi Warga" trailing={<button className="icon-btn"><Img src="ic-help.svg" size={20} /></button>} />

@@ -15,12 +15,17 @@ const CATS: [string, string, string, string, 'illo' | 'icon'][] = [
 
 /** Figma: B2 Ubah Kategori (24:1585) / C1 Ubah Kategori (247:4770, 254:5756) — Simpan → Detail */
 export default function Kategori() {
-  const { s, go, back } = useStore()
+  const { s, d, go, back } = useStore()
   const [sel, setSel] = useState('Elektronik')
   const [q, setQ] = useState('')
   const list = CATS.filter(c => !q || (c[0] + c[1]).toLowerCase().includes(q.toLowerCase()))
-  // Dispenser flow (C1): Foto → Ubah Kategori → Detail. Kipas (B2): Detail → Edit → Ubah Kategori → back.
-  const save = () => (s.scenario === 'dispenser' ? go('detail', { replace: true }) : back())
+  // Figma: from the camera, Simpan → Detail. From Detail's Edit: B2 → back to Detail, C1 (247:4770) → C1 Foto Blur.
+  const fromEdit = s.v.katFrom === 'edit'
+  const save = () => {
+    d({ type: 'set', v: { katFrom: '' } })
+    if (s.scenario === 'dispenser') { d({ type: 'set', v: { detail: fromEdit ? 'blur' : 'ok' } }); fromEdit ? back() : go('detail', { replace: true }) }
+    else fromEdit ? back() : go('detail', { replace: true })
+  }
   return (
     <div className="screen fit">
       <AppBar title="Ubah Kategori" />

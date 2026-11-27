@@ -11,6 +11,23 @@ const PRESETS: [Preset, string, string][] = [
   ['selesai', '7', 'Transaksi selesai'],
 ]
 
+/** Figma flow starting points added in the latest prototype: [label, role, screen, extra UI variants] */
+const FLOWS: [string, 'warga' | 'pengepul', string, Record<string, string | number | boolean>?][] = [
+  ['Warga · Lepas Gratis', 'warga', 'lepas', { lgTolak: false }],
+  ['Warga · Lepas Gratis, barang ditolak', 'warga', 'lepas', { lgTolak: true }],
+  ['Warga · E-waste Aman', 'warga', 'ewaste'],
+  ['Warga · Koreksi E-waste', 'warga', 'i4-koreksi'],
+  ['Warga · Mode Dibantu Keluarga', 'warga', 'k1-aktifkan'],
+  ['Kerabat · Undangan & bantu jual', 'warga', 'k4-undangan'],
+  ['Pemilik · Setujui ketuk palu kerabat', 'warga', 'k7-setujui'],
+  ['Pengepul · Daftar Mitra', 'pengepul', 'mitra-daftar'],
+  ['Pengepul · Lepas Gratis', 'pengepul', 'f1-radar'],
+  ['Pengepul · E-waste Aman', 'pengepul', 'g1-ajukan'],
+  ['Pengepul · Pembayaran', 'pengepul', 'd1a-metode'],
+  ['Pengepul · Transfer kedaluwarsa', 'pengepul', 'd1f-kedaluwarsa'],
+  ['Pengepul · Saldo KETUK', 'pengepul', 'e2-saldo'],
+]
+
 /** Presenter-only control panel. Toggle with D (or `). Hidden from the judges' view by default. */
 export default function DemoPanel() {
   const { s, d } = useStore()
@@ -54,6 +71,17 @@ export default function DemoPanel() {
           <Section title="Lompat ke adegan">
             {PRESETS.map(([p, key, label]) => (
               <Btn key={p} onClick={() => d({ type: 'jump', preset: p })}><Kbd>{key}</Kbd>{label}</Btn>
+            ))}
+          </Section>
+
+          <Section title="Alur lain (Figma)">
+            {FLOWS.map(([label, role, screen, v]) => (
+              <Btn key={label} onClick={() => {
+                d({ type: 'jump', preset: role === 'pengepul' ? 'pengepul' : 'awal' })
+                if (role === 'pengepul') d({ type: 'role', role })
+                if (v) d({ type: 'set', v })
+                d({ type: 'go', screen, role, root: true })
+              }}>{label}</Btn>
             ))}
           </Section>
 

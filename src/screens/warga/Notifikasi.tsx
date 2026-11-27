@@ -21,7 +21,7 @@ export default function Notifikasi() {
   const yesterday: N[] = [
     { k: 'd', icon: 'ic-alert-coral20.svg', bg: 'var(--coral-100)', title: 'Koreksi diajukan', sub: 'Kasur busa | usulan Rp50.000 dengan bukti foto', time: 'Kmr', go: () => { d({ type: 'demoState', scenario: 'kipas', phase: 'won', correction: true }); go('koreksi') } },
     { k: 'e', icon: 'ic-cash-amber.svg', bg: 'var(--amber-100)', title: 'Rp45.000 diterima', sub: 'Rak besi 3 susun | tanpa koreksi', time: 'Kmr', go: () => go('bukti') },
-    { k: 'f', icon: 'ic-users-indigo20.svg', bg: 'var(--primary-100)', title: 'Dimas memasang barang', sub: 'Mode Dibantu Keluarga | kardus 12 kg', time: 'Kmr', go: () => go('dibantu') },
+    { k: 'f', icon: 'ic-users-indigo20.svg', bg: 'var(--primary-100)', title: 'Dimas memasang barang', sub: 'Mode Dibantu Keluarga | kardus 12 kg', time: 'Kmr', go: () => go('k9-akses') },
   ]
   const groups: [string, N[]][] = tab === 'Semua' ? [['Hari ini', today], ['Kemarin', yesterday]] : tab === 'Sesi' ? [['Hari ini', today]] : [['Hari ini', today.slice(0, 2)]]
   return (

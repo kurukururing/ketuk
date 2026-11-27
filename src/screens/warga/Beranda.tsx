@@ -1,3 +1,4 @@
+import { openCam } from '../Camera'
 import { useStore, ITEM, rp } from '../../store'
 import { A, Img, StatusBar, CountdownRing, BottomNavWarga, SectionHeader } from '../../ui'
 
@@ -17,7 +18,7 @@ export default function Beranda() {
     else if (sesi.status === 'done') go('selesai')
     else pasang()
   }
-  const pasang = () => { d({ type: 'scenario', scenario: 'kipas' }); go('foto') }
+  const pasang = () => { d({ type: 'scenario', scenario: 'kipas' }); openCam(d, go, 'kipas') }
   // Figma B1 Beranda hotspots
   const TILE_GO: Record<string, () => void> = {
     'Pasang': pasang, 'Harga AI': pasang, 'Sesi Ketuk': () => go('sesi-saya'), 'Pindahan': () => go('pindahan'),

@@ -7,8 +7,9 @@ import { itemPhoto } from '../../ui'
 export default function ChatPengepul() {
   const { s, d, go } = useStore()
   const price = s.finalPrice ?? 38000
-  // Figma: E1/D5 chat carry the correction request; D1 (dispenser) chat → Barang Sesuai
-  const koreksi = s.correction === 'pending' || s.scenario === 'borongan'
+  // Figma: E1/D5 chat carry the coral "Pengajuan Koreksi Harga →"; D1 (dispenser) shows "Barang Sesuai →",
+  // and in the prototype both lead to the Koreksi Berbukti screen.
+  const koreksi = s.correction === 'pending' || s.scenario !== 'dispenser'
   const w = winner(s)
   return (
     <Chat initials={w.initials} name={w.name} status={s.arrived ? 'Sudah tiba di lokasi' : 'Menuju lokasi | tiba 12 menit lagi'}
@@ -24,7 +25,7 @@ export default function ChatPengepul() {
           me: false, time: '15.55',
           action: koreksi
             ? <button className="btn" style={{ width: 'auto', background: 'var(--coral-700)', color: '#fff' }} onClick={() => { if (s.correction === 'none') d({ type: 'requestCorrection' }); go('koreksi') }}>Pengajuan Koreksi Harga →</button>
-            : <button className="btn btn-primary" style={{ width: 'auto', boxShadow: 'none' }} onClick={() => go('serah')}>Barang Sesuai →</button>,
+            : <button className="btn btn-primary" style={{ width: 'auto', boxShadow: 'none' }} onClick={() => { if (s.correction === 'none') d({ type: 'requestCorrection' }); go('koreksi') }}>Barang Sesuai →</button>,
         },
       ]}
     />

@@ -11,10 +11,10 @@ const OPTS: { k: Role; img: string; over: string; overColor: string; title: stri
 /** Figma: A5 Pilih Peran (9:246) — Warga → A6 Alamat Jemput; Pengepul → A1 Daftar Mitra; Mode Dibantu → G1 */
 export default function Peran() {
   const { s, d, go } = useStore()
-  const [role, setRole] = useState<Role>(s.role)
+  const [role, setRole] = useState<Role | null>(null) // Figma: nothing selected until a card is tapped
   const [dibantu, setDibantu] = useState(false)
   const next = () => {
-    if (role === 'warga') {
+    if ((role ?? s.role) === 'warga') {
       if (s.role === 'warga') go('alamat')
       else { go('alamat', { role: 'warga' }); d({ type: 'role', role: 'warga' }) }
     } else if (s.role === 'pengepul') go('mitra-daftar')
@@ -27,12 +27,12 @@ export default function Peran() {
       <div className="abs col" style={{ left: 0, top: 76, width: 390, padding: '0 24px', gap: 16 }}>
         <span className="t-h1" style={{ color: 'var(--primary-500)', letterSpacing: -0.39 }}>Kamu ingin masuk sebagai?</span>
         <span className="t-body-l" style={{ color: 'var(--ink-500)' }}>Peran bisa diganti kapan saja dari menu Akun.</span>
-        {OPTS.map(o => {
+        {(s.role === 'pengepul' ? [OPTS[1], OPTS[0]] : OPTS).map(o => {
           const on = role === o.k
           return (
             <button key={o.k} onClick={() => setRole(o.k)} className="row"
               style={{ gap: 14, padding: 18, alignItems: 'flex-start', textAlign: 'left', borderRadius: 'var(--radius-lg)', background: '#fff',
-                border: on ? '2px solid var(--primary-500)' : '1.5px solid var(--line-200)', boxShadow: on ? 'var(--elev-2)' : 'none', transition: 'all .2s' }}>
+                border: on ? '2px solid var(--primary-500)' : '1.5px solid var(--line-200)', boxShadow: on || (role === null && o.k === s.role) ? 'var(--elev-2)' : 'none', transition: 'all .2s' }}>
               <img src={A(o.img)} alt="" style={{ width: 68, height: 68, objectFit: 'cover' }} />
               <div className="col grow" style={{ gap: 4 }}>
                 <span className="t-overline" style={{ color: o.overColor }}>{o.over}</span>
@@ -53,12 +53,12 @@ export default function Peran() {
             <span className="t-body-ms">Mode Dibantu Keluarga</span>
             <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Kerabat bisa memasang barang untuk orang tua. Uang tetap masuk ke pemilik.</span>
           </div>
-          <Toggle on={dibantu} onChange={v => { setDibantu(v); if (v && s.role === 'warga') go('dibantu') }} />
+          <Toggle on={dibantu} onChange={v => { setDibantu(v); if (v && s.role === 'warga') go('k1-aktifkan') }} />
         </div>
       </div>
       <div className="fix" style={{ left: 24, bottom: 50, width: 342 }}>
         <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={next}>
-          <Img src="ic-arrow-right-white.svg" size={20} />Lanjut sebagai {role === 'warga' ? 'Warga' : 'Pengepul'}
+          <Img src="ic-arrow-right-white.svg" size={20} />Lanjut sebagai {(role ?? s.role) === 'warga' ? 'Warga' : 'Pengepul'}
         </button>
       </div>
       <StatusBar />

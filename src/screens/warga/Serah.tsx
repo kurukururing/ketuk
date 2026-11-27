@@ -8,7 +8,7 @@ export default function Serah() {
   const { s, d, go } = useStore()
   const price = s.finalPrice ?? 38000
   const [checks, setChecks] = useState([true, true, false])
-  const [method, setMethod] = useState<'tunai' | 'ewallet'>('tunai')
+  const [method, setMethod] = useState<'tunai' | 'ewallet' | null>(null) // Figma: no method picked yet
   const set = (i: number, v: boolean) => setChecks(c => c.map((x, j) => (j === i ? v : x)))
   const items = ['Barang sesuai foto saat dipasang', 'Kondisi sama, masih menyala', `Uang diterima ${rp(price)}`]
 

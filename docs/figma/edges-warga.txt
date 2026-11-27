@@ -1,0 +1,57 @@
+# Prototype edges, section "Aplikasi Warga" (read 2026-11-27). Format: frame#id: trigger>destination ; ...
+B1 Beranda#10:148: Avatar>G1 Akun ; Notif>B1 Notifikasi ; Sekali Ketuk/Foto Barang/Pasang/Harga AI/Kardus/Besi & kaleng/Kipas angin>B2 Ambil Foto (Buram)#552:5888 ; Sesi Ketuk/Lihat semua/Sesi>D1 Sesi Saya ; Pindahan>D4 ; E-waste>B2 Jalur E-waste Aman#557:6579 ; Lepas Gratis>D3 Lepas Gratis#555:6146 ; Dompet>G1 Dompet ; Bantuan>G1 Pusat Bantuan ; 38:12 (session card)>B2 Sesi Ketuk ; [+] nav>C1 Ambil Foto#550:6355 ; Riwayat>F1 ; Akun>G1 Akun
+B2 Ambil Foto (Buram)#552:5888: back ; Galeri>B2 Detail#10:442 ; "Langkah 1 dari 3"(tap)>B2 Ambil Foto#10:351
+B2 Ambil Foto#10:351: Galeri>B2 Detail ; Shutter/Lanjut>B2 Ubah Kategori#24:1585
+B2 Ubah Kategori: Simpan>B2 Detail
+B2 Detail#10:442: Bantuan ; Label>B2 Ambil Foto (Buram) ; Edit>B2 Ubah Kategori ; Ada baterai?>B2 Jalur E-waste Aman#557:6579 ; Mulai Sesi>B2 Sesi Ketuk
+C1 Ambil Foto#550:6355 (nav +): Galeri>C1 Gambar Tidak Dikenali#254:5141 ; "Langkah 1 dari 3">C1 Ambil Foto#254:5681
+C1 Ambil Foto#254:5681: Galeri>C1 Gambar Tidak Dikenali ; Shutter/Lanjut>C1 Ubah Kategori#254:5756
+C1 Ubah Kategori#254:5756: Simpan>C1 Detail#247:4724 ; C1 Ubah Kategori#247:4770: Simpan>C1 Foto Blur#254:5048
+C1 Detail/Foto Blur/Gambar Tidak Dikenali: Label>C1 Ambil Foto#550:6355 ; Edit>C1 Ubah Kategori#247:4770 ; Ada baterai?>C1 Jalur E-waste Aman#557:6675 ; Foto Ulang>C1 Ambil Foto#254:5681 ; C1 Detail Mulai Sesi>D1 Tidak Ada Pengepul
+D1 Tidak Ada Pengepul: Perluas>D1 Perluasan Radius (after3)>D1 Sesi Ketuk
+B2/D1 Sesi Ketuk: PS>Detail Tawaran ; Ketuk Palu>Konfirmasi ; D5 Sesi Borongan: back>D4 ; UB>D5 Detail ; Ketuk Palu>D5 Konfirmasi#552:5978 (NEW)
+D5 Detail Tawaran: Ketuk Palu>D5 Konfirmasi Ketuk Palu#552:5978 (NEW) > D5 Ketuk Palu Berhasil
+E1/D1/D5 Harga Terkunci: pengepul card>Serah Terima ; Chat/Telepon>Chat
+E1 Serah Terima: koreksi?>E1 Koreksi ; Konfirmasi Terima>E1 Selesai & Ulasan#550:6428 (NEW)
+D1 Serah Terima: koreksi?>D1 Koreksi Berbukti#552:6262 (NEW) ; Konfirmasi>D1 Selesai & Ulasan#550:6511 (NEW)
+D5 Serah Terima: koreksi?>D5 Koreksi ; Konfirmasi>D5 Selesai#95:4769
+E1 Koreksi: Terima>E1 Selesai (koreksi)#95:6350 ; Tolak>E1 Dibatalkan
+D1 Koreksi Berbukti#552:6262: Terima>D1 Selesai & Ulasan · Koreksi#552:6318 ; Tolak>D1 Transaksi Dibatalkan#552:6398
+D1 Transaksi Dibatalkan#552:6398: Pasang ulang>C1 Detail#247:4724 ; Ada paksaan>Bantuan ; Beranda
+D5 Koreksi: Terima>D5 Selesai#95:6421 ; Tolak>D5 Dibatalkan
+E1 Chat: Telepon>E1 Terkunci ; Pengajuan Koreksi>E1 Koreksi ; Kamera>OV:S1 Dialog Sumber Foto#41:3132
+D1 Chat: "Barang Sesuai →">D1 Koreksi Berbukti#552:6262 (!) ; Kamera>OV S1
+D5 Chat: back>D5 Terkunci ; Pengajuan Koreksi>D5 Koreksi ; Kamera>OV S1
+Selesai (all): Ya/Tidak sesuai chips ; Kirim Ulasan>B1 Beranda
+D4 Mode Pindahan: Tambah barang>D4 Foto Barang Pindahan (Buram)#552:6125 ; Mulai>D5 Sesi Borongan
+D4 Foto Barang Pindahan (Buram)#552:6125: Galeri>D4 ; "Langkah 1 dari 3">D4 Foto Barang Pindahan#552:6171 ; #552:6171: Galeri/Shutter/Lanjut>D4
+A5 Pilih Peran: Mode Dibantu Keluarga>K1 Aktifkan#571:7943
+B1 Notifikasi: Back>B1 Beranda ; Tawaran baru/Sesi tersisa>B2 Sesi ; Harga terkunci Rp35.000>E1 Harga Terkunci ; Koreksi diajukan>E1 Koreksi ; Rp45.000>F1 Bukti ; Dimas memasang>K9 Akses & Aktivitas Kerabat#571:8544
+D2 Sesi Tanpa Tawaran: Perluas radius / Perluas +30>D1 Perluasan Radius ; Lepas Gratis>D3 Lepas Gratis#555:6146 ; Ubah foto>B2 Detail
+D1 Sesi Saya: Terkunci tab/Dispenser>E1 Harga Terkunci ; Selesai tab>F1 ; kipas>B2 Sesi ; borongan>D5 Sesi ; kardus>D2 ; nav + >C1 Ambil Foto#550:6355
+F1 Riwayat: items>F1 Bukti ; Kasur>E1 Dibatalkan ; F1 Bukti: Unduh>F1 Riwayat ; Lapor>Bantuan
+G1 Akun: Ubah profil>A4 Daftar ; Alamat ; Dompet ; Mode Dibantu>G1 Mode Dibantu ; Ganti ke Pengepul>Splash Pengepul#353:5150 ; Notifikasi ; Bantuan ; Keluar>OV Dialog Keluar
+G1 Mode Dibantu Keluarga#29:2256: Toggle ; DP (Dimas row)>K9 Akses & Aktivitas Kerabat ; Undang kerabat>K2 Undang Kerabat ; Simpan>G1 Akun
+G1 Pusat Bantuan: "Bagaimana Mode Dibantu">K1 Aktifkan Mode Dibantu
+G1 Dompet / Tarik / Berhasil Tarik: unchanged
+D3 Lepas Gratis + Jemput#555:6146 (NEW layout): slot chips Besok 08–11 / 13–16 ; Ajukan Lepas Gratis>H1 Cek Kondisi Barang#555:6224
+H1 Cek Kondisi Barang#555:6224: checkboxes ; berat chips <5/5–20/>20 kg ; Lanjut Ambil Foto>H1 Foto Kondisi Barang (Buram)#555:6385
+H1 Foto (Buram)#555:6385: "Langkah 1 dari 3">H1 Foto Kondisi Barang#555:6316 ; #555:6316: Shutter/Lanjut>H2 Mencari Pengepul 3 km#555:6455
+H2 Mencari 3 km#555:6455: after2.5>H2 Perluasan Radius 5 km#555:6540 (after2.5)>H2 Pengepul Menerima#555:6623 ; Batalkan Permintaan>B1
+H2 Pengepul Menerima#555:6623: after4>H3 Pengepul Mengecek Barang#556:6342 (after3)>H3 Serah Terima Lepas Gratis#556:6423 ; Chat Pengepul>E1 Chat
+H3 Serah Terima LG#556:6423: Konfirmasi Serah Terima>H4 Bukti Lepas Gratis#556:6527 ; H4: Beri Ulasan>E1 Selesai#550:6428 ; Lihat di Riwayat>F1
+Varian tidak sesuai: H2 Menerima · Varian#556:6612 (after4)>H3 Mengecek · Varian#556:6680 (after3)>H3 Hasil Cek Tidak Sesuai#556:6759 ; Lihat Alasan & Foto Bukti>H3 Barang Ditolak#556:6838 ; Setuju, Tutup>B1 ; Ajukan Banding>H3 Banding Diajukan#556:6895 ; Pilah & Ajukan Ulang>H1 Foto (Buram)
+  (flow start "Lepas Gratis · Skenario 2" = 556:6612)
+B2 Jalur E-waste Aman#557:6579 / C1#557:6675: chips ; Mengerti, Cek Kondisi Barang>I1 Cek Kondisi E-waste#557:6708
+I1 Cek Kondisi E-waste: chips HP/Powerbank/Baterai ; checkboxes ; IMEI input ; Lanjut Ambil Foto>I1 Foto E-waste (Buram)#557:6894 >(Langkah)>I1 Foto E-waste#557:6809 >Shutter/Lanjut> I2 Sesi Ketuk E-waste Radar#557:6980 (after2.5)> I2 Sesi Ketuk E-waste Tawaran#557:7059
+I2 Tawaran: PS>I2 Detail Tawaran E-waste#557:7170 ; Ketuk Palu>I2 Konfirmasi#557:7264 >Ketuk Palu> I2 Ketuk Palu Berhasil#557:7408 ; Detail: Ketuk Palu Rp85.000>Konfirmasi
+I2 Berhasil: Lihat Rincian Transaksi>I3 Rincian Transaksi E-waste#561:6963 ; Beranda
+I3 Rincian: Lihat Jadwal Jemput>I4 Serah Terima E-waste#561:7097 ; I4: Konfirmasi & Terima Rp85.000>I5 Bukti & Lacak E-waste#561:7206 ; I5: Unduh Bukti>F1
+I4 Koreksi Berbukti E-waste#561:7304 (flow start "Warga | Koreksi E-waste"): Terima Rp70.000>I4 Serah Terima · Koreksi#561:7360 >Konfirmasi Rp70.000> I5 Bukti · Koreksi#561:7466 ; Tolak>E1 Dibatalkan
+K1 Aktifkan Mode Dibantu#571:7943: Undang Kerabat>K2 ; Nanti Saja>BACK
+K2 Undang Kerabat#571:8032: inputs, chips Anak/Cucu/Saudara/Tetangga, checkbox ; Kirim Undangan via WhatsApp>K3 Undangan Terkirim#571:8128 ; K3: Selesai>G1 Mode Dibantu ; Batalkan Undangan>K1
+K4 Kerabat · Undangan Masuk#571:8206 (flow start "Keluarga | Kerabat membantu"): kode input ; Terima & Hubungkan>K5 Kerabat · Bantu Bu Ratna#571:8286 ; Tolak>B1
+K5: Pasang barang untuk Bu Ratna / Pasang Barang Baru>B2 Ambil Foto (Buram) ; Ajukan Ketuk Palu Rp38.000>K6 Menunggu Persetujuan#571:8372 (after3)>B2 Ketuk Palu Berhasil
+K7 Pemilik · Setujui Ketuk Palu#571:8441 (flow start "Flow 2"): Setujui, Jual Rp38.000>K8 Penjualan Disetujui#571:8489 ; Tolak>B1 ; K8: Lihat Status>E1 Harga Terkunci ; Beranda
+K9 Akses & Aktivitas Kerabat#571:8544: Ubah Hak Akses>G1 Mode Dibantu ; Cabut Akses Dimas>K10 Akses Dicabut#571:8634 ; K10: Kembali ke Akun>G1 Akun
+Flow starts: Alur Utama 125:6459 ; Warga Beranda 10:148 ; Warga Sesi 27:1997 ; Warga Status 13:573 ; Riwayat 27:2139 ; Profil 27:2406 ; Lepas Gratis S1 555:6146 ; S2 556:6612 ; Koreksi E-waste 561:7304 ; Pemilik mengundang 571:7943 ; Kerabat membantu 571:8206 ; Flow 2 571:8441

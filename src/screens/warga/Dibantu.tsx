@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useStore } from '../../store'
 import { Img, StatusBar, AppBar, Toggle, Avatar, Checkbox, SectionHeader } from '../../ui'
 
-/** Figma: G1 Mode Dibantu Keluarga (29:2256) — Simpan → G1 Akun Warga */
+/** Figma: G1 Mode Dibantu Keluarga (29:2256) — Dimas → K9; Undang kerabat → K2; Simpan → G1 Akun Warga */
 export default function Dibantu() {
   const { go } = useStore()
   const [on, setOn] = useState(true)
-  const [perm, setPerm] = useState([true, true, true])
-  const labels = ['Bisa memasang barang atas namaku', 'Bisa chat dengan pengepul', 'Kirim notifikasi ke ponselku']
+  const [perm, setPerm] = useState([true, true, true, true])
+  const labels = ['Bisa memasang barang atas namaku', 'Bisa chat dengan pengepul', 'Kirim notifikasi ke ponselku', 'Ketuk palu perlu persetujuanku']
   return (
     <div className="screen">
       <AppBar title="Mode Dibantu Keluarga" ink trailing={<button className="icon-btn" onClick={() => go('bantuan')} aria-label="Bantuan"><Img src="ic-help.svg" size={20} /></button>} />
@@ -22,22 +22,23 @@ export default function Dibantu() {
         </div>
         <SectionHeader title="Kerabat terhubung" />
         <div className="col" style={{ padding: '4px 14px', borderRadius: 'var(--radius-lg)', background: '#fff' }}>
-          <div className="row" style={{ gap: 12, padding: '12px 0', borderBottom: '1px solid var(--line-100)' }}>
+          {/* Figma: Dimas row → K9 Akses & Aktivitas Kerabat */}
+          <button onClick={() => go('k9-akses')} className="row" style={{ gap: 12, padding: '12px 0', borderBottom: '1px solid var(--line-100)', textAlign: 'left' }}>
             <Avatar initials="DP" tone="amber" />
             <div className="col grow" style={{ gap: 2 }}>
               <span className="t-body-ms">Dimas Pratama</span>
               <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Anak | memasang barang & chat pengepul</span>
             </div>
             <span className="tag tag-indigo">{on ? 'Aktif' : 'Nonaktif'}</span>
-          </div>
-          <a className="row" href="https://wa.me/?text=Gabung%20Mode%20Dibantu%20Keluarga%20KETUK" target="_blank" rel="noreferrer" style={{ gap: 12, padding: '12px 0', textDecoration: 'none' }}>
+          </button>
+          <button onClick={() => go('k2-undang')} className="row" style={{ gap: 12, padding: '12px 0', textAlign: 'left' }}>
             <div className="row" style={{ width: 44, height: 44, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center', flex: 'none' }}><Img src="ic-plus-indigo22.svg" size={22} /></div>
             <div className="col grow" style={{ gap: 2 }}>
               <span className="t-body-ms" style={{ color: 'var(--primary-500)' }}>Undang kerabat</span>
               <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Kirim tautan undangan lewat WhatsApp</span>
             </div>
             <Img src="ic-chevron-right18.svg" size={18} />
-          </a>
+          </button>
         </div>
         <div className="col" style={{ padding: 16, gap: 12, borderRadius: 'var(--radius-lg)', background: '#fff' }}>
           <span className="t-body-ms">Hak akses kerabat</span>
@@ -47,13 +48,6 @@ export default function Dibantu() {
               <span className="t-body-m grow">{l}</span>
             </div>
           ))}
-          <div className="row" style={{ gap: 12 }}>
-            <Checkbox on={false} />
-            <div className="col grow" style={{ gap: 2 }}>
-              <span className="t-body-m" style={{ color: 'var(--ink-500)' }}>Uang masuk ke rekening kerabat</span>
-              <span className="t-body-s" style={{ color: 'var(--coral-700)' }}>Dikunci: uang selalu ke pemilik</span>
-            </div>
-          </div>
         </div>
       </div>
       <div className="bottom-bar">

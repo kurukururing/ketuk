@@ -9,8 +9,8 @@ function useCountdown(start: number) {
   return t
 }
 
-function RadarCard({ photo, title, meta, ai, sisa, extra, onClick, highlight }: {
-  photo: string; title: string; meta: string; ai: string; sisa: number; extra: React.ReactNode; onClick?: () => void; highlight?: boolean
+function RadarCard({ photo, title, meta, ai, line, sisa, extra, onClick, highlight }: {
+  photo: string; title: string; meta: string; ai: string; line?: string; sisa: number; extra: React.ReactNode; onClick?: () => void; highlight?: boolean
 }) {
   return (
     <motion.button layout onClick={onClick} initial={{ opacity: 0, y: -20, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -19,7 +19,7 @@ function RadarCard({ photo, title, meta, ai, sisa, extra, onClick, highlight }: 
       <div className="col grow" style={{ gap: 5 }}>
         <span className="t-body-ms">{title}</span>
         <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>{meta}</span>
-        <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>AI <b style={{ color: 'var(--amber-700)' }}>{ai}</b></span>
+        {line ? <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>{line}</span> : <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>AI <b style={{ color: 'var(--amber-700)' }}>{ai}</b></span>}
         <div className="row" style={{ gap: 6 }}>
           <span className="tag tag-amber" style={{ fontVariantNumeric: 'tabular-nums' }}><Img src="ic-clock-amber.svg" size={14} />sisa {mmss(sisa)}</span>
           {extra}
@@ -30,7 +30,8 @@ function RadarCard({ photo, title, meta, ai, sisa, extra, onClick, highlight }: 
 }
 
 /** Figma: B1 Radar Barang (15:818) — kartu → B2 Ajukan; peta/filter/lonceng/statistik; the warga's live item appears here */
-export default function Radar() {
+/** lg: Figma F1 Radar Lepas Gratis (562:7145) — kardus is a free Lepas Gratis request → F1 Permintaan */
+export default function Radar({ lg = false }: { lg?: boolean } = {}) {
   const { s, go } = useStore()
   const kardus = useCountdown(18 * 60 + 5)
   const dispenser = useCountdown(52 * 60 + 40)
@@ -72,17 +73,20 @@ export default function Radar() {
       <div className="scroll" style={{ top: 284, bottom: 97 }}>
         <div className="col" style={{ padding: '2px 24px 24px', gap: 12 }}>
           <AnimatePresence initial={false}>
-            {live && (
+            {(live || lg) && (
               <RadarCard key="kipas" photo={itemPhoto(s)} title={ITEM.name} meta="1,2 km | Rungkut Kidul"
-                ai={`${rp(ITEM.aiLow)}–${rp(ITEM.aiHigh)}`} sisa={s.session.remaining} highlight={!mine}
+                ai={`${rp(ITEM.aiLow)}–${rp(ITEM.aiHigh)}`} sisa={lg && !live ? 41 * 60 + 20 : s.session.remaining} highlight={!mine && !lg}
                 onClick={() => go(mine ? 'terkirim' : 'ajukan')}
                 extra={mine
                   ? <span className="tag tag-indigo">Tawaranmu {rp(mine.price)}</span>
-                  : <span className="tag tag-neutral">{s.session.offers.length} tawaran</span>} />
+                  : <span className="tag tag-neutral">{lg && !live ? 3 : s.session.offers.length} tawaran</span>} />
             )}
           </AnimatePresence>
-          <RadarCard photo={A('photo-kardus.jpg')} title="Kardus bekas 12 kg" meta="0,8 km | Medokan Ayu" ai="Rp24.000–Rp30.000" sisa={kardus} onClick={() => go('ajukan')}
-            extra={<span className="tag tag-neutral">1 tawaran</span>} />
+          {lg
+            ? <RadarCard photo={A('photo-kardus.jpg')} title="Kardus bekas 12 kg" meta="1,2 km | Rungkut Asri" ai="" line="Lepas gratis | Rp0, tanpa ongkir" sisa={kardus} onClick={() => go('f1-permintaan')}
+                extra={<span className="tag tag-neutral">Gratis</span>} />
+            : <RadarCard photo={A('photo-kardus.jpg')} title="Kardus bekas 12 kg" meta="0,8 km | Medokan Ayu" ai="Rp24.000–Rp30.000" sisa={kardus} onClick={() => go('ajukan')}
+                extra={<span className="tag tag-neutral">1 tawaran</span>} />}
           <RadarCard photo={A('photo-dispenser.jpg')} title="Dispenser rusak" meta="2,4 km | Penjaringan Sari" ai="Rp30.000–Rp50.000" sisa={dispenser} onClick={() => go('ajukan')}
             extra={<span className="tag tag-dark"><Img src="ic-battery-white.svg" size={14} />E-waste</span>} />
         </div>

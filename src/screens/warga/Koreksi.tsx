@@ -34,7 +34,7 @@ export default function Koreksi() {
 
           <div className="col" style={{ gap: 6, padding: 16, borderRadius: 'var(--radius-lg)', background: '#fff' }}>
             <span className="t-overline" style={{ color: 'var(--ink-500)' }}>Alasan dari pengepul</span>
-            <span className="t-body-l">"Baling-baling retak, tidak terlihat di foto awal."</span>
+            <span className="t-body-l">{s.scenario === 'dispenser' ? '"Keran dispenser patah, tidak terlihat di foto awal."' : '"Baling-baling retak, tidak terlihat di foto awal."'}</span>
           </div>
 
           <div className="col" style={{ gap: 8 }}>

@@ -6,19 +6,11 @@ import { createContext, useContext, useEffect, useReducer, useRef, type ReactNod
 export type Role = 'warga' | 'pengepul'
 
 /** Shared by both apps (same Figma frames, role-aware) */
-type AuthScreen = 'splash' | 'onboarding' | 'masuk' | 'otp' | 'peran' | 'daftar'
 
-export type WargaScreen = AuthScreen
-  | 'alamat' | 'beranda' | 'notifikasi' | 'sesi-saya' | 'riwayat' | 'bukti' | 'akun' | 'dibantu' | 'bantuan'
-  | 'dompet' | 'tarik' | 'tarik-ok' | 'lepas' | 'sesi-kosong' | 'ewaste' | 'kategori' | 'pindahan'
-  | 'foto' | 'detail' | 'sesi' | 'tawaran'
-  | 'konfirmasi' | 'berhasil' | 'terkunci' | 'chat' | 'serah' | 'koreksi' | 'batal' | 'selesai'
-
-export type PengepulScreen = AuthScreen
-  | 'mitra-daftar' | 'mitra-verifikasi' | 'mitra-status' | 'mitra-ok'
-  | 'radar' | 'notif' | 'filter' | 'peta' | 'tawaranku' | 'tawaranku-menang'
-  | 'ajukan' | 'terkirim' | 'jadwal' | 'navigasi' | 'cek'
-  | 'ajukan-koreksi' | 'menunggu' | 'chat' | 'disetujui' | 'bayar' | 'profil' | 'pendapatan' | 'lencana' | 'bukti' | 'bantuan'
+/** Route names (see docs/FLOW.md). Kept as plain strings: the demo has ~150 screens. */
+export type AuthScreen = string
+export type WargaScreen = string
+export type PengepulScreen = string
 
 export type ScenarioId = 'kipas' | 'dispenser' | 'borongan' | 'kardus'
 
@@ -59,6 +51,8 @@ export type State = {
   radius: 3 | 5
   /** dispenser flow: photo retaken after the blur warning */
   retake: boolean
+  /** free-form UI variant flags shared by screens (camera mode, detail variant, …) */
+  v: Record<string, string | number | boolean>
   toasts: Toast[]
   panel: boolean
 }
@@ -99,14 +93,14 @@ export const SCENARIOS: Record<ScenarioId, Scenario> = {
     aiLow: 25000, aiHigh: 40000, confidence: 82, basis: 'Dari 214 transaksi kipas angin di Surabaya, 30 hari terakhir.',
     offers: BASE_OFFERS, auto: ['rj', 'lr', 'ub'], manual: 'ps', startAt: 60 * 60,
     correction: { price: 30000, reason: 'Retak / pecah', note: 'Baling-baling retak di dua sisi, tidak terlihat di foto awal.' },
-    weight: '3,2 kg', total: 0, totalItems: 1, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
+    weight: '3,2 kg', total: 88000, totalItems: 4, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
   },
   dispenser: {
     name: 'Dispenser', short: 'dispenser', category: 'Elektronik', photo: 'photo-dispenser-c1.jpg',
-    aiLow: 25000, aiHigh: 40000, confidence: 82, basis: 'Dari 214 transaksi kipas angin di Surabaya, 30 hari terakhir.',
+    aiLow: 25000, aiHigh: 40000, confidence: 82, basis: 'Dari 214 transaksi dispenser di Surabaya, 30 hari terakhir.',
     offers: BASE_OFFERS, auto: ['ps', 'ub', 'rj', 'lr'], manual: null, startAt: 38 * 60 + 12,
     correction: { price: 30000, reason: 'Retak / pecah', note: 'Tutup galon retak, tidak terlihat di foto awal.' },
-    weight: '3,2 kg', total: 0, totalItems: 1, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
+    weight: '3,2 kg', total: 88000, totalItems: 4, pickupWhen: 'hari ini pukul 16.00', pickupWait: 12, chatPlace: 'pagar hitam',
   },
   borongan: {
     name: '3 barang borongan', short: '3 barang borongan', category: 'Mode Pindahan', photo: 'item-kasur.jpg',
@@ -162,6 +156,7 @@ type Action =
   | { type: 'scenario'; scenario: ScenarioId }
   | { type: 'expandRadius' }
   | { type: 'retake' }
+  | { type: 'set'; v: Record<string, string | number | boolean> }
   | { type: 'demoState'; scenario: ScenarioId; phase: 'running' | 'won'; correction?: boolean; lock?: { id: string; price: number; pickup: string } }
   | { type: 'switchToPengepul'; screen: PengepulScreen }
   | { type: 'tick'; dt: number }
@@ -196,6 +191,7 @@ const initial = (): State => ({
   scenario: 'kipas',
   radius: 3,
   retake: false,
+  v: {},
   toasts: [],
   panel: false,
 })
@@ -302,11 +298,13 @@ function reducer(s: State, a: Action): State {
       return {
         ...s, scenario: a.scenario, retake: true, radius: a.scenario === 'dispenser' ? 5 : 3, correction: a.correction ? 'pending' : 'none', arrived: !!a.correction,
         finalPrice: a.phase === 'won' ? win.price : null,
-        session: { status: a.phase, remaining: S.startAt, offers, queued: [], nextIn: 0, winner: a.phase === 'won' ? win.id : null, selected: null },
+        session: { status: a.phase, remaining: a.scenario === 'kipas' ? 38 * 60 + 12 : S.startAt, offers, queued: [], nextIn: 0, winner: a.phase === 'won' ? win.id : null, selected: null },
       }
     }
     case 'retake':
       return { ...s, retake: true }
+    case 'set':
+      return { ...s, v: { ...s.v, ...a.v } }
     case 'switchToPengepul':
       return { ...s, role: 'pengepul', pengepul: [a.screen] }
     case 'tick': {

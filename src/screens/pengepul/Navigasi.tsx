@@ -6,7 +6,8 @@ import { A, Img, StatusBar, Avatar, ItemPhoto } from '../../ui'
 const TRIP = 6 // seconds; mirrors "6 menit"
 
 /** Figma: D1 Navigasi ke Lokasi (38:3038) — truck drives the route; "Saya Sudah Tiba" → Serah Terima Pengepul */
-export default function Navigasi() {
+export type NavItem = { photo: React.ReactNode; name: string; tag: string; next: string }
+export default function Navigasi({ item }: { item?: NavItem } = {}) {
   const { s, d, go, back } = useStore()
   const [min, setMin] = useState(6)
   useEffect(() => {
@@ -57,11 +58,11 @@ export default function Navigasi() {
           <button onClick={() => go('chat')} className="row" style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--primary-100)', justifyContent: 'center' }}><Img src="ic-call-indigo.svg" size={20} /></button>
         </div>
         <div className="row" style={{ gap: 12, padding: 12, borderRadius: 'var(--radius-md)', background: 'var(--primary-50)' }}>
-          <ItemPhoto size={44} />
-          <span className="t-body-ms grow">{ITEM.name}</span>
-          <span className="tag tag-indigo"><Img src="ic-lock-indigo14.svg" size={14} />{rp(price)}</span>
+          {item ? item.photo : <ItemPhoto size={44} />}
+          <span className="t-body-ms grow">{item ? item.name : ITEM.name}</span>
+          <span className="tag tag-indigo"><Img src="ic-lock-indigo14.svg" size={14} />{item ? item.tag : rp(price)}</span>
         </div>
-        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => { d({ type: 'arrive' }); go('cek') }}>
+        <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }} onClick={() => { if (item) { go(item.next); return } d({ type: 'arrive' }); go('cek') }}>
           <Img src="ic-pin-white20.svg" size={20} />Saya Sudah Tiba
         </button>
       </div>

@@ -25,7 +25,7 @@ export default function Bayar() {
           </motion.div>
           <span className="t-h1" style={{ letterSpacing: -0.39 }}>{rp(price)} dibayar ke {ITEM.warga}</span>
           <span className="t-body-l" style={{ color: 'var(--ink-500)' }}>
-            {corrected ? 'Transaksi dengan koreksi berbukti. Skor Tepat Harga menjadi 96%.' : 'Transaksi tanpa koreksi. Skor Tepat Harga tetap 97%.'}
+            {corrected ? 'Transaksi dengan koreksi berbukti yang disetujui warga.' : 'Transaksi tanpa koreksi. Skor Tepat Harga tetap 97%.'}
           </span>
         </div>
         <div className="col" style={{ padding: '20px 24px 24px', gap: 12 }}>

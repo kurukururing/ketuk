@@ -43,7 +43,9 @@ Cabang koreksi: Chat/Serah Terima → Koreksi Berbukti → Terima (Selesai) atau
 **Pengepul — onboarding & akun:** Ganti ke Pengepul / Pilih Peran Pengepul → Splash → Onboarding → Masuk → OTP → Pilih Peran → Daftar Mitra → Verifikasi Identitas (dialog Sumber Foto) → Status Verifikasi → Mitra Terverifikasi → Radar / Profil.
 Radar: ikon peta → Peta Radar, filter → Filter Radar, lonceng → Notifikasi, statistik → Pendapatan. Nav bawah: Radar | Tawaranku (Berjalan/Menang) | Jemput | Akun (Profil & Skor → Pendapatan, Lencana E-waste Aman, Keluar).
 
-Daftar lengkap koneksi prototype ada di [docs/FLOW.md](docs/FLOW.md); uji otomatis: `node scripts/e2e.mjs`, `node scripts/e2e-scen.mjs`, `node scripts/e2e-nav.mjs` (dengan `npx vite --port 5173` berjalan). Tambahkan `DEVICE="iPhone SE"` (nama perangkat Playwright apa pun) untuk menguji dalam emulasi HP.
+**Alur baru (Figma 27 Nov):** Warga — Lepas Gratis, E-waste Aman, Mode Dibantu Keluarga (undang kerabat, kerabat membantu, persetujuan pemilik, cabut akses). Pengepul — Daftar Mitra dengan pindai KTP & foto dokumen, Lepas Gratis, E-waste Aman, pilihan pembayaran (Saldo/VA/Tunai), Saldo KETUK (isi & tarik). Titik mulai tiap alur ada di Panel Demo → *Alur lain (Figma)*.
+
+Daftar lengkap koneksi prototype ada di [docs/FLOW.md](docs/FLOW.md); uji otomatis: `node scripts/e2e.mjs`, `node scripts/e2e-scen.mjs`, `node scripts/e2e-nav.mjs`, `node scripts/e2e-baru.mjs` (dengan `npx vite --port 5173` berjalan). Tambahkan `DEVICE="iPhone SE"` (nama perangkat Playwright apa pun) untuk menguji dalam emulasi HP.
 
 ## Naskah demo 2 menit (saran)
 

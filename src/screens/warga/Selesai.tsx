@@ -13,8 +13,14 @@ export default function Selesai() {
   const { s, d, go } = useStore()
   const price = s.finalPrice ?? 38000
   const corrected = s.correction === 'approved'
-  const [stars, setStars] = useState(0)
-  const [sesuai, setSesuai] = useState<boolean | null>(corrected ? null : true)
+  // Figma frames show the review already filled in: 5 stars, "Ya, sesuai"
+  const [stars, setStars] = useState(5)
+  const [sesuai, setSesuai] = useState<boolean | null>(true)
+  // Figma: E1/D1 Selesai (550:6428, 550:6511) show Rp126.000 from 4 items; after a correction (95:6350, 552:6318)
+  // only the corrected item counts. D5 borongan always counts its 3 items.
+  const single = corrected && s.scenario !== 'borongan'
+  const total = single ? price : ITEM.total + price
+  const items = single ? 1 : ITEM.totalItems
   const [tags, setTags] = useState<string[]>(['Harga sesuai'])
   const [sent, setSent] = useState(false)
   const toggleTag = (t: string) => setTags(x => (x.includes(t) ? x.filter(y => y !== t) : [...x, t]))
@@ -35,7 +41,7 @@ export default function Selesai() {
           <div style={{ height: 4 }} />
           <span className="t-h1" style={{ letterSpacing: -0.39, textAlign: 'center' }}>{rp(price)} diterima</span>
           <span className="t-body-m" style={{ color: 'var(--ink-500)', textAlign: 'center' }}>
-            {corrected ? 'Transaksi selesai dengan koreksi berbukti. Terima kasih sudah memilah!' : 'Transaksi selesai tanpa koreksi. Terima kasih sudah memilah!'}
+            {corrected ? 'Selesai dengan Koreksi Berbukti. Terima kasih sudah memilah!' : 'Transaksi selesai tanpa koreksi. Terima kasih sudah memilah!'}
           </span>
         </div>
 
@@ -46,8 +52,8 @@ export default function Selesai() {
               <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>tidak berakhir di TPA</span>
             </div>
             <div className="col grow" style={{ gap: 2, padding: 14, borderRadius: 'var(--radius-lg)', background: 'var(--amber-100)' }}>
-              <span className="t-num-m">{rp(ITEM.total + price)}</span>
-              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>total dari {ITEM.totalItems} barang</span>
+              <span className="t-num-m">{rp(total)}</span>
+              <span className="t-body-s" style={{ color: 'var(--ink-700)' }}>total dari {items} barang</span>
             </div>
           </div>
 
@@ -57,7 +63,7 @@ export default function Selesai() {
               <div className="row" style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'var(--amber-100)', justifyContent: 'center' }}><Img src="ic-wrench-amber.svg" size={22} /></div>
               <div className="col grow" style={{ gap: 2 }}>
                 <span className="t-body-ms">Servis & jual ulang</span>
-                <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>Kipas diperbaiki lalu dijual kembali oleh mitra servis</span>
+                <span className="t-body-s" style={{ color: 'var(--ink-500)' }}>{s.scenario === 'dispenser' ? 'Dispenser diservis lalu dijual kembali oleh mitra servis' : 'Kipas diperbaiki lalu dijual kembali oleh mitra servis'}</span>
               </div>
             </div>
           </div>

@@ -1,0 +1,34 @@
+# Prototype edges, section "Aplikasi Pengepul" (read 2026-11-27)
+B1 Radar#15:818: Peta>B2 Peta ; Filter>B1 Filter ; Notif>B1 Notif ; stats>E1 Pendapatan ; kipas/kardus/dispenser>B2 Ajukan ; nav
+C1 Tawaranku (menang)#15:1114: Berjalan/Kalah>C1 Berjalan ; Mulai Jemput>D1 Navigasi ; Chat>D1 Chat Warga ; Lihat Detail>B2 Ajukan
+D1 Serah Terima Pengepul#15:1274: Barang sesuai, bayar Rp38.000>D1a Pilih Metode Pembayaran#576:8640 (NEW) ; Ajukan Koreksi>D1 Ajukan Koreksi
+E1 Profil#15:1364 (390x1023): Skor/stats>E1 Pendapatan ; Saldo KETUK>E2 Saldo KETUK#581:8822 (NEW) ; Mitra Terverifikasi>A4 ; E-waste Aman>Lencana ; Keluar>OV Dialog Keluar
+A2 Verifikasi Identitas#30:2506: Foto lapak>A2a#574:8539 ; Foto kendaraan>A2c#574:8675 ; Foto STNK>A2e#574:8822 ; Surat kuasa>A2h#574:9084 ; Kirim Verifikasi>A3
+A3 Status: modul E-waste>Lencana ; Lihat Status Mitra>A4 ; A4: Mulai>Radar ; Profil>E1 Profil
+B1 Notif: Barang baru>Ajukan ; terlampaui>C1 Berjalan ; menang>C1 Tawaranku ; pengingat>Jadwal ; skor>Profil ; modul>Lencana
+B1 Filter: Scrim/Reset/Terapkan>Radar ; kipas>Ajukan ; B2 Peta: pins/Ajukan>Ajukan ; Daftar>Radar ; Filter>Filter
+B2 Terkirim: Lihat Tawaranku>D1 Jadwal ; Kembali ke Radar>Radar ; C1 Berjalan: Menang>C1 Tawaranku ; Lihat>Terkirim
+D1 Jadwal: Navigasi>D1 Navigasi ; Chat>D1 Chat ; D1 Navigasi: Chat/Telepon>Chat ; Saya Sudah Tiba>D1 Serah Terima Pengepul
+D1 Ajukan Koreksi: Tambah>OV S1 Sumber Foto ; Kirim>D1 Menunggu ; Menunggu: Buka chat>D1 Chat
+D1 Chat Warga: Lanjut ke pembayaran>D1 Koreksi Disetujui ; back>D1 Menunggu ; Kamera>OV S1
+D1 Koreksi Disetujui: bayar Rp30.000>D1 Pembayaran Selesai · Koreksi#565:8148 (NEW)
+D1 Pembayaran Selesai#39:3042 / · Koreksi#565:8148: Lanjut>D1 Jadwal ; Bukti>F1 Bukti
+Pengepul auth: Splash#353:5150 (0.8)>#353:5162 (1.6)>Onboarding#353:5174>#353:5283>#353:5299>Masuk#353:5190 ; Masuk: OTP>#353:5211 ; Google>Pilih Peran#353:5256 ; Daftar>#353:5315 ; Pilih Peran: Lanjut sebagai Pengepul>A1 Daftar Mitra#550:6249
+A1 Daftar Mitra#550:6249 (390x915): Pindai KTP>A1a Pindai KTP#574:8289 ; Lanjut>A2
+A1a Pindai KTP: Shutter/Lanjut>A1b Konfirmasi Data KTP#574:8358 ; A1b: Gunakan Data Ini>A1c Daftar Mitra · Terisi#574:8431 ; Pindai Ulang>A1a ; A1c: Pindai Ulang>A1a ; Lanjut>A2
+A2a Foto Lapak: Shutter/Lanjut>A2b Pratinjau Lapak ; A2b: Gunakan & Lanjut Foto Kendaraan>A2c ; Ulangi>A2a
+A2c Foto Kendaraan>A2d Pratinjau ; A2d: Gunakan & Lanjut Foto STNK>A2e ; Ulangi>A2c ; A2e Foto STNK>A2f Pratinjau STNK ; A2f: Gunakan Foto>A2g Verifikasi · Dokumen Lengkap#574:8972 ; Ulangi>A2e
+A2g: same slots as A2 ; Kirim Verifikasi>A3 ; A2h Unggah Surat Kuasa#574:9084: Simpan Dokumen>A2g ; Kembali>BACK
+D1a Pilih Metode Pembayaran#576:8640: Saldo KETUK>D1b Konfirmasi PIN Saldo#576:8736 (after2.5)>D1 Pembayaran Selesai ; Tunai>D1 Pembayaran Selesai ; Lanjut Bayar Rp38.000>D1c Transfer VA#576:8796
+D1c VA: countdown "Selesaikan dalam 14:52">D1f Transfer Kedaluwarsa#576:9064 ; Saya Sudah Transfer>D1d Mengecek#576:8905 (after3)>D1e Transfer Berhasil#576:8987 ; Ganti Metode>BACK ; D1d: Hubungi Bantuan>Bantuan
+D1e: Lanjut, Salurkan Barang>D1 Pembayaran Selesai ; D1f: Buat VA Baru>D1c ; Bayar dengan Saldo>D1b
+E2 Saldo KETUK#581:8822: Isi Saldo>E2a#581:8934 >Lanjut> E2b VA#581:9021 >Saya Sudah Transfer> E2c Berhasil#581:9110 >Kembali ke Saldo> E2 ; Tarik>E2d Tarik#581:9160 >Tarik Rp400.000> E2e PIN#581:9239 (after2.5)> E2f Diproses#581:9345 >Kembali ke Saldo>E2 ; Bantuan ; "Bayar ke Bu Ratna">D1e
+F1 Radar Lepas Gratis#562:7145 (flow start): same as Radar but Kardus>F1 Permintaan Lepas Gratis#562:7282
+F1 Permintaan: Terima Permintaan>F2 Jadwal LG#562:7369 ; Lewati>F1 Radar LG ; F2 Jadwal: Navigasi>F2 Navigasi#562:7445 ; Chat Warga>D1 Chat ; F2 Navigasi: Saya Sudah Tiba>F3 Cek & Timbang#562:7526
+F3 Cek & Timbang: Sesuai, Minta Kode Warga>F4 Kode Serah Terima#562:7798 ; Tolak di Lokasi>F3 Tolak#562:7596 ; F3 Tolak: Tambah>OV S1 ; Kirim Penolakan>F3 Penolakan Terkirim#562:7666 (after3)>F3 Penolakan Disetujui#562:7748 ; Buka chat>D1 Chat ; Disetujui: Lanjut>D1 Jadwal
+F4 Kode: Selesaikan Serah Terima>F4 Lepas Gratis Selesai#562:7874 ; Lanjut>D1 Jadwal ; Bukti>F1 Bukti
+G1 Ajukan Tawaran E-waste#563:7492 (flow start): Kirim Rp85.000>G1 Terkirim#563:7593 ; Lihat Tawaranku>G2 Persiapan Jemput#563:7651 ; Kembali>Radar
+G2 Persiapan: Isi Saldo Dompet>E1 Pendapatan ; Navigasi>G2 Navigasi E-waste#563:7745 >Saya Sudah Tiba> G3 Cek E-waste#563:7826
+G3 Cek: Sesuai, Minta Kode>G4 Kode & Pembayaran#565:7773 >Bayar Rp85.000> G4 Selesai#565:7844 ; Ajukan Koreksi>G3 Ajukan Koreksi#563:7913 >Kirim> G3 Menunggu#563:7991 (after3)> G3 Disetujui#563:8073 >bayar Rp70.000> G4 Kode · Koreksi#565:8001 >Bayar Rp70.000> G4 Selesai · Koreksi#565:8069
+G4 Selesai: Salurkan ke Pengolah Berizin>G5 Serahkan#565:7916 >Kirim Bukti Penyaluran> Radar ; Bukti>F1 Bukti
+Flow starts: Alur Pengepul 15:818 ; Daftar Mitra 550:6249 and 574:8431 ; Jadwal 38:2898 ; Profil 15:1364 ; Pengepul | Lepas Gratis 562:7145 ; E-waste Aman 563:7492 ; Transfer kedaluwarsa 576:9064 ; Saldo KETUK 581:8822

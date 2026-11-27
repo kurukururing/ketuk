@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useStore, ITEM, rp } from '../../store'
-import { Img, StatusBar, AppBar, Toggle, ItemPhoto } from '../../ui'
+import { A, Img, StatusBar, AppBar, Toggle, ItemPhoto } from '../../ui'
+import { openCam } from '../Camera'
 
-/** Figma: B2 Detail & Patokan Harga AI (10:442), C1 Foto Blur (254:5048), C1 Detail (247:4724) */
+/**
+ * Figma: B2 Detail & Patokan Harga AI (10:442), C1 Detail (247:4724),
+ * C1 Foto Blur (254:5048, "Foto Kurang Jelas"), C1 Gambar Tidak Dikenali (254:5141, "Barang Tidak Dikenali").
+ * Label → camera (blurred); Edit → Ubah Kategori; Foto Ulang → camera (sharp).
+ */
 export default function Detail() {
   const { s, d, go } = useStore()
-  const blurred = s.scenario === 'dispenser' && !s.retake && !s.photo
+  const disp = s.scenario === 'dispenser'
+  const variant = disp ? String(s.v.detail ?? 'ok') : 'ok'
+  const blurred = variant !== 'ok'
+  const mode = disp ? 'dispenser' : 'kipas'
   const [menyala, setMenyala] = useState(true)
   const [baterai, setBaterai] = useState(false)
   const [slot, setSlot] = useState(0)
@@ -19,8 +27,10 @@ export default function Detail() {
         <div className="col" style={{ padding: '0 24px 24px', gap: 12 }}>
           {/* Foto */}
           <div className="row" style={{ gap: 10, alignItems: 'flex-start' }}>
-            <ItemPhoto size={84} />
-            <button onClick={() => go('foto')} className="col" style={{ width: 84, height: 84, borderRadius: 'var(--radius-md)', border: '1.5px dashed var(--primary-200)', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+            {variant === 'unknown'
+              ? <img src={A('photo-dispenser-pixel.jpg')} alt="" style={{ width: 84, height: 84, borderRadius: 14, objectFit: 'cover', imageRendering: 'pixelated' }} />
+              : <ItemPhoto size={84} />}
+            <button onClick={() => openCam(d, go, mode)} className="col" style={{ width: 84, height: 84, borderRadius: 'var(--radius-md)', border: '1.5px dashed var(--primary-200)', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
               <Img src="ic-plus-indigo.svg" size={20} />
               <span className="t-body-s" style={{ color: 'var(--primary-500)' }}>Label</span>
             </button>
@@ -30,7 +40,7 @@ export default function Detail() {
           <div className="col" style={{ gap: 8 }}>
             <div className="row" style={{ gap: 8 }}>
               <span className="t-h2 nowrap" style={{ color: 'var(--primary-600)' }}>{ITEM.name}</span>
-              <button onClick={() => go('kategori')} aria-label="Ubah kategori"><Img src="ic-edit-indigo.svg" size={18} /></button>
+              <button onClick={() => { d({ type: 'set', v: { katFrom: 'edit' } }); go('kategori') }} aria-label="Ubah kategori"><Img src="ic-edit-indigo.svg" size={18} /></button>
             </div>
             <div className="row" style={{ gap: 8 }}>
               <span className="tag tag-indigo"><Img src="ic-tag-indigo.svg" size={14} />{ITEM.category}</span>
@@ -62,7 +72,7 @@ export default function Detail() {
             <div className="row" style={{ gap: 12, padding: 16, alignItems: 'flex-start', borderRadius: 'var(--radius-lg)', background: 'var(--coral-500)' }}>
               <Img src="ic-alert-coral20.svg" size={20} style={{ filter: 'brightness(0) invert(1)' }} />
               <div className="col grow" style={{ gap: 4 }}>
-                <span className="t-body-ms" style={{ color: '#fff' }}>Foto Kurang Jelas</span>
+                <span className="t-body-ms" style={{ color: '#fff' }}>{variant === 'unknown' ? 'Barang Tidak Dikenali' : 'Foto Kurang Jelas'}</span>
                 <span className="t-body-s" style={{ color: 'rgba(255,255,255,.9)' }}>Patokan harga belum bisa dihitung. Ambil ulang ditempat terang dan pastikan seluruh barang terlihat jelas</span>
               </div>
             </div>
@@ -104,7 +114,7 @@ export default function Detail() {
       <div className="bottom-bar">
         {blurred ? (
           <button className="btn btn-primary" style={{ boxShadow: '0 10px 12px rgba(61,47,208,0.35)' }}
-            onClick={() => { d({ type: 'retake' }); go('foto', { replace: true }) }}>
+            onClick={() => { d({ type: 'retake' }); openCam(d, go, mode, true) }}>
             <Img src="ic-camera-white.svg" size={20} />Foto Ulang
           </button>
         ) : (

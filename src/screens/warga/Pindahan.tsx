@@ -1,3 +1,4 @@
+import { openCam } from '../Camera'
 import { useState } from 'react'
 import { useStore, rp } from '../../store'
 import { A, Img, StatusBar, AppBar, Checkbox } from '../../ui'
@@ -40,7 +41,7 @@ export default function Pindahan() {
               </label>
             ))}
           </div>
-          <button onClick={() => go('foto')} className="row" style={{ gap: 8, padding: 14, justifyContent: 'center', borderRadius: 'var(--radius-md)', border: '1.5px dashed var(--primary-200)' }}>
+          <button onClick={() => openCam(d, go, 'pindahan')} className="row" style={{ gap: 8, padding: 14, justifyContent: 'center', borderRadius: 'var(--radius-md)', border: '1.5px dashed var(--primary-200)' }}>
             <Img src="ic-plus-indigo.svg" size={18} /><span className="t-label-m" style={{ color: 'var(--primary-500)' }}>Tambah barang</span>
           </button>
           <div className="col" style={{ gap: 8 }}>

@@ -21,10 +21,16 @@ export default function Konfirmasi() {
           className="row" style={{ width: 76, height: 76, borderRadius: 999, background: 'var(--amber-500)', justifyContent: 'center', boxShadow: '0 10px 24px -4px rgba(245,166,36,0.35)' }}>
           <Img src="ic-gavel-ink-36.svg" size={36} />
         </motion.div>
-        <span className="t-h2" style={{ textAlign: 'center' }}>Ketuk palu untuk {rp(o.price)}?</span>
-        <span className="t-body-m" style={{ textAlign: 'center', color: 'var(--ink-500)' }}>
-          <b style={{ color: 'var(--ink-900)' }}>{o.name}</b> | {o.pickup.toLowerCase().replace('jemput', 'jemput hari ini')} | Skor Tepat Harga {o.score}%
-        </span>
+        {s.scenario === 'borongan' ? (<>
+          {/* Figma: D5 Konfirmasi Ketuk Palu (552:5978) */}
+          <span className="t-h2" style={{ textAlign: 'center' }}>Ketuk palu borongan {rp(o.price)}?</span>
+          <span className="t-body-ms" style={{ textAlign: 'center' }}>{o.name} | 3 barang | jemput {o.pickup.toLowerCase()} | Skor {o.score}%</span>
+        </>) : (<>
+          <span className="t-h2" style={{ textAlign: 'center' }}>Ketuk palu untuk {rp(o.price)}?</span>
+          <span className="t-body-m" style={{ textAlign: 'center', color: 'var(--ink-500)' }}>
+            <b style={{ color: 'var(--ink-900)' }}>{o.name}</b> | {o.pickup.toLowerCase().replace('jemput', 'jemput hari ini')} | Skor Tepat Harga {o.score}%
+          </span>
+        </>)}
         <div className="row" style={{ width: '100%', gap: 12, padding: 14, alignItems: 'flex-start', borderRadius: 'var(--radius-md)', background: 'var(--primary-50)', border: '1px solid var(--primary-100)' }}>
           <Img src="ic-lock-indigo.svg" size={22} />
           <div className="col grow" style={{ gap: 2 }}>
